@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Labb1DatorGrafik.System
 {
-    class ModelSystem
+   public class ModelSystem
     {
     }
 }

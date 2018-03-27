@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Labb1DatorGrafik.Component
 {
-    class HeightmapComponent
+   public class HeightmapComponent
     {
     }
 }
