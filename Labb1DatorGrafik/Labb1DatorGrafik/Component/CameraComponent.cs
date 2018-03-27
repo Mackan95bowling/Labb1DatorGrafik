@@ -8,5 +8,8 @@ namespace Labb1DatorGrafik.Component
 {
     public class CameraComponent
     {
+        public float fieldOfView;
+        //ska de va float?
+        public float aspectRatio;
     }
 }
