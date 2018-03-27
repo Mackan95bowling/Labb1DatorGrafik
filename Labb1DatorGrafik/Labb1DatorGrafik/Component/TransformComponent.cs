@@ -8,5 +8,8 @@ namespace Labb1DatorGrafik.Component
 {
     public class TransformComponent
     {
+        public double position;
+        public double rotation;
+        public double scaling;
     }
 }
