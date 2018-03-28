@@ -9,5 +9,7 @@ namespace Labb1DatorGrafik.Component
    public class HeightmapComponent
     {
         //vafan ska vi ha här
+        //föreläsning 2?
+        
     }
 }
