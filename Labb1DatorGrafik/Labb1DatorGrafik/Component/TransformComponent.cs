@@ -6,10 +6,25 @@ using System.Threading.Tasks;
 
 namespace Labb1DatorGrafik.Component
 {
-    public class TransformComponent
+    public class TransformComponent : IComponent
     {
-        public double position;
-        public double rotation;
-        public double scaling;
+        // Position
+        public float positionX { get; set; }
+        public float positionY { get; set; }
+        public float positionZ { get; set; }
+        //Scaling
+        public float scalingX { get; set; }
+        public float scalingY { get; set; }
+        public float scalingZ { get; set; }
+        //Rotation 
+        public float rotationX { get; set; }
+        public float rotationY { get; set; }
+        public float rotationZ { get; set; }
+        
+        //int id (in till metod)
+        public void TransformComponent() {
+            //EntityID = id;
+
+        }
     }
 }

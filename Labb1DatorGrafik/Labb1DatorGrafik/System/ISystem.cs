@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Labb1DatorGrafik.Component
+namespace Labb1DatorGrafik.System
 {
-    public class ModelComponent
+    interface ISystem
     {
-        //ha 
     }
 }

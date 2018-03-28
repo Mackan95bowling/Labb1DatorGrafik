@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Component\CameraComponent.cs" />
     <Compile Include="Component\HeightmapComponent.cs" />
+    <Compile Include="Component\IComponent.cs" />
     <Compile Include="Component\ModelComponent.cs" />
     <Compile Include="Component\TransformComponent.cs" />
     <Compile Include="Game1.cs" />
@@ -50,6 +51,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="System\CameraSystem.cs" />
     <Compile Include="System\HeightmapSystem.cs" />
+    <Compile Include="System\ISystem.cs" />
     <Compile Include="System\ModelSystem.cs" />
     <Compile Include="System\TransformSystem.cs" />
   </ItemGroup>
