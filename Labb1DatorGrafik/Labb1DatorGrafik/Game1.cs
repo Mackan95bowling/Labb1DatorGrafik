@@ -39,6 +39,7 @@ namespace Labb1DatorGrafik
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            this.Content.Load<Model>("Chopper");
 
             // TODO: use this.Content to load your game content here
         }
@@ -61,7 +62,6 @@ namespace Labb1DatorGrafik
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
             // TODO: Add your update logic here
 
             base.Update(gameTime);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,11 @@ namespace Labb1DatorGrafik.Component
         public float rotationX { get; set; }
         public float rotationY { get; set; }
         public float rotationZ { get; set; }
-        
-        //int id (in till metod)
-        public void TransformComponent() {
+
+        //public Vector3 position { get; set; }
+        //public Vector3 scaling { get; set; }
+        //public Vector3 rotation { get; set; }
+        public  TransformComponent(/*int id*/) {
             //EntityID = id;
 
         }

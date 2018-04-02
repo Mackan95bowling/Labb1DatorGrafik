@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +12,7 @@ namespace Labb1DatorGrafik.Component
         public float fieldOfView;
         //ska de va float?
         public float aspectRatio;
+        public Vector3 CameraPosition;
+
     }
 }
