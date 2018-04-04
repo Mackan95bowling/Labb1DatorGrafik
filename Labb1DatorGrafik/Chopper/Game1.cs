@@ -88,7 +88,7 @@ namespace Chopper
             GraphicsDevice.Clear(Color.CornflowerBlue);
             boneTransformations = new Matrix[chopper.Bones.Count];
             chopper.CopyAbsoluteBoneTransformsTo(boneTransformations);
-            foreach (ModelMesh mesh in chopper.Meshes) {
+            foreach (ModelMesh mesh in chopper.Meshes) {//MODELSYS
                 foreach (BasicEffect effect in mesh.Effects) {
                     effect.World = boneTransformations[mesh.ParentBone.Index] * Matrix.CreateScale(1f) * Matrix.CreateRotationX(0) * Matrix.CreateRotationY(0) * Matrix.CreateRotationZ(0);
                     effect.View = view;
@@ -110,7 +110,7 @@ namespace Chopper
 
             ComponentManager.Get().AddComponentToEntity(new CameraComponent() { cameraPosition = new Vector3(10, 10, 10),cameraTarget = Vector3.Zero }, chopperID);
             //ComponentManager.Get().AddComponentToEntity(new TransformComponent() { }, chopperID);
-            ComponentManager.Get().AddComponentToEntity(new ModelComponent() {model = Content.Load<Model>("Chopper")},chopperID);
+            //ComponentManager.Get().AddComponentToEntity(new ModelComponent() {model = Content.Load<Model>("Chopper")},chopperID);
 
         }
     }
