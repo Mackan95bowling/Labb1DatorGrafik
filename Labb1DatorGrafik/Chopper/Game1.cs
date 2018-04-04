@@ -10,8 +10,10 @@ namespace Chopper
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        Matrix view, projection;
         Model chopper;
+        Matrix[] boneTransformations;
+        Vector3 rotation;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -37,9 +39,10 @@ namespace Chopper
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
             chopper = Content.Load<Model>("Chopper");
+            view = Matrix.CreateLookAt(new Vector3(10,10,10), Vector3.Zero,Vector3.Up);
+            rotation = Vector3.Zero;
+            projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45f), graphics.GraphicsDevice.Viewport.AspectRatio, .1f, 1000f);
             // TODO: use this.Content to load your game content here
         }
 
@@ -61,7 +64,12 @@ namespace Chopper
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
+            rotation.Y += 0.1f;
+            rotation.X += 0.1f;
+          //  Matrix.CreateFromQuaternion();
+            chopper.Bones["Main_Rotor"].Transform = Matrix.CreateRotationY(rotation.Y) * Matrix.CreateTranslation(chopper.Bones["Main_Rotor"].Transform.Translation);
+            chopper.Bones["Back_Rotor"].Transform = Matrix.CreateRotationZ((float) MathHelper.Pi/2 ) * Matrix.CreateRotationX(rotation.X)* Matrix.CreateTranslation(chopper.Bones["Back_Rotor"].Transform.Translation);
+            var test = chopper.Bones;
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -74,6 +82,18 @@ namespace Chopper
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            boneTransformations = new Matrix[chopper.Bones.Count];
+            chopper.CopyAbsoluteBoneTransformsTo(boneTransformations);
+            foreach (ModelMesh mesh in chopper.Meshes) {
+                foreach (BasicEffect effect in mesh.Effects) {
+                    effect.World = boneTransformations[mesh.ParentBone.Index] * Matrix.CreateScale(1f) * Matrix.CreateRotationX(0) * Matrix.CreateRotationY(0) * Matrix.CreateRotationZ(0);
+                    effect.View = view;
+                    effect.Projection = projection;
+                    effect.EnableDefaultLighting();
+
+                }
+                mesh.Draw();
+            }
 
             // TODO: Add your drawing code here
             base.Draw(gameTime);

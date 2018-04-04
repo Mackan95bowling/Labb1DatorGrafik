@@ -10,7 +10,7 @@ namespace Labb1DatorGrafik.System
     public class TransformSystem
     {
 
-        public void Draw(GameTime gameTime) {
+        public void Draw(GameTime gameTime) { //Update??
 
 
         }
