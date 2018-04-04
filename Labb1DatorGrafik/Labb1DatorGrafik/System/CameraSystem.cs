@@ -15,7 +15,7 @@ namespace Labb1DatorGrafik.System
     {
         Dictionary<uint, IComponent> cameraComponents;
 
-        public void Update(GameTime gameTime)
+        public void MoveCamera()
         {
             cameraComponents = ComponentManager.Get().GetComponents<CameraComponent>();
             foreach (var cameraComponent in cameraComponents)
@@ -51,6 +51,10 @@ namespace Labb1DatorGrafik.System
                 }
 
             }
+        }
+        public void Update(GameTime gameTime) {
+
+            MoveCamera();
         }
     }
 }

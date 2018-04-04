@@ -1,4 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Labb1DatorGrafik.System;
+using Labb1DatorGrafik.Component;
+using Labb1DatorGrafik.Manager;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -10,14 +13,16 @@ namespace Chopper
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
-        Matrix view, projection;
-        Model chopper;
+        Matrix view, projection; // camera eller transform
         Matrix[] boneTransformations;
+        Model chopper;
         Vector3 rotation;
+        private CameraSystem cameraSystem;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            cameraSystem = new CameraSystem();
         }
 
         /// <summary>
@@ -40,9 +45,10 @@ namespace Chopper
         protected override void LoadContent()
         {
             chopper = Content.Load<Model>("Chopper");
-            view = Matrix.CreateLookAt(new Vector3(10,10,10), Vector3.Zero,Vector3.Up);
-            rotation = Vector3.Zero;
-            projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45f), graphics.GraphicsDevice.Viewport.AspectRatio, .1f, 1000f);
+            view = Matrix.CreateLookAt(new Vector3(10,10,10), Vector3.Zero,Vector3.Up); //Camera eller Transform?
+            rotation = Vector3.Zero; //Transform
+            projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45f), graphics.GraphicsDevice.Viewport.AspectRatio, .1f, 1000f); //Camera? eller Transform
+            CreateEntities();
             // TODO: use this.Content to load your game content here
         }
 
@@ -64,14 +70,12 @@ namespace Chopper
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            rotation.Y += 0.1f;
-            rotation.X += 0.1f;
-          //  Matrix.CreateFromQuaternion();
+            rotation.Y += 1f;
+            rotation.X += 1f;
             chopper.Bones["Main_Rotor"].Transform = Matrix.CreateRotationY(rotation.Y) * Matrix.CreateTranslation(chopper.Bones["Main_Rotor"].Transform.Translation);
             chopper.Bones["Back_Rotor"].Transform = Matrix.CreateRotationZ((float) MathHelper.Pi/2 ) * Matrix.CreateRotationX(rotation.X)* Matrix.CreateTranslation(chopper.Bones["Back_Rotor"].Transform.Translation);
-            var test = chopper.Bones;
-            // TODO: Add your update logic here
-
+   
+            cameraSystem.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -97,6 +101,17 @@ namespace Chopper
 
             // TODO: Add your drawing code here
             base.Draw(gameTime);
+        }
+        private void CreateEntities()
+        {
+            var chopperID = ComponentManager.Get().NewEntity();
+
+
+
+            ComponentManager.Get().AddComponentToEntity(new CameraComponent() { cameraPosition = new Vector3(10, 10, 10),cameraTarget = Vector3.Zero }, chopperID);
+            //ComponentManager.Get().AddComponentToEntity(new TransformComponent() { }, chopperID);
+            ComponentManager.Get().AddComponentToEntity(new ModelComponent() {model = Content.Load<Model>("Chopper")},chopperID);
+
         }
     }
 }

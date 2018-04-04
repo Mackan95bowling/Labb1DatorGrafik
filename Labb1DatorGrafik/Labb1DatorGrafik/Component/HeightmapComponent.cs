@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +10,9 @@ namespace Labb1DatorGrafik.Component
 {
    public class HeightmapComponent
     {
-        //vafan ska vi ha här
-        //föreläsning 2?
+        Color[] hightMapColors;
+        float[,] heightMapData;
+        Texture2D texture2D; 
         
     }
 }

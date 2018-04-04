@@ -18,7 +18,6 @@ namespace Labb1DatorGrafik.Component
             scaling = new Vector3(0, 0, 0);
             rotation = new Vector3(0, 0, 0);
             rotationMatrix = Matrix.Identity;
-
         }
     }
 }

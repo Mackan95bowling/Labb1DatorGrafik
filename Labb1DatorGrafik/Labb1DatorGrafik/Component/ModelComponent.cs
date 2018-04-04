@@ -10,8 +10,8 @@ namespace Labb1DatorGrafik.Component
 {
     public class ModelComponent : IComponent
     {
-        Vector3 modelPosition;
-        Model model;
-        ModelMesh[] Meshes;//ModelMesh Meshes or ModelMesh[] Meshes;
+        public Vector3 modelPosition;
+        public Matrix[] boneTransformations { get; set; }
+        public Model model { get; set; }
     }
 }
