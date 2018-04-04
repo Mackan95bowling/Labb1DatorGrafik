@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +10,7 @@ namespace Labb1DatorGrafik.Component
 {
     public class ModelComponent : IComponent
     {
-        
+        Vector3 modelPosition;
+        ModelMesh[] Meshes;//ModelMesh Meshes or ModelMesh[] Meshes;
     }
 }

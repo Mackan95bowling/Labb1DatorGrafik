@@ -12,8 +12,8 @@ namespace Labb1DatorGrafik.Component
         public float fieldOfView;
         //ska de va float?
         public float aspectRatio;
-        public Vector3 cameraPosition { get; set; }
-        public Vector3 cameraTarget { get; set; }
+        public Vector3 cameraPosition;
+        public Vector3 cameraTarget;
 		
 
     }
