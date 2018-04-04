@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Labb1DatorGrafik.Component
 {
-    public class ModelComponent
+    public class ModelComponent : IComponent
     {
-        //ha 
+        
     }
 }

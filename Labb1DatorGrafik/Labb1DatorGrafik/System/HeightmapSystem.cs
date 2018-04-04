@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Labb1DatorGrafik.System
 {
-    public class HeightmapSystem
+    public class HeightmapSystem : ISystem
     {
     }
 }

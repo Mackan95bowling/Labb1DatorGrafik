@@ -7,12 +7,14 @@ using System.Threading.Tasks;
 
 namespace Labb1DatorGrafik.Component
 {
-    public class CameraComponent
+    public class CameraComponent : IComponent
     {
         public float fieldOfView;
         //ska de va float?
         public float aspectRatio;
-        public Vector3 CameraPosition;
+        public Vector3 cameraPosition { get; set; }
+        public Vector3 cameraTarget { get; set; }
+		
 
     }
 }
