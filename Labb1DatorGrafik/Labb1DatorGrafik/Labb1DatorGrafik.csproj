@@ -46,7 +46,6 @@
     <Compile Include="Component\IComponent.cs" />
     <Compile Include="Component\ModelComponent.cs" />
     <Compile Include="Component\TransformComponent.cs" />
-    <Compile Include="Managers\ComponentManager.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
