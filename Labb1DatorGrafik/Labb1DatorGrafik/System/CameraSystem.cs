@@ -49,10 +49,6 @@ namespace Labb1DatorGrafik.System
                 {
                     camera.cameraPosition.Z -= 1f;
                 }
-                //if (Keyboard.GetState().IsKeyDown(Keys.Space))
-                //{
-                //    orbit = !orbit;
-                //}
 
             }
         }

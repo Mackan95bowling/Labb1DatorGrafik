@@ -11,6 +11,7 @@ namespace Labb1DatorGrafik.Component
     public class ModelComponent : IComponent
     {
         Vector3 modelPosition;
+        Model model;
         ModelMesh[] Meshes;//ModelMesh Meshes or ModelMesh[] Meshes;
     }
 }

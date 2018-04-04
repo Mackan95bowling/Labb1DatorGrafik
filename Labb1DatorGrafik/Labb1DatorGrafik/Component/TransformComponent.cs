@@ -22,8 +22,8 @@ namespace Labb1DatorGrafik.Component
         //public float rotationY { get; set; }
         //public float rotationZ { get; set; }
 
-        public Vector3 position { get; set; }
-        public Vector3 scaling { get; set; }
-        public Vector3 rotation { get; set; }
+        public Vector3 position;
+        public Vector3 scaling;
+        public Vector3 rotation;
     }
 }
