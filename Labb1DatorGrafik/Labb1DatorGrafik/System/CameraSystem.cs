@@ -14,8 +14,17 @@ namespace Labb1DatorGrafik.System
     public class CameraSystem
     {
         Dictionary<uint, IComponent> cameraComponents;
+        public void SetCameraView(){
+            cameraComponents = ComponentManager.Get().GetComponents<CameraComponent>();
+            foreach (var cameraComponent in cameraComponents) {
+                var camera = cameraComponent.Value as CameraComponent;
+                camera.view = Matrix.CreateLookAt(camera.cameraPosition, camera.cameraTarget, Vector3.Up);
+                camera.projection = Matrix.CreatePerspectiveFieldOfView(camera.fieldOfView, camera.aspectRatio, 1f, 1000f);
 
-        public void MoveCamera()
+            }
+
+        }
+        private void MoveCamera()
         {
             cameraComponents = ComponentManager.Get().GetComponents<CameraComponent>();
             foreach (var cameraComponent in cameraComponents)

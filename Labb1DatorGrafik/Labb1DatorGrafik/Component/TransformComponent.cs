@@ -12,6 +12,7 @@ namespace Labb1DatorGrafik.Component
         public Vector3 position;
         public Vector3 scaling;
         public Vector3 rotation;
+        public Quaternion quaternion { get; set; }
         Matrix rotationMatrix { get; set; }
         public TransformComponent() {
             position = new Vector3(0, 0, 0);

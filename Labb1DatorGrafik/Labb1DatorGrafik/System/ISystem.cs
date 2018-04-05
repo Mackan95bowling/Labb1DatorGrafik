@@ -9,6 +9,6 @@ namespace Labb1DatorGrafik.System
 {
     interface ISystem
     {
-        void Update(GameTime gameTime);
+        //void Update(GameTime gameTime);
     }
 }

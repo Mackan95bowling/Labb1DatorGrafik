@@ -38,6 +38,7 @@ namespace Labb1DatorGrafik.System
                         effect.View = view;
                         effect.Projection = projection;
                         effect.EnableDefaultLighting();
+                        //effect.VertexColorEnabled = true; FÖR HEIGHTMAPEN
                     }
                     mesh.Draw();
                 }

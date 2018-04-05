@@ -19,6 +19,7 @@ namespace Labb1DatorGrafik.System
                 var transform = transformComponent.Value as TransformComponent;
                 foreach (var modelcomponent in modelComponents) {
                     var model = modelcomponent.Value as ModelComponent;
+                    var temp = model.model.Bones[0].Transform;
                     if (Keyboard.GetState().IsKeyDown(Keys.S)) {
                         model.model.Bones[0].Transform *= Matrix.CreateTranslation(0, -1f, 0) * Matrix.CreateRotationX(0) * Matrix.CreateTranslation(0, -1f, 0);
                     }
@@ -42,8 +43,8 @@ namespace Labb1DatorGrafik.System
                     {
                         model.model.Bones[0].Transform *= Matrix.CreateTranslation(0, 0, -1f) * Matrix.CreateRotationX(0) * Matrix.CreateTranslation(0, 0, -1f);
                     }
-                    if (Keyboard.GetState().IsKeyDown(Keys.Space)) {
-                        model.model.Bones[0].Transform *= Matrix.CreateRotationY(1f);
+                    if (Keyboard.GetState().IsKeyDown(Keys.Space)) { 
+                        model.model.Bones[0].Transform = Matrix.CreateTranslation(new Vector3(0, 0, 0)) * Matrix.CreateRotationY(.2f) * temp;
                     }
                 }
             }

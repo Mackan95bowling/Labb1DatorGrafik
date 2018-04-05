@@ -35,7 +35,7 @@ namespace Chopper
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            
             base.Initialize();
         }
 
@@ -47,6 +47,7 @@ namespace Chopper
         {
             chopper = Content.Load<Model>("Chopper");
             CreateEntities();
+            cameraSystem.SetCameraView();
         }
 
         /// <summary>
@@ -89,11 +90,13 @@ namespace Chopper
         private void CreateEntities()
         {
             var chopperID = ComponentManager.Get().NewEntity();
-
-            ComponentManager.Get().AddComponentToEntity(new CameraComponent() {view = Matrix.CreateLookAt(new Vector3(15, 10, 45), Vector3.Zero, Vector3.Up),projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45f), graphics.GraphicsDevice.Viewport.AspectRatio, .1f, 1000f)}, chopperID);
             ComponentManager.Get().AddComponentToEntity(new TransformComponent() { }, chopperID);
             ComponentManager.Get().AddComponentToEntity(new ModelComponent() {model = chopper},chopperID);
 
-        }
+
+
+            var cameraID = ComponentManager.Get().NewEntity(); 
+            ComponentManager.Get().AddComponentToEntity(new CameraComponent() { fieldOfView = MathHelper.ToRadians(45f), aspectRatio = graphics.GraphicsDevice.Viewport.AspectRatio,cameraPosition = new Vector3(15,10,45), cameraTarget = Vector3.Zero}, cameraID);
+    }
     }
 }
