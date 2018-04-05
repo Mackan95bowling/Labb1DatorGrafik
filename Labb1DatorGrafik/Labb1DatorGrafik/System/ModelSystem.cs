@@ -38,7 +38,6 @@ namespace Labb1DatorGrafik.System
                         effect.View = view;
                         effect.Projection = projection;
                         effect.EnableDefaultLighting();
-
                     }
                     mesh.Draw();
                 }
