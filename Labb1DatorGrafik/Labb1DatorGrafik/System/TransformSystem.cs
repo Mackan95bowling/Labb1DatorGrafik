@@ -6,28 +6,56 @@ using System.Text;
 using System.Threading.Tasks;
 using Labb1DatorGrafik.Component;
 using Labb1DatorGrafik.Manager;
+using Microsoft.Xna.Framework.Input;
 
 namespace Labb1DatorGrafik.System
 {
     public class TransformSystem
     {
-       
-        public void Update(GameTime gameTime) {
+        public void TransformMove() {
             var transformComponents = ComponentManager.Get().GetComponents<TransformComponent>();
-            //likadant för model??? för att få in model för att kunna använda chopper!
+            var modelComponents = ComponentManager.Get().GetComponents<ModelComponent>();
+            foreach (var transformComponent in transformComponents) {
+                var transform = transformComponent.Value as TransformComponent;
+                foreach (var modelcomponent in modelComponents) {
+                    var model = modelcomponent.Value as ModelComponent;
+                    if (Keyboard.GetState().IsKeyDown(Keys.Down)) {
+                   model.model.Bones[0].Transform *= Matrix.CreateTranslation(0, -1f, 0) * Matrix.CreateRotationX(0) * Matrix.CreateTranslation(0, -1f, 0);
+                    }
+                    if (Keyboard.GetState().IsKeyDown(Keys.Up))
+                    {
+                        model.model.Bones[0].Transform *= Matrix.CreateTranslation(0, 1f, 0) * Matrix.CreateRotationX(0) * Matrix.CreateTranslation(0, 1f, 0);
+                    }
+                    if (Keyboard.GetState().IsKeyDown(Keys.Right))
+                    {
+                        model.model.Bones[0].Transform *= Matrix.CreateTranslation(1f, 0, 0) * Matrix.CreateRotationX(0) * Matrix.CreateTranslation(1f, 0, 0);
+                    }
+                    if (Keyboard.GetState().IsKeyDown(Keys.Left))
+                    {
+                        model.model.Bones[0].Transform *= Matrix.CreateTranslation(-1f, 0, 0) * Matrix.CreateRotationX(0) * Matrix.CreateTranslation(-1f, 0, 0);
+                    }
+                }
+            }
+        }
+        public void Update(GameTime gameTime) {
+            RotationOnRotors();
+            TransformMove();
+        }
+        public void RotationOnRotors() {
+            var transformComponents = ComponentManager.Get().GetComponents<TransformComponent>();
             var modelComponents = ComponentManager.Get().GetComponents<ModelComponent>();
             foreach (var transformComponent in transformComponents)
             {
                 var transform = transformComponent.Value as TransformComponent;
-                transform.rotation.Y += 1f;
-                transform.rotation.X += 1f;
+                transform.rotation.Y += .9f;
+                transform.rotation.X += .9f;
                 foreach (var modelComponent in modelComponents)
                 {
                     var model = modelComponent.Value as ModelComponent;
                     model.model.Bones["Main_Rotor"].Transform = Matrix.CreateRotationY(transform.rotation.Y) * Matrix.CreateTranslation(model.model.Bones["Main_Rotor"].Transform.Translation);
                     model.model.Bones["Back_Rotor"].Transform = Matrix.CreateRotationZ((float)MathHelper.Pi / 2) * Matrix.CreateRotationX(transform.rotation.X) * Matrix.CreateTranslation(model.model.Bones["Back_Rotor"].Transform.Translation);
                 }
-                }
+            }
         }
     }
 }

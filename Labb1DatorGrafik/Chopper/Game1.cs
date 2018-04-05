@@ -13,10 +13,7 @@ namespace Chopper
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
-        Matrix view, projection; // camera eller transform
-        Matrix[] boneTransformations;
         Model chopper;
-        Vector3 rotation;
         private CameraSystem cameraSystem;
         private TransformSystem transformSystem;
         private ModelSystem modelSystem;
@@ -49,11 +46,7 @@ namespace Chopper
         protected override void LoadContent()
         {
             chopper = Content.Load<Model>("Chopper");
-           // view = Matrix.CreateLookAt(new Vector3(10,10,10), Vector3.Zero,Vector3.Up); //Camera eller Transform?
-           // rotation = Vector3.Zero; //Transform
-            //projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45f), graphics.GraphicsDevice.Viewport.AspectRatio, .1f, 1000f); //Camera? eller Transform
             CreateEntities();
-            // TODO: use this.Content to load your game content here
         }
 
         /// <summary>
@@ -74,11 +67,7 @@ namespace Chopper
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            //rotation.Y += 1f;
-          //  rotation.X += 1f;
-        //    chopper.Bones["Main_Rotor"].Transform = Matrix.CreateRotationY(rotation.Y) * Matrix.CreateTranslation(chopper.Bones["Main_Rotor"].Transform.Translation);
-      //      chopper.Bones["Back_Rotor"].Transform = Matrix.CreateRotationZ((float) MathHelper.Pi/2 ) * Matrix.CreateRotationX(rotation.X)* Matrix.CreateTranslation(chopper.Bones["Back_Rotor"].Transform.Translation);
-   
+
             cameraSystem.Update(gameTime);
             transformSystem.Update(gameTime);
             base.Update(gameTime);
@@ -92,18 +81,7 @@ namespace Chopper
         {
             
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            //boneTransformations = new Matrix[chopper.Bones.Count];
-            //chopper.CopyAbsoluteBoneTransformsTo(boneTransformations);
-            //foreach (ModelMesh mesh in chopper.Meshes) {//MODELSYS
-            //    foreach (BasicEffect effect in mesh.Effects) {
-            //        effect.World = boneTransformations[mesh.ParentBone.Index] * Matrix.CreateScale(1f) * Matrix.CreateRotationX(0) * Matrix.CreateRotationY(0) * Matrix.CreateRotationZ(0);
-            //        effect.View = view;
-            //        effect.Projection = projection;
-            //        effect.EnableDefaultLighting();
 
-            //    }
-            //    mesh.Draw();
-            //}
             modelSystem.Draw(gameTime);
             // TODO: Add your drawing code here
             base.Draw(gameTime);
@@ -112,7 +90,7 @@ namespace Chopper
         {
             var chopperID = ComponentManager.Get().NewEntity();
 
-            ComponentManager.Get().AddComponentToEntity(new CameraComponent() {view = Matrix.CreateLookAt(new Vector3(10, 10, 10), Vector3.Zero, Vector3.Up),projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45f), graphics.GraphicsDevice.Viewport.AspectRatio, .1f, 1000f)}, chopperID);
+            ComponentManager.Get().AddComponentToEntity(new CameraComponent() {view = Matrix.CreateLookAt(new Vector3(15, 10, 45), Vector3.Zero, Vector3.Up),projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45f), graphics.GraphicsDevice.Viewport.AspectRatio, .1f, 1000f)}, chopperID);
             ComponentManager.Get().AddComponentToEntity(new TransformComponent() { }, chopperID);
             ComponentManager.Get().AddComponentToEntity(new ModelComponent() {model = chopper},chopperID);
 
