@@ -19,6 +19,7 @@ namespace Chopper
         private TransformSystem transformSystem;
         private ModelSystem modelSystem;
         private HeightmapSystem heightmapSystem;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -50,6 +51,10 @@ namespace Chopper
         {
             chopper = Content.Load<Model>("Chopper");
 
+            //Matrix viewMatrix = Matrix.CreateLookAt(new Vector3(60, 80, -80), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
+            //Matrix projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, GraphicsDevice.Viewport.AspectRatio, 1.0f, 300.0f);
+
+            //CameraComponent cc = new CameraComponent(entityId, viewMatrix, projectionMatrix);
             HeightMapBuilder heightMap = new HeightMapBuilder()
                 .SetHeightMapTextureData(Content.Load<Texture2D>("US_Canyon"), Content.Load<Texture2D>("sand"))
                 .SetHeights()
