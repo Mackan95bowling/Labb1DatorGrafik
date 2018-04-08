@@ -114,7 +114,7 @@ namespace Chopper
 
 
             var cameraID = ComponentManager.Get().NewEntity(); 
-            ComponentManager.Get().AddComponentToEntity(new CameraComponent() { fieldOfView = MathHelper.ToRadians(45f), aspectRatio = graphics.GraphicsDevice.Viewport.AspectRatio,cameraPosition = new Vector3(15,10,50), cameraTarget = Vector3.Zero}, cameraID);
+            ComponentManager.Get().AddComponentToEntity(new CameraComponent() { fieldOfView = MathHelper.ToRadians(45f), aspectRatio = graphics.GraphicsDevice.Viewport.AspectRatio,cameraPosition = new Vector3(15,10,20), cameraTarget = Vector3.Zero}, cameraID);
     }
     }
 }

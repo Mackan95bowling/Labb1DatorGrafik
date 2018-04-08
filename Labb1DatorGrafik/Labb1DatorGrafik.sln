@@ -7,10 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Labb1DatorGrafik", "Labb1Da
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chopper", "Chopper\Chopper.csproj", "{98B782A2-D59D-45CF-9A33-1113E39CD8B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game1", "Game1\Game1.csproj", "{AC9B96BB-49ED-4DF3-BADD-0A020DB03A09}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{A17A544A-9018-431B-A7E1-A718BD98B7F7}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -25,14 +21,6 @@ Global
 		{98B782A2-D59D-45CF-9A33-1113E39CD8B0}.Debug|x86.Build.0 = Debug|x86
 		{98B782A2-D59D-45CF-9A33-1113E39CD8B0}.Release|x86.ActiveCfg = Release|x86
 		{98B782A2-D59D-45CF-9A33-1113E39CD8B0}.Release|x86.Build.0 = Release|x86
-		{AC9B96BB-49ED-4DF3-BADD-0A020DB03A09}.Debug|x86.ActiveCfg = Debug|x86
-		{AC9B96BB-49ED-4DF3-BADD-0A020DB03A09}.Debug|x86.Build.0 = Debug|x86
-		{AC9B96BB-49ED-4DF3-BADD-0A020DB03A09}.Release|x86.ActiveCfg = Release|x86
-		{AC9B96BB-49ED-4DF3-BADD-0A020DB03A09}.Release|x86.Build.0 = Release|x86
-		{A17A544A-9018-431B-A7E1-A718BD98B7F7}.Debug|x86.ActiveCfg = Debug|x86
-		{A17A544A-9018-431B-A7E1-A718BD98B7F7}.Debug|x86.Build.0 = Debug|x86
-		{A17A544A-9018-431B-A7E1-A718BD98B7F7}.Release|x86.ActiveCfg = Release|x86
-		{A17A544A-9018-431B-A7E1-A718BD98B7F7}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
