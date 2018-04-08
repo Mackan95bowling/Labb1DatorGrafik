@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Labb1DatorGrafik.Component;
+using Labb1DatorGrafik.Manager;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -11,51 +13,23 @@ namespace Labb1DatorGrafik.System
 {
     public class HeightmapSystem : ISystem
     {
-        private Texture2D heightMap;
-        private int terrainWidth;
-        private int terrainHeight;
-        private float[,] heightData;
+        public GraphicsDevice graphicsDevice { get; set; }
 
-        public void LoadHeightMap(ContentManager content)
+
+        public void Draw(GraphicsDevice gd)
         {
-            heightMap = content.Load<Texture2D>("heightmap"); LoadHeightData(heightMap);
+            var heightmapComp = ComponentManager.Get().GetComponents<HeightmapComponent>();
+
+            var heightmap = heightmapComp.FirstOrDefault().Value as HeightmapComponent;
+            //SetEffects(basicEffect);
+
+            foreach (EffectPass pass in heightmap.BasicEffect.CurrentTechnique.Passes)
+            {
+                pass.Apply();
+                gd.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, heightmap.Vertices, 0, heightmap.Vertices.Length, heightmap.Indices, 0, heightmap.Indices.Length / 3);
+
+            }
         }
 
-        private void LoadHeightData(Texture2D heightMap)
-        {
-            terrainWidth = heightMap.Width;
-            terrainHeight = heightMap.Height;
-
-            Color[] heightMapColors = new Color[terrainWidth * terrainHeight];
-            heightMap.GetData(heightMapColors);
-
-            heightData = new float[terrainWidth, terrainHeight];
-            for (int x = 0; x < terrainWidth; x++)
-                for (int y = 0; y < terrainHeight; y++)
-                    heightData[x, y] = heightMapColors[x + y * terrainWidth].R / 5.0f;
-        }
-
-        //public void Update(GameTime gameTime)
-        //{
-        //    Matrix worldMatrix = Matrix.CreateTranslation(-terrainWidth / 2.0f, 0, terrainHeight / 2.0f);
-        //    effect.CurrentTechnique = effect.Techniques["ColoredNoShading"];
-           
-        //    effect.Parameters["xView"].SetValue(viewMatrix);
-        //    effect.Parameters["xProjection"].SetValue(projectionMatrix);
-        //    effect.Parameters["xWorld"].SetValue(worldMatrix);
-        //    // This will bring your terrain to the center of your screen.
-        //}
-
-        // Temprorarly before fixing usage of components!
-        public void Update(GameTime gameTime, Matrix viewMatrix, Matrix projectionMatrix, Effect effect)
-        {
-            Matrix worldMatrix = Matrix.CreateTranslation(-terrainWidth / 2.0f, 0, terrainHeight / 2.0f);
-            effect.CurrentTechnique = effect.Techniques["ColoredNoShading"];
-
-            effect.Parameters["xView"].SetValue(viewMatrix);
-            effect.Parameters["xProjection"].SetValue(projectionMatrix);
-            effect.Parameters["xWorld"].SetValue(worldMatrix);
-            // This will bring your terrain to the center of your screen.
-        }
     }
 }

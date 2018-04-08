@@ -93,15 +93,8 @@ namespace Game1
                     texturePosition = new Vector2((float)x / 25.5f, (float)y / 25.5f);
                     vertices[x + y * width] = new VertexPositionTexture(new Vector3(x, heightMapData[x, y], -y), texturePosition);
                 }
-               // VertexBuffer vb = new VertexBuffer(graphicsDevice, typeof(VertexPositionColor), vertices.Length, BufferUsage.None);
-                //vb.SetData(vertices);
-                
-                // maybe in draw
-               // graphicsDevice.SetVertexBuffer(vb);
-                // graphicsDevice.VertexDeclaration = new VertexDeclaration(graphicsDevice, VertexPositionTexture.VertexElements);
             }
         }
-
 
 
         public void SetEffects()

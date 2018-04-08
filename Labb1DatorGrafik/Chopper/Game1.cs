@@ -4,6 +4,7 @@ using Labb1DatorGrafik.Manager;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Labb1DatorGrafik.EngineHelpers;
 
 namespace Chopper
 {
@@ -17,6 +18,7 @@ namespace Chopper
         private CameraSystem cameraSystem;
         private TransformSystem transformSystem;
         private ModelSystem modelSystem;
+        private HeightmapSystem heightmapSystem;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -24,6 +26,7 @@ namespace Chopper
             cameraSystem = new CameraSystem();
             transformSystem = new TransformSystem();
             modelSystem = new ModelSystem();
+            heightmapSystem = new HeightmapSystem();
         }
 
         /// <summary>
@@ -46,6 +49,15 @@ namespace Chopper
         protected override void LoadContent()
         {
             chopper = Content.Load<Model>("Chopper");
+
+            HeightMapBuilder heightMap = new HeightMapBuilder()
+                .SetHeightMapTextureData(Content.Load<Texture2D>("US_Canyon"), Content.Load<Texture2D>("sand"))
+                .SetHeights()
+                .SetVertices()
+                .SetIndices()
+                .SetEffects(graphics.GraphicsDevice)
+                .Build();         
+                
             CreateEntities();
             cameraSystem.SetCameraView();
         }
@@ -84,6 +96,7 @@ namespace Chopper
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             modelSystem.Draw(gameTime);
+            heightmapSystem.Draw(graphics.GraphicsDevice);
             // TODO: Add your drawing code here
             base.Draw(gameTime);
         }

@@ -8,11 +8,15 @@ using System.Threading.Tasks;
 
 namespace Labb1DatorGrafik.Component
 {
-   public class HeightmapComponent
+   public class HeightmapComponent : IComponent
     {
-        Color[] hightMapColors;
-        float[,] heightMapData;
-        Texture2D texture2D; 
-        
+        public Color[] HeightMapColors { get; set; }
+        public float[,] HeightMapData { get; set; }
+        public Texture2D HeightMap { get; set; }
+        public Texture2D HeightMapTexture { get; set; }
+        public VertexPositionTexture[] Vertices { get; set; }           
+        public BasicEffect BasicEffect { get; set; }
+        public int[] Indices { get; set; }
+
     }
 }
