@@ -46,6 +46,19 @@ namespace Labb1DatorGrafik.System
                     if (Keyboard.GetState().IsKeyDown(Keys.Space)) { 
                         model.model.Bones[0].Transform = Matrix.CreateTranslation(new Vector3(0, 0, 0)) * Matrix.CreateRotationY(.2f) * temp;
                     }
+                    if (Keyboard.GetState().IsKeyDown(Keys.A))
+                    {
+                        model.model.Bones[0].Transform = Matrix.CreateTranslation(new Vector3(0, 0, 0)) * Matrix.CreateRotationZ(.2f) * temp;
+                    }
+                    if (Keyboard.GetState().IsKeyDown(Keys.D))
+                    {
+                        model.model.Bones[0].Transform = Matrix.CreateTranslation(new Vector3(0, 0, 0)) * Matrix.CreateRotationX(.2f) * temp;
+                    }
+                    if (Keyboard.GetState().IsKeyDown(Keys.R))
+                    {
+                        model.model.Bones[0].Transform = Matrix.CreateTranslation(new Vector3(0, 0, 0));
+                    }
+                    model.modelPosition = model.model.Bones[0].Transform.Translation;
                 }
             }
         }

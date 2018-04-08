@@ -30,40 +30,21 @@ namespace Labb1DatorGrafik.System
             foreach (var cameraComponent in cameraComponents)
             {
                 var camera = cameraComponent.Value as CameraComponent;
-                if (Keyboard.GetState().IsKeyDown(Keys.Left))
-                {
-                    camera.cameraPosition.X -= 1f;
-                    camera.cameraTarget.X -= 1f;
-                }
-                if (Keyboard.GetState().IsKeyDown(Keys.Right))
-                {
-                    camera.cameraPosition.X += 1f;
-                    camera.cameraTarget.X += 1f;
-                }
-                if (Keyboard.GetState().IsKeyDown(Keys.Up))
-                {
-                    camera.cameraPosition.Y -= 1f;
-                    camera.cameraTarget.Y -= 1f;
-                }
-                if (Keyboard.GetState().IsKeyDown(Keys.Down))
-                {
-                    camera.cameraPosition.Y += 1f;
-                    camera.cameraTarget.Y += 1f;
-                }
-                if (Keyboard.GetState().IsKeyDown(Keys.OemPlus))
-                {
-                    camera.cameraPosition.Z += 1f;
-                }
-                if (Keyboard.GetState().IsKeyDown(Keys.OemMinus))
-                {
-                    camera.cameraPosition.Z -= 1f;
-                }
+                var modelComponents = ComponentManager.Get().GetComponents<ModelComponent>();
 
+                foreach (var modelComponent in modelComponents)
+                {
+                    var model = modelComponent.Value as ModelComponent;
+                    camera.cameraTarget = model.modelPosition; //camera fck the Z doesnt work as i want it tooo
+                    camera.cameraPosition = new Vector3(camera.cameraTarget.X, (camera.cameraTarget.Y + 10), (camera.cameraTarget.Z + 20));
+                    camera.view = Matrix.CreateLookAt(camera.cameraPosition, camera.cameraTarget, Vector3.Up);
+                }
+                Console.WriteLine(camera.cameraPosition.ToString());
             }
         }
         public void Update(GameTime gameTime) {
 
-            MoveCamera();
+           // MoveCamera();
         }
     }
 }
