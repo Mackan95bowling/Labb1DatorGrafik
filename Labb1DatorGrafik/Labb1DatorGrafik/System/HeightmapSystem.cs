@@ -46,7 +46,7 @@ namespace Labb1DatorGrafik.System
 
             heightmap.BasicEffect.View = Matrix.CreateLookAt(new Vector3(0, 0, 20), new Vector3(0, 0, 0), Vector3.Up);
             heightmap.BasicEffect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver2, gd.Viewport.AspectRatio, 0.1f, 1000f);
-            heightmap.BasicEffect.World = Matrix.CreateTranslation(new Vector3(200, -100, 256));
+            heightmap.BasicEffect.World = Matrix.CreateTranslation(new Vector3(-200, -100, 256));
 
             foreach (EffectPass pass in heightmap.BasicEffect.CurrentTechnique.Passes)
             {
