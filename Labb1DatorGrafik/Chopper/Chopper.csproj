@@ -60,9 +60,9 @@
     <None Include="app.manifest" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Labb1DatorGrafik\Labb1DatorGrafik.csproj">
+    <ProjectReference Include="..\Labb1DatorGrafik\Engine.csproj">
       <Project>{58C7166C-2641-484B-9FEF-BB08827992D3}</Project>
-      <Name>Labb1DatorGrafik</Name>
+      <Name>Engine</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

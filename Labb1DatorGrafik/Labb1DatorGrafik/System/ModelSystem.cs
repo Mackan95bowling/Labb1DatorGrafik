@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Labb1DatorGrafik.Component;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
 using Labb1DatorGrafik.Manager;
 
 namespace Labb1DatorGrafik.System
@@ -13,6 +14,16 @@ namespace Labb1DatorGrafik.System
    public class ModelSystem : ISystem
     {
         private Matrix view,projection;
+        public void LoadModel(Model name) {
+            var ModelComponents = ComponentManager.Get().GetComponents<ModelComponent>();
+            
+            var modelComp = ModelComponents.FirstOrDefault().Value as ModelComponent;
+            foreach (ModelMesh modelMesh in name.Meshes) {
+                //foreach (ModelMeshPart meshPart in modelMesh. ) {
+                //}
+            }
+           // return newModel;
+        }
        public void Draw(GameTime gameTime)
         {
            var ModelComponents = ComponentManager.Get().GetComponents<ModelComponent>();
