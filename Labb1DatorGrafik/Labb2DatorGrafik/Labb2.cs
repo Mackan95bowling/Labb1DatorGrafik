@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Labb2DatorGrafik.Models;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -14,6 +15,7 @@ namespace Labb2DatorGrafik
         World terrain;
         WorldTerrain worldTerrain;
         Texture2D texture, textureImage;
+        House woodhouse;
         public Labb2()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -41,8 +43,12 @@ namespace Labb2DatorGrafik
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            Texture2D houseTexture1 = Content.Load<Texture2D>("brickHouse");
+            Texture2D houseTexture2 = Content.Load<Texture2D>("woodHouse");
+            Model houses = Content.Load<Model>("hus");
             texture = Content.Load<Texture2D>("US_Canyon");
             textureImage = Content.Load<Texture2D>("sand");
+            woodhouse = new House(this.GraphicsDevice,houses,houseTexture1);
             terrain = new World(this.GraphicsDevice, Content.Load<Texture2D>("US_Canyon"), Content.Load<Texture2D>("sand"));
             worldTerrain = new WorldTerrain(this.GraphicsDevice, texture, new Texture2D[4] {textureImage, textureImage, textureImage, textureImage });
             // TODO: use this.Content to load your game content here
@@ -89,11 +95,11 @@ namespace Labb2DatorGrafik
             //}
             //graphics.GraphicsDevice.Clear(ClearOptions.DepthBuffer, Color.DarkSlateBlue, 1.0f, 0);
             // terrain.DrawGround();
-          
+            
             worldTerrain.BasicEffect.View = Matrix.CreateLookAt(new Vector3(0, 0, 20), new Vector3(0, 0, 0), Vector3.Up);
 
            worldTerrain.BasicEffect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver2, GraphicsDevice.Viewport.AspectRatio, 0.1f, 1000f);
-
+            woodhouse.Draw(worldTerrain.BasicEffect);
            worldTerrain.Draw();
             base.Draw(gameTime);
         }

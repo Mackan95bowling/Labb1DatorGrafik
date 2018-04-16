@@ -10,7 +10,7 @@ namespace Labb2DatorGrafik.Models
 {
     class Character : IGameObject
     {
-        public void Draw(BasicEffect effect, Matrix world)
+        public void Draw(BasicEffect effect)
         {
             throw new NotImplementedException();
         }

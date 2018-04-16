@@ -10,17 +10,41 @@ namespace Labb2DatorGrafik.Models
 {
     public class House : IGameObject
     {
-        Vector3 position;
-        BoundingBox boundingBoxHouse;
+        private Vector3 position;
+        public Model model;
+        public Matrix[] boneTransformations;
+        public BoundingBox boundingBoxHouse;
+        public GraphicsDevice device;
+        public Texture2D houseTexture { get; set; }
+        public int size; 
 
 
-        public House() {
-
+        public House(GraphicsDevice device, Model model, Texture2D texture) {
+            this.device = device;
+            this.model = model;
+            this.houseTexture = texture;
+            boundingBoxHouse = new BoundingBox();
 
         }
-        public void Draw(BasicEffect effect, Matrix world)
+        public void SetPosition(Vector3 position) {
+            this.position = position;
+        }
+        public void Draw(BasicEffect effect)
         {
-            throw new NotImplementedException();
+            boneTransformations = new Matrix[model.Bones.Count];
+            model.CopyAbsoluteBoneTransformsTo(boneTransformations);
+            foreach (ModelMesh mesh in model.Meshes)
+            {
+                foreach (BasicEffect effects in mesh.Effects)
+                {
+                   effects.World = boneTransformations[mesh.ParentBone.Index];
+                    effects.View = Matrix.CreateLookAt(new Vector3(0,0,-10), Vector3.Zero, Vector3.Up);
+                    effects.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45f), device.Viewport.AspectRatio, 1f, 1000f);
+                    effects.EnableDefaultLighting();
+                }
+                mesh.Draw();
+            }
+
         }
 
         public void Update(GameTime gameTime)
