@@ -2,6 +2,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Labb1DatorGrafik.Manager;
+using Labb1DatorGrafik.Component;
+using Labb1DatorGrafik.System;
 
 namespace Labb2DatorGrafik
 {
@@ -15,7 +18,12 @@ namespace Labb2DatorGrafik
         World terrain;
         WorldTerrain worldTerrain;
         Texture2D texture, textureImage;
-        House woodhouse;
+        public House woodhouse;
+        /*private CameraSystem cameraSystem;
+        private TransformSystem transformSystem;
+        private ModelSystem modelSystem;
+        private HeightmapSystem heightmapSystem;*/
+
         public Labb2()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -33,6 +41,11 @@ namespace Labb2DatorGrafik
             // TODO: Add your initialization logic here
             Window.Title = "Laboration2";
             base.Initialize();
+            //cameraSystem = new CameraSystem();
+            //transformSystem = new TransformSystem();
+            //modelSystem = new ModelSystem();
+            //heightmapSystem = new HeightmapSystem();
+            woodhouse.SetPosition(new Vector3(worldTerrain.Width/2,100,0));
         }
 
         /// <summary>
@@ -49,8 +62,10 @@ namespace Labb2DatorGrafik
             texture = Content.Load<Texture2D>("US_Canyon");
             textureImage = Content.Load<Texture2D>("sand");
             woodhouse = new House(this.GraphicsDevice,houses,houseTexture1);
-            terrain = new World(this.GraphicsDevice, Content.Load<Texture2D>("US_Canyon"), Content.Load<Texture2D>("sand"));
+            //terrain = new World(this.GraphicsDevice, Content.Load<Texture2D>("US_Canyon"), Content.Load<Texture2D>("sand"));
             worldTerrain = new WorldTerrain(this.GraphicsDevice, texture, new Texture2D[4] {textureImage, textureImage, textureImage, textureImage });
+    
+
             // TODO: use this.Content to load your game content here
         }
 
@@ -74,7 +89,6 @@ namespace Labb2DatorGrafik
                 Exit();
 
             // TODO: Add your update logic here
-
             base.Update(gameTime);
         }
 
@@ -84,24 +98,28 @@ namespace Labb2DatorGrafik
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            //terrain.BasicEffect.View = Matrix.CreateLookAt(new Vector3(0, 0, 20), Vector3.Zero, Vector3.Up);
-            //terrain.BasicEffect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45f), GraphicsDevice.Viewport.AspectRatio, 0.1f, 1000f);
-            //terrain.BasicEffect.World = Matrix.CreateTranslation(new Vector3(0, -100, 256));
-            //foreach (EffectPass pass in terrain.BasicEffect.CurrentTechnique.Passes)
-            //{
-            //    pass.Apply();
-            //    terrain.Draw();
-
-            //}
+            GraphicsDevice.Clear(Color.CornflowerBlue);
             //graphics.GraphicsDevice.Clear(ClearOptions.DepthBuffer, Color.DarkSlateBlue, 1.0f, 0);
             // terrain.DrawGround();
-            
-            worldTerrain.BasicEffect.View = Matrix.CreateLookAt(new Vector3(0, 0, 20), new Vector3(0, 0, 0), Vector3.Up);
+
+           worldTerrain.BasicEffect.View = Matrix.CreateLookAt(new Vector3(51, 26, -120), new Vector3(51, 26, 0), Vector3.Up);
 
            worldTerrain.BasicEffect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver2, GraphicsDevice.Viewport.AspectRatio, 0.1f, 1000f);
-            woodhouse.Draw(worldTerrain.BasicEffect);
-           worldTerrain.Draw();
-            base.Draw(gameTime);
+          
+          worldTerrain.Draw();
+           woodhouse.Draw(worldTerrain.BasicEffect);
+           base.Draw(gameTime);
         }
+
+        //test
+       /* public void CreateEntity() {
+            var HouseId = ComponentManager.Get().NewEntity();
+            ComponentManager.Get().AddComponentToEntity(new ModelComponent() { model = woodhouse.model}, HouseId);
+
+
+            var cameraID = ComponentManager.Get().NewEntity();
+            ComponentManager.Get().AddComponentToEntity(new CameraComponent() { fieldOfView = MathHelper.ToRadians(45f), aspectRatio = graphics.GraphicsDevice.Viewport.AspectRatio, cameraPosition = new Vector3(15, 10, 20), cameraTarget = Vector3.Zero }, cameraID);
+
+        }*/
     }
 }

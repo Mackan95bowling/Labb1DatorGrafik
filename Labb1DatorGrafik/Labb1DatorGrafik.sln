@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "Labb1DatorGrafik\Engine.csproj", "{58C7166C-2641-484B-9FEF-BB08827992D3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Labb1DatorGrafik", "Labb1DatorGrafik\Labb1DatorGrafik.csproj", "{58C7166C-2641-484B-9FEF-BB08827992D3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chopper", "Chopper\Chopper.csproj", "{98B782A2-D59D-45CF-9A33-1113E39CD8B0}"
 EndProject
