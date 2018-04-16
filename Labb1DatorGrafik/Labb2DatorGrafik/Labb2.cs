@@ -7,12 +7,14 @@ namespace Labb2DatorGrafik
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class Labb2 : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
-        public Game1()
+        World terrain;
+        WorldTerrain worldTerrain;
+        Texture2D texture, textureImage;
+        public Labb2()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -39,7 +41,10 @@ namespace Labb2DatorGrafik
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
+            texture = Content.Load<Texture2D>("US_Canyon");
+            textureImage = Content.Load<Texture2D>("sand");
+            terrain = new World(this.GraphicsDevice, Content.Load<Texture2D>("US_Canyon"), Content.Load<Texture2D>("sand"));
+            worldTerrain = new WorldTerrain(this.GraphicsDevice, texture, new Texture2D[4] {textureImage, textureImage, textureImage, textureImage });
             // TODO: use this.Content to load your game content here
         }
 
@@ -73,10 +78,23 @@ namespace Labb2DatorGrafik
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            //terrain.BasicEffect.View = Matrix.CreateLookAt(new Vector3(0, 0, 20), Vector3.Zero, Vector3.Up);
+            //terrain.BasicEffect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45f), GraphicsDevice.Viewport.AspectRatio, 0.1f, 1000f);
+            //terrain.BasicEffect.World = Matrix.CreateTranslation(new Vector3(0, -100, 256));
+            //foreach (EffectPass pass in terrain.BasicEffect.CurrentTechnique.Passes)
+            //{
+            //    pass.Apply();
+            //    terrain.Draw();
 
-            // TODO: Add your drawing code here
+            //}
+            //graphics.GraphicsDevice.Clear(ClearOptions.DepthBuffer, Color.DarkSlateBlue, 1.0f, 0);
+            // terrain.DrawGround();
+          
+            worldTerrain.BasicEffect.View = Matrix.CreateLookAt(new Vector3(0, 0, 20), new Vector3(0, 0, 0), Vector3.Up);
 
+           worldTerrain.BasicEffect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver2, GraphicsDevice.Viewport.AspectRatio, 0.1f, 1000f);
+
+           worldTerrain.Draw();
             base.Draw(gameTime);
         }
     }

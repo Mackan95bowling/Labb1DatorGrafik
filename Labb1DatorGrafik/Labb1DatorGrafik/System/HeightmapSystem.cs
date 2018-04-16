@@ -13,7 +13,7 @@ namespace Labb1DatorGrafik.System
 {
     public class HeightmapSystem : ISystem
     {
-        public GraphicsDevice graphicsDevice { get; set; }
+        public GraphicsDevice GraphicsDevice { get; set; }
         // matrix for camera view and projection
         private Matrix viewMatrix;
         private Matrix projectionMatrix;
