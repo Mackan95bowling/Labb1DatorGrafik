@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using Labb1DatorGrafik.Manager;
 using Labb1DatorGrafik.Component;
 using Labb1DatorGrafik.System;
+using System.Collections.Generic;
 
 namespace Labb2DatorGrafik
 {
@@ -15,10 +16,11 @@ namespace Labb2DatorGrafik
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        World terrain;
         WorldTerrain worldTerrain;
         Texture2D texture, textureImage;
-        public House woodhouse;
+        public House woodhouse,brickHouse;
+
+        List<IGameObject> gameObjects = new List<IGameObject>(100);
         /*private CameraSystem cameraSystem;
         private TransformSystem transformSystem;
         private ModelSystem modelSystem;
@@ -59,14 +61,16 @@ namespace Labb2DatorGrafik
             Texture2D houseTexture1 = Content.Load<Texture2D>("brickHouse");
             Texture2D houseTexture2 = Content.Load<Texture2D>("woodHouse");
             Model houses = Content.Load<Model>("hus");
+           
             texture = Content.Load<Texture2D>("US_Canyon");
             textureImage = Content.Load<Texture2D>("sand");
+            brickHouse = new House(this.GraphicsDevice, houses, houseTexture1);
             woodhouse = new House(this.GraphicsDevice,houses,houseTexture1);
-            //terrain = new World(this.GraphicsDevice, Content.Load<Texture2D>("US_Canyon"), Content.Load<Texture2D>("sand"));
             worldTerrain = new WorldTerrain(this.GraphicsDevice, texture, new Texture2D[4] {textureImage, textureImage, textureImage, textureImage });
-    
 
-            // TODO: use this.Content to load your game content here
+            gameObjects.Add(brickHouse);
+            gameObjects.Add(woodhouse);
+            //gameObjects.Add(brickHouse);
         }
 
         /// <summary>
@@ -88,7 +92,9 @@ namespace Labb2DatorGrafik
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            // looping through all the game objects
+            // gameObjects.ForEach(o => o.Update(gameTime));
+
             base.Update(gameTime);
         }
 
@@ -107,7 +113,11 @@ namespace Labb2DatorGrafik
            worldTerrain.BasicEffect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver2, GraphicsDevice.Viewport.AspectRatio, 0.1f, 1000f);
           
           worldTerrain.Draw();
+            brickHouse.Draw(worldTerrain.BasicEffect);
            woodhouse.Draw(worldTerrain.BasicEffect);
+
+           // drawing all game objects
+           // gameObjects.ForEach(o => o.Draw());
            base.Draw(gameTime);
         }
 

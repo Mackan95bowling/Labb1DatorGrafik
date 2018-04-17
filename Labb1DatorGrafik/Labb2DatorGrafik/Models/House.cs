@@ -15,6 +15,7 @@ namespace Labb2DatorGrafik.Models
         public Matrix[] boneTransformations;
         public BoundingBox boundingBoxHouse;
         public GraphicsDevice device;
+        public BasicEffect houseEffect;
         public Texture2D houseTexture { get; set; }
         public int size; 
 
@@ -31,15 +32,17 @@ namespace Labb2DatorGrafik.Models
         }
         public void Draw(BasicEffect effect)
         {
-           // effect.Texture = houseTexture;
-           // effect.TextureEnabled = true;
+            // effect.Texture = houseTexture;
+            // effect.TextureEnabled = true;
+            houseEffect = effect;
+
             boneTransformations = new Matrix[model.Bones.Count];
             model.CopyAbsoluteBoneTransformsTo(boneTransformations);
             foreach (ModelMesh mesh in model.Meshes)
             {
+                
                 foreach (BasicEffect effects in mesh.Effects)
                 {
-                    effects.Texture = houseTexture;
                     effects.World = boneTransformations[mesh.ParentBone.Index];
                     effects.View = effect.View;
                     effects.Projection = effect.Projection;
