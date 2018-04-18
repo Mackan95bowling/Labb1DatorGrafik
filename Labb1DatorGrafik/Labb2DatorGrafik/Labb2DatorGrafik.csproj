@@ -44,7 +44,9 @@
     <Compile Include="IGameObject.cs" />
     <Compile Include="Labb2.cs" />
     <Compile Include="Models\Character.cs" />
+    <Compile Include="Models\Head.cs" />
     <Compile Include="Models\House.cs" />
+    <Compile Include="Models\Leg.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\World.cs" />

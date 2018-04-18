@@ -10,7 +10,7 @@ namespace Labb2DatorGrafik
 {
     public interface IGameObject
     {
-        void Draw(BasicEffect effect);
+        void Draw(BasicEffect BasicEffect);
         void Update(GameTime gameTime);
     }
 }

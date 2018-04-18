@@ -33,7 +33,8 @@ namespace Labb2DatorGrafik
             };
 
     }
-    public class WorldTerrain
+    public class WorldTerrain : IGameObject
+
     {
         public int Width { get; set; }
         public int Height { get; set; }
@@ -228,7 +229,7 @@ namespace Labb2DatorGrafik
             for (int i = 0; i < vertices.Length; i++)
                 vertices[i].Normal.Normalize();
         }
-        public void Draw()
+        public void Draw(BasicEffect Basic)
 
         {
             BasicEffect.World = Matrix.CreateTranslation(new Vector3(-100, -100, 300));
@@ -243,6 +244,10 @@ namespace Labb2DatorGrafik
                 graphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, vertices, 0, vertices.Length, Indices, 0, Indices.Length / 3, this.vertexDeclaration);
 
             }
+        }
+        public void Update(GameTime gameTime)
+        {
+         
         }
     }
 }

@@ -15,10 +15,10 @@ namespace Labb2DatorGrafik
     public class Labb2 : Game
     {
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
         WorldTerrain worldTerrain;
         Texture2D texture, textureImage;
         public House woodhouse,brickHouse;
+        BasicEffect basicEffect;
 
         List<IGameObject> gameObjects = new List<IGameObject>(100);
         /*private CameraSystem cameraSystem;
@@ -43,11 +43,12 @@ namespace Labb2DatorGrafik
             // TODO: Add your initialization logic here
             Window.Title = "Laboration2";
             base.Initialize();
+            
             //cameraSystem = new CameraSystem();
             //transformSystem = new TransformSystem();
             //modelSystem = new ModelSystem();
             //heightmapSystem = new HeightmapSystem();
-            woodhouse.SetPosition(new Vector3(worldTerrain.Width/2,100,0));
+           // woodhouse.SetPosition(new Vector3(worldTerrain.Width/2,100,0));
         }
 
         /// <summary>
@@ -56,11 +57,11 @@ namespace Labb2DatorGrafik
         /// </summary>
         protected override void LoadContent()
         {
+            basicEffect = new BasicEffect(this.GraphicsDevice);
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-            Texture2D houseTexture1 = Content.Load<Texture2D>("brickHouse");
+            Texture2D houseTexture1 = Content.Load<Texture2D>("Farmhouse Texture");
             Texture2D houseTexture2 = Content.Load<Texture2D>("woodHouse");
-            Model houses = Content.Load<Model>("hus");
+            Model houses = Content.Load<Model>("farmhouse_obj");
            
             texture = Content.Load<Texture2D>("US_Canyon");
             textureImage = Content.Load<Texture2D>("sand");
@@ -108,13 +109,13 @@ namespace Labb2DatorGrafik
             //graphics.GraphicsDevice.Clear(ClearOptions.DepthBuffer, Color.DarkSlateBlue, 1.0f, 0);
             // terrain.DrawGround();
 
-           worldTerrain.BasicEffect.View = Matrix.CreateLookAt(new Vector3(51, 26, -120), new Vector3(51, 26, 0), Vector3.Up);
+           worldTerrain.BasicEffect.View = Matrix.CreateLookAt(new Vector3(0, 0, -20), new Vector3(0, 0, 0), Vector3.Up);
 
            worldTerrain.BasicEffect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver2, GraphicsDevice.Viewport.AspectRatio, 0.1f, 1000f);
           
-          worldTerrain.Draw();
-            brickHouse.Draw(worldTerrain.BasicEffect);
-           woodhouse.Draw(worldTerrain.BasicEffect);
+          worldTerrain.Draw(worldTerrain.BasicEffect);
+          brickHouse.Draw(worldTerrain.BasicEffect);
+         //  woodhouse.Draw();
 
            // drawing all game objects
            // gameObjects.ForEach(o => o.Draw());

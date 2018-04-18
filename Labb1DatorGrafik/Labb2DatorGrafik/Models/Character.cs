@@ -8,9 +8,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Labb2DatorGrafik.Models
 {
-    class Character : IGameObject
+   public class Character : IGameObject
     {
-        public void Draw(BasicEffect effect)
+        public void Draw(BasicEffect BasicEffect)
         {
             throw new NotImplementedException();
         }

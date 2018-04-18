@@ -25,6 +25,7 @@ namespace Labb2DatorGrafik.Models
             this.model = model;
             this.houseTexture = texture;
             boundingBoxHouse = new BoundingBox();
+           
 
         }
         public void SetPosition(Vector3 position) {
@@ -34,21 +35,27 @@ namespace Labb2DatorGrafik.Models
         {
             // effect.Texture = houseTexture;
             // effect.TextureEnabled = true;
+            //  BasicEffect.Texture = houseTexture;
+            // BasicEffect.TextureEnabled = true;
             houseEffect = effect;
 
             boneTransformations = new Matrix[model.Bones.Count];
             model.CopyAbsoluteBoneTransformsTo(boneTransformations);
+
             foreach (ModelMesh mesh in model.Meshes)
             {
                 
                 foreach (BasicEffect effects in mesh.Effects)
                 {
-                    effects.World = boneTransformations[mesh.ParentBone.Index];
-                    effects.View = effect.View;
-                    effects.Projection = effect.Projection;
+                    effects.World = model.Bones[0].Transform; //boneTransformations[mesh.ParentBone.Index];
+                    effects.View = effects.View;
+                    effects.Projection = effects.Projection;
                     effects.EnableDefaultLighting();
+                    effects.Texture = houseTexture;
+                    effects.TextureEnabled = true;
+                    mesh.Draw();
                 }
-                mesh.Draw();
+              
             }
 
         }
