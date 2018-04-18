@@ -19,7 +19,12 @@ namespace Labb1DatorGrafik.System
         {
 
         }
+        public float[,] GetHeightMapData() {
 
+            var heightmapComp = ComponentManager.Get().GetComponents<HeightmapComponent>();
+            var heightmap = heightmapComp.FirstOrDefault().Value as HeightmapComponent;
+            return heightmap.HeightMapData;
+        }
         public void Draw(GraphicsDevice gd)
         {
             var cameraComps = ComponentManager.Get().GetComponents<CameraComponent>();

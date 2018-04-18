@@ -93,25 +93,25 @@ namespace Labb2DatorGrafik
             cameraSystem.SetCameraView();
             //gameObjects.Add(brickHouse);
             //gameObjects.Add(woodhouse);
-            int amount = 100;
-            CreateHouseStaticObject(amount,houses,houseTexture1);
+            int amount = 50;
+            List<IGameObject> list = CreateHouseStaticObject(amount, houses, houseTexture1);
+            foreach (var item in list) {
+                drawGameObjects.gameObjects.Add(item);
+            }
+           // List<IGameObject> list = CreateOtherStaticObject(amount, houses, houseTexture1);
+            //foreach (var item in list)
+            //{
+            //    drawGameObjects.gameObjects.Add(item);
+            //}
+            // CreateHouseStaticObject(amount, houses, houseTexture1);
+
             drawGameObjects.gameObjects.Add(mapleTree);
            // farmerHouse.SetPosition(new Vector3(0, 0, 0));
            // drawGameObjects.gameObjects.Add(farmerHouse);
 
             //gameObjects.Add(brickHouse);
         }
-        public void CreateHouseStaticObject(int amount, Model houses, Texture2D texture)
-        {
-            List<House> house = new List<House>(); ;
-
-            for (int i = 0; i < amount; i++)
-            {
-                house.Add(new House(this.GraphicsDevice, houses, texture));
-
-            }
-
-        }
+  
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
         /// game-specific content.
@@ -153,6 +153,32 @@ namespace Labb2DatorGrafik
             // drawing all game objects
             // gameObjects.ForEach(o => o.Draw());
             base.Draw(gameTime);
+        }
+        public List<IGameObject> CreateHouseStaticObject(int amount, Model houses, Texture2D texture)
+        {
+            List<IGameObject> house = new List<IGameObject>(); ;
+            var heightData = heightmapSystem.GetHeightMapData();
+            //add position to HouseConstructor!
+            //GetHeightMapPositionPosition();
+            for (int i = 0; i < amount; i++)
+            {
+                house.Add(new House(this.GraphicsDevice, houses, texture));
+
+            }
+            return house;
+        }
+        public List<IGameObject> CreateOtherStaticObject(int amount, Model houses, Texture2D texture) //FIX
+        {
+            List<IGameObject> Other = new List<IGameObject>(); ;
+            var heightData = heightmapSystem.GetHeightMapData();
+            //add position to HouseConstructor!
+            //GetHeightMapPositionPosition();
+            for (int i = 0; i < amount; i++)
+            {
+                Other.Add(new House(this.GraphicsDevice, houses, texture));
+
+            }
+            return Other;
         }
         private void CreateEntities()
         {
