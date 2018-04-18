@@ -31,14 +31,8 @@ namespace Labb2DatorGrafik.Models
         public void SetPosition(Vector3 position) {
             this.position = position;
         }
-        public void Draw(BasicEffect effect)
+        public void Draw(Matrix view, Matrix projection)
         {
-            // effect.Texture = houseTexture;
-            // effect.TextureEnabled = true;
-            //  BasicEffect.Texture = houseTexture;
-            // BasicEffect.TextureEnabled = true;
-            houseEffect = effect;
-
             boneTransformations = new Matrix[model.Bones.Count];
             model.CopyAbsoluteBoneTransformsTo(boneTransformations);
 
@@ -47,9 +41,9 @@ namespace Labb2DatorGrafik.Models
                 
                 foreach (BasicEffect effects in mesh.Effects)
                 {
-                    effects.World = model.Bones[0].Transform; //boneTransformations[mesh.ParentBone.Index];
-                    effects.View = effects.View;
-                    effects.Projection = effects.Projection;
+                    effects.World = model.Bones[0].Transform;
+                    effects.View = view;
+                    effects.Projection = projection;
                     effects.EnableDefaultLighting();
                     effects.Texture = houseTexture;
                     effects.TextureEnabled = true;

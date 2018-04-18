@@ -10,7 +10,9 @@ namespace Labb2DatorGrafik.Models
 {
    public class Character : IGameObject
     {
-        public void Draw(BasicEffect BasicEffect)
+
+
+        public void Draw(Matrix view, Matrix projection)
         {
             throw new NotImplementedException();
         }
@@ -19,10 +21,5 @@ namespace Labb2DatorGrafik.Models
         {
             throw new NotImplementedException();
         }
-    }
-
-    class CharactersLegs : Character {
-
-
     }
 }

@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Labb2DatorGrafik
-{
+{ //lägga detta i heightmapsyst/component?
     public struct VertexTextures
     {
         public Vector3 Position;
@@ -73,6 +73,9 @@ namespace Labb2DatorGrafik
             BasicEffect = new BasicEffect(graphicsDevice);
             worldBoundingBox = new BoundingBox(new Vector3(0, 0, 0), new Vector3(Width, 0, Height));
             Console.WriteLine(worldBoundingBox.ToString());
+        }
+        public float[,] GetHeightMapData() {
+            return heightMapData;
         }
 
         private void SetHeights()
@@ -248,6 +251,11 @@ namespace Labb2DatorGrafik
         public void Update(GameTime gameTime)
         {
          
+        }
+
+        public void Draw(Matrix view, Matrix projection)
+        {
+            throw new NotImplementedException();
         }
     }
 }

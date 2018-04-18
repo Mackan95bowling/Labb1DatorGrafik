@@ -14,24 +14,14 @@ namespace Labb1DatorGrafik.System
     public class HeightmapSystem : ISystem
     {
         public GraphicsDevice GraphicsDevice { get; set; }
-        // matrix for camera view and projection
-        private Matrix viewMatrix;
-        private Matrix projectionMatrix;
 
-        // world matrix for our landscape
-        private Matrix terrainMatrix;
-
-        private void SetEffects() {
+        private void SetEffects()
+        {
 
         }
 
         public void Draw(GraphicsDevice gd)
         {
-            //Original
-            //  Matrix viewMatrix = Matrix.CreateLookAt(new Vector3(60, 80, -80), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
-            //Matrix projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4, gd.Viewport.AspectRatio, 1.0f, 300.0f);
-
-
             var cameraComps = ComponentManager.Get().GetComponents<CameraComponent>();
             var cameraComp = cameraComps.FirstOrDefault().Value as CameraComponent;
             cameraComp.view = Matrix.CreateLookAt(new Vector3(10, 50, 80), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
@@ -40,25 +30,22 @@ namespace Labb1DatorGrafik.System
             var heightmapComp = ComponentManager.Get().GetComponents<HeightmapComponent>();
             var heightmap = heightmapComp.FirstOrDefault().Value as HeightmapComponent;
 
-            //Matrix worldMatrix = Matrix.CreateTranslation(-heightmap.HeightMapTexture.Width / 2.0f, 0, heightmap.HeightMapTexture.Height / 2.0f);
-
-            //heightmap.BasicEffect.View = Matrix.CreateLookAt(new Vector3(0, 0, 20), new Vector3(0, 0, 0), Vector3.Up);
-            //heightmap.BasicEffect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver2, gd.Viewport.AspectRatio, 0.1f, 1000f);
-            //heightmap.BasicEffect.World = worldMatrix;
-
+  
             Matrix worldMatrix = Matrix.CreateTranslation(-heightmap.HeightMapTexture.Width / 2.0f, 0, heightmap.HeightMapTexture.Height / 2.0f);
 
-            heightmap.BasicEffect.View = cameraComp.view;  //not used Matrix.CreateLookAt(new Vector3(0, 0, 20), new Vector3(0, 0, 0), Vector3.Up);
-            heightmap.BasicEffect.Projection = cameraComp.projection; //not used Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver2, gd.Viewport.AspectRatio, 0.1f, 1000f);
+            heightmap.BasicEffect.View = cameraComp.view; 
+            heightmap.BasicEffect.Projection = cameraComp.projection; 
             heightmap.BasicEffect.World = Matrix.CreateTranslation(new Vector3(-100, -35, 200));
-           
+
             foreach (EffectPass pass in heightmap.BasicEffect.CurrentTechnique.Passes)
             {
                 pass.Apply();
-                gd.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, heightmap.Vertices, 0, heightmap.Vertices.Length, heightmap.Indices, 0, heightmap.Indices.Length / 3);
+                gd.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, heightmap.vertices, 0, heightmap.vertices.Length, heightmap.Indices, 0, heightmap.Indices.Length / 3, heightmap.vertexDeclaration);
                 
             }
-        }
 
+        }
     }
 }
+
+

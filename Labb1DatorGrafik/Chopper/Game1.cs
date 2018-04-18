@@ -59,6 +59,7 @@ namespace Chopper
                 .SetHeightMapTextureData(Content.Load<Texture2D>("US_Canyon"), Content.Load<Texture2D>("sand"))
                 .SetHeights()
                 .SetVertices()
+                .InitNormal()
                 .SetIndices()
                 .SetEffects(graphics.GraphicsDevice)
                 .Build();         

@@ -6,6 +6,9 @@ using Labb1DatorGrafik.Manager;
 using Labb1DatorGrafik.Component;
 using Labb1DatorGrafik.System;
 using System.Collections.Generic;
+using Labb1DatorGrafik.EngineHelpers;
+using Labb2DatorGrafik.System;
+using System;
 
 namespace Labb2DatorGrafik
 {
@@ -16,8 +19,13 @@ namespace Labb2DatorGrafik
     {
         GraphicsDeviceManager graphics;
         WorldTerrain worldTerrain;
+        private Texture2D houseTexture2;
         Texture2D texture, textureImage;
-        public House woodhouse,brickHouse;
+        private Tree mapleTree;
+        public House farmerHouse;
+        private HeightmapSystem heightmapSystem;
+        private CameraSystem cameraSystem;
+        DrawGameObjects drawGameObjects;
         BasicEffect basicEffect;
 
         List<IGameObject> gameObjects = new List<IGameObject>(100);
@@ -30,6 +38,8 @@ namespace Labb2DatorGrafik
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            heightmapSystem = new HeightmapSystem();
+            cameraSystem = new CameraSystem();
         }
 
         /// <summary>
@@ -60,20 +70,48 @@ namespace Labb2DatorGrafik
             basicEffect = new BasicEffect(this.GraphicsDevice);
             // Create a new SpriteBatch, which can be used to draw textures.
             Texture2D houseTexture1 = Content.Load<Texture2D>("Farmhouse Texture");
-            Texture2D houseTexture2 = Content.Load<Texture2D>("woodHouse");
             Model houses = Content.Load<Model>("farmhouse_obj");
-           
+            Model tree = Content.Load<Model>("House");
+            houseTexture2 = Content.Load<Texture2D>("Farmhouse Texture");
+
             texture = Content.Load<Texture2D>("US_Canyon");
             textureImage = Content.Load<Texture2D>("sand");
-            brickHouse = new House(this.GraphicsDevice, houses, houseTexture1);
-            woodhouse = new House(this.GraphicsDevice,houses,houseTexture1);
+            mapleTree = new Tree(this.GraphicsDevice, tree, houseTexture2);
+            farmerHouse = new House(this.GraphicsDevice, houses, houseTexture1);
             worldTerrain = new WorldTerrain(this.GraphicsDevice, texture, new Texture2D[4] {textureImage, textureImage, textureImage, textureImage });
+            drawGameObjects = new DrawGameObjects();
+            HeightMapBuilder heightMap = new HeightMapBuilder()
+                .SetHeightMapTextureData(Content.Load<Texture2D>("US_Canyon"), Content.Load<Texture2D>("sand"))
+                .SetHeights()
+                .SetVertices()
+                .SetIndices()
+                .InitNormal()
+                .SetEffects(graphics.GraphicsDevice)
+                .Build();
 
-            gameObjects.Add(brickHouse);
-            gameObjects.Add(woodhouse);
+            CreateEntities();
+            cameraSystem.SetCameraView();
+            //gameObjects.Add(brickHouse);
+            //gameObjects.Add(woodhouse);
+            int amount = 100;
+            CreateHouseStaticObject(amount,houses,houseTexture1);
+            drawGameObjects.gameObjects.Add(mapleTree);
+           // farmerHouse.SetPosition(new Vector3(0, 0, 0));
+           // drawGameObjects.gameObjects.Add(farmerHouse);
+
             //gameObjects.Add(brickHouse);
         }
+        public void CreateHouseStaticObject(int amount, Model houses, Texture2D texture)
+        {
+            List<House> house = new List<House>(); ;
 
+            for (int i = 0; i < amount; i++)
+            {
+                house.Add(new House(this.GraphicsDevice, houses, texture));
+
+            }
+
+        }
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
         /// game-specific content.
@@ -106,31 +144,26 @@ namespace Labb2DatorGrafik
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            //graphics.GraphicsDevice.Clear(ClearOptions.DepthBuffer, Color.DarkSlateBlue, 1.0f, 0);
-            // terrain.DrawGround();
 
-           worldTerrain.BasicEffect.View = Matrix.CreateLookAt(new Vector3(0, 0, -20), new Vector3(0, 0, 0), Vector3.Up);
+          //worldTerrain.Draw(worldTerrain.BasicEffect);
+         // brickHouse.Draw(worldTerrain.BasicEffect);
+            heightmapSystem.Draw(graphics.GraphicsDevice);
 
-           worldTerrain.BasicEffect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver2, GraphicsDevice.Viewport.AspectRatio, 0.1f, 1000f);
-          
-          worldTerrain.Draw(worldTerrain.BasicEffect);
-          brickHouse.Draw(worldTerrain.BasicEffect);
-         //  woodhouse.Draw();
-
-           // drawing all game objects
-           // gameObjects.ForEach(o => o.Draw());
-           base.Draw(gameTime);
+            drawGameObjects.Draw();
+            // drawing all game objects
+            // gameObjects.ForEach(o => o.Draw());
+            base.Draw(gameTime);
         }
+        private void CreateEntities()
+        {
+            var chopperID = ComponentManager.Get().NewEntity();
+            ComponentManager.Get().AddComponentToEntity(new TransformComponent() { }, chopperID);
+            //ComponentManager.Get().AddComponentToEntity(new ModelComponent() { model = brickHouse }, chopperID);
 
-        //test
-       /* public void CreateEntity() {
-            var HouseId = ComponentManager.Get().NewEntity();
-            ComponentManager.Get().AddComponentToEntity(new ModelComponent() { model = woodhouse.model}, HouseId);
 
 
             var cameraID = ComponentManager.Get().NewEntity();
-            ComponentManager.Get().AddComponentToEntity(new CameraComponent() { fieldOfView = MathHelper.ToRadians(45f), aspectRatio = graphics.GraphicsDevice.Viewport.AspectRatio, cameraPosition = new Vector3(15, 10, 20), cameraTarget = Vector3.Zero }, cameraID);
-
-        }*/
+            ComponentManager.Get().AddComponentToEntity(new CameraComponent() { fieldOfView = MathHelper.ToRadians(45f), aspectRatio = graphics.GraphicsDevice.Viewport.AspectRatio, cameraPosition = new Vector3(15, 10, 20), cameraTarget = new Vector3(0,-10,-15) }, cameraID);
+        }
     }
 }
