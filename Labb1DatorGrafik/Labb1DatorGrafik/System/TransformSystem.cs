@@ -59,6 +59,7 @@ namespace Labb1DatorGrafik.System
                         model.model.Bones[0].Transform = Matrix.CreateTranslation(new Vector3(0, 0, 0));
                     }
                     model.modelPosition = model.model.Bones[0].Transform.Translation;
+                    transform.position = model.model.Bones[0].Transform.Translation;
                 }
             }
         }

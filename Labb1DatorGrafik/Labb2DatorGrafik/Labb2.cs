@@ -27,6 +27,7 @@ namespace Labb2DatorGrafik
         private CameraSystem cameraSystem;
         DrawGameObjects drawGameObjects;
         BasicEffect basicEffect;
+        Camera camera;
 
         List<GameObject> gameObjects = new List<GameObject>(100);
         /*private CameraSystem cameraSystem;
@@ -40,7 +41,7 @@ namespace Labb2DatorGrafik
             Content.RootDirectory = "Content";
             heightmapSystem = new HeightmapSystem();
             cameraSystem = new CameraSystem();
-
+            //camera = new Camera(new Vector3(0,0,-20),Vector3.Zero, Vector3.Zero);
         }
 
         /// <summary>
@@ -54,12 +55,6 @@ namespace Labb2DatorGrafik
             // TODO: Add your initialization logic here
             Window.Title = "Laboration2";
             base.Initialize();
-            
-            //cameraSystem = new CameraSystem();
-            //transformSystem = new TransformSystem();
-            //modelSystem = new ModelSystem();
-            //heightmapSystem = new HeightmapSystem();
-           // woodhouse.SetPosition(new Vector3(worldTerrain.Width/2,100,0));
         }
 
         /// <summary>
@@ -69,7 +64,6 @@ namespace Labb2DatorGrafik
         protected override void LoadContent()
         {
             basicEffect = new BasicEffect(this.GraphicsDevice);
-            // Create a new SpriteBatch, which can be used to draw textures.
             Texture2D houseTexture1 = Content.Load<Texture2D>("Farmhouse Texture");
             Model houseModel = Content.Load<Model>("farmhouse_obj");
             Model tree = Content.Load<Model>("Leaf_Oak");
@@ -77,9 +71,6 @@ namespace Labb2DatorGrafik
 
             texture = Content.Load<Texture2D>("US_Canyon");
             textureImage = Content.Load<Texture2D>("sand");
-            mapleTree = new Tree(this.GraphicsDevice, tree, houseTexture2);
-            //farmerHouse = new House(this.GraphicsDevice, houses, houseTexture1);
-            worldTerrain = new WorldTerrain(this.GraphicsDevice, texture, new Texture2D[4] {textureImage, textureImage, textureImage, textureImage });
             drawGameObjects = new DrawGameObjects();
             HeightMapBuilder heightMap = new HeightMapBuilder()
                 .SetHeightMapTextureData(Content.Load<Texture2D>("US_Canyon"), Content.Load<Texture2D>("sand"))
@@ -91,16 +82,16 @@ namespace Labb2DatorGrafik
                 .Build();
 
             CreateEntities();
-            cameraSystem.SetCameraView();
-            //gameObjects.Add(brickHouse);
-            //gameObjects.Add(woodhouse);
+             cameraSystem.SetCameraView();
+            //camera.SetCameraView();
 
-            //drawGameObjects.gameObjects.AddRange(CreateHouseStaticObject(
-            //    amount: 100, 
-            //    houses: houseModel, 
-            //    texture: houseTexture1));
 
-            drawGameObjects.gameObjects.Add(new Character(graphics.GraphicsDevice, new Vector3(-5, 1,-5)));
+            drawGameObjects.gameObjects.AddRange(CreateHouseStaticObject(
+                amount: 100,
+                houses: houseModel,
+                texture: houseTexture1));
+
+            drawGameObjects.gameObjects.Add(new Characters(graphics.GraphicsDevice, new Vector3(0,0,0)));
 
             
             //DETTA SKA ANVÄNDAS
@@ -110,12 +101,6 @@ namespace Labb2DatorGrafik
             //    drawGameObjects.gameObjects.Add(item);
             //}
             // CreateHouseStaticObject(amount, houses, houseTexture1);
-
-            //drawGameObjects.gameObjects.Add(mapleTree);
-           // farmerHouse.SetPosition(new Vector3(0, 0, 0));
-           // drawGameObjects.gameObjects.Add(farmerHouse);
-
-            //gameObjects.Add(brickHouse);
         }
   
         /// <summary>
@@ -140,7 +125,8 @@ namespace Labb2DatorGrafik
             // looping through all the game objects
             // gameObjects.ForEach(o => o.Update(gameTime));
             drawGameObjects.gameObjects.ForEach(o => o.Update(gameTime));
-
+            cameraSystem.Update(gameTime);
+            //camera.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -152,12 +138,9 @@ namespace Labb2DatorGrafik
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-          //worldTerrain.Draw(worldTerrain.BasicEffect);
-         // brickHouse.Draw(worldTerrain.BasicEffect);
-
-            drawGameObjects.Draw();
             heightmapSystem.Draw(graphics.GraphicsDevice);
-
+           
+            drawGameObjects.Draw();
             // drawing all game objects
             // gameObjects.ForEach(o => o.Draw());
             base.Draw(gameTime);
@@ -208,12 +191,13 @@ namespace Labb2DatorGrafik
         {
             var chopperID = ComponentManager.Get().NewEntity();
             ComponentManager.Get().AddComponentToEntity(new TransformComponent() { }, chopperID);
+            
             //ComponentManager.Get().AddComponentToEntity(new ModelComponent() { model = brickHouse }, chopperID);
 
 
 
             var cameraID = ComponentManager.Get().NewEntity();
-            ComponentManager.Get().AddComponentToEntity(new CameraComponent() { fieldOfView = MathHelper.ToRadians(45f), aspectRatio = graphics.GraphicsDevice.Viewport.AspectRatio, cameraPosition = new Vector3(15, 10, 20), cameraTarget = new Vector3(0,-10,-15) }, cameraID);
+            ComponentManager.Get().AddComponentToEntity(new CameraComponent() { fieldOfView = MathHelper.ToRadians(45f), aspectRatio = graphics.GraphicsDevice.Viewport.AspectRatio, cameraPosition = new Vector3(15, 10, 20), cameraTarget = new Vector3(0,-10,-15), FollowPlayer = true }, cameraID);
         }
     }
 }

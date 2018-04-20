@@ -9,13 +9,13 @@ using ModelDemo2;
 
 namespace Labb2DatorGrafik.Models
 {
-   public class Character : GameObject
+   public class Characters : GameObject
     {
         private Body body;
         private BasicEffect effect;
         public Vector3 Position { get; set; }
 
-        public Character(GraphicsDevice graphics, Vector3 position)
+        public Characters(GraphicsDevice graphics, Vector3 position)
         {
             body = new Body(graphics, position);
             Position = position;

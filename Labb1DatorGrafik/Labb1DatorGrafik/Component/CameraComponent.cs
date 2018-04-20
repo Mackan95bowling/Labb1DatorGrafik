@@ -16,7 +16,7 @@ namespace Labb1DatorGrafik.Component
         public Vector3 cameraTarget;
         public Matrix view { get; set; }
         public Matrix projection { get; set; }
-
-
+        public bool FollowPlayer { get; set; }
+        public BoundingFrustum BoundingFrustum { get; set; }
     }
 }
