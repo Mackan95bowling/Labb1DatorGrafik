@@ -10,6 +10,9 @@ namespace Labb2DatorGrafik
 {
     public interface IGameObject
     {
+        Vector3 BoundingSphere { get; set; }
+        Matrix WorldMatrix { get; set; }
+
         void Draw(Matrix view, Matrix projection);
         void Update(GameTime gameTime);
     }

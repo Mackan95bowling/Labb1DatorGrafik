@@ -13,7 +13,7 @@ namespace Labb2DatorGrafik.Models
        
         public Model model;
         public Matrix[] boneTransformations;
-        public BoundingBox boundingBoxHouse;
+        public BoundingBox boundingBoxHouse; // alla game objects ska ha en boundingbox?!
         public GraphicsDevice device;
         public BasicEffect houseEffect;
         public Matrix worldMatrix { get; set; }
