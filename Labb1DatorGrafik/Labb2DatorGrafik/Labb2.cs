@@ -94,11 +94,12 @@ namespace Labb2DatorGrafik
             //gameObjects.Add(brickHouse);
             //gameObjects.Add(woodhouse);
 
-            drawGameObjects.gameObjects.AddRange(CreateHouseStaticObject(
-                amount: 100, 
-                houses: houseModel, 
-                texture: houseTexture1));
+            //drawGameObjects.gameObjects.AddRange(CreateHouseStaticObject(
+            //    amount: 100, 
+            //    houses: houseModel, 
+            //    texture: houseTexture1));
 
+            drawGameObjects.gameObjects.Add(new Character(graphics.GraphicsDevice, new Vector3(0,0,0)));
 
             
             //DETTA SKA ANVÄNDAS
@@ -137,6 +138,7 @@ namespace Labb2DatorGrafik
 
             // looping through all the game objects
             // gameObjects.ForEach(o => o.Update(gameTime));
+            drawGameObjects.gameObjects.ForEach(o => o.Update(gameTime));
 
             base.Update(gameTime);
         }
