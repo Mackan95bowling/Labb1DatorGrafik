@@ -10,26 +10,34 @@ namespace Labb2DatorGrafik.Models
 {
     public class House : IGameObject
     {
-        private Vector3 position;
+       
         public Model model;
         public Matrix[] boneTransformations;
         public BoundingBox boundingBoxHouse;
         public GraphicsDevice device;
         public BasicEffect houseEffect;
+        public Matrix worldMatrix { get; set; }
         public Texture2D houseTexture { get; set; }
-        public int size; 
+        public int size;
+        private Vector3 position;
 
-
-        public House(GraphicsDevice device, Model model, Texture2D texture) {
+        public House(GraphicsDevice device, Model model, Texture2D texture,Vector3 pos) {
             this.device = device;
             this.model = model;
             this.houseTexture = texture;
-            boundingBoxHouse = new BoundingBox();
+            this.position = pos;
+            worldMatrix = Matrix.CreateTranslation(pos);
+            
+     
            
 
         }
-        public void SetPosition(Vector3 position) {
-            this.position = position;
+        private void SetBoundingBox() {
+
+            //Vector3 min = position + Vector3.Up * height - size / 2f;
+            //Vector3 max = position + Vector3.Up * height + size / 2f;
+            //this.boundingBoxHouse = new BoundingBox(min, max);
+
         }
         public void Draw(Matrix view, Matrix projection)
         {
@@ -41,7 +49,7 @@ namespace Labb2DatorGrafik.Models
                 
                 foreach (BasicEffect effects in mesh.Effects)
                 {
-                    effects.World = model.Bones[0].Transform;
+                    effects.World = worldMatrix; // model.Bones[0].Transform;
                     effects.View = view;
                     effects.Projection = projection;
                     effects.EnableDefaultLighting();

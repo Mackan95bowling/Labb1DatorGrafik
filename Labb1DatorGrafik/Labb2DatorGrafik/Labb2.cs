@@ -71,13 +71,13 @@ namespace Labb2DatorGrafik
             // Create a new SpriteBatch, which can be used to draw textures.
             Texture2D houseTexture1 = Content.Load<Texture2D>("Farmhouse Texture");
             Model houses = Content.Load<Model>("farmhouse_obj");
-            Model tree = Content.Load<Model>("House");
-            houseTexture2 = Content.Load<Texture2D>("Farmhouse Texture");
+            Model tree = Content.Load<Model>("Leaf_Oak");
+            houseTexture2 = Content.Load<Texture2D>("TexturesGreen");
 
             texture = Content.Load<Texture2D>("US_Canyon");
             textureImage = Content.Load<Texture2D>("sand");
             mapleTree = new Tree(this.GraphicsDevice, tree, houseTexture2);
-            farmerHouse = new House(this.GraphicsDevice, houses, houseTexture1);
+            //farmerHouse = new House(this.GraphicsDevice, houses, houseTexture1);
             worldTerrain = new WorldTerrain(this.GraphicsDevice, texture, new Texture2D[4] {textureImage, textureImage, textureImage, textureImage });
             drawGameObjects = new DrawGameObjects();
             HeightMapBuilder heightMap = new HeightMapBuilder()
@@ -93,19 +93,21 @@ namespace Labb2DatorGrafik
             cameraSystem.SetCameraView();
             //gameObjects.Add(brickHouse);
             //gameObjects.Add(woodhouse);
-            int amount = 50;
+            int amount = 100;
             List<IGameObject> list = CreateHouseStaticObject(amount, houses, houseTexture1);
-            foreach (var item in list) {
+            foreach (var item in list)
+            {
                 drawGameObjects.gameObjects.Add(item);
             }
-           // List<IGameObject> list = CreateOtherStaticObject(amount, houses, houseTexture1);
+            //DETTA SKA ANVÄNDAS
+            // List<IGameObject> list = CreateOtherStaticObject(amount, houses, houseTexture1);
             //foreach (var item in list)
             //{
             //    drawGameObjects.gameObjects.Add(item);
             //}
             // CreateHouseStaticObject(amount, houses, houseTexture1);
 
-            drawGameObjects.gameObjects.Add(mapleTree);
+            //drawGameObjects.gameObjects.Add(mapleTree);
            // farmerHouse.SetPosition(new Vector3(0, 0, 0));
            // drawGameObjects.gameObjects.Add(farmerHouse);
 
@@ -156,13 +158,15 @@ namespace Labb2DatorGrafik
         }
         public List<IGameObject> CreateHouseStaticObject(int amount, Model houses, Texture2D texture)
         {
-            List<IGameObject> house = new List<IGameObject>(); ;
+            List<IGameObject> house = new List<IGameObject>();
             var heightData = heightmapSystem.GetHeightMapData();
-            //add position to HouseConstructor!
-            //GetHeightMapPositionPosition();
+            List<Vector3> modelPositions = new List<Vector3>();
+
+            modelPositions = GetHeightMapPositionPositions(heightData, amount);
             for (int i = 0; i < amount; i++)
             {
-                house.Add(new House(this.GraphicsDevice, houses, texture));
+                house.Add(new House(this.GraphicsDevice, houses, texture,modelPositions[i]));
+                
 
             }
             return house;
@@ -175,10 +179,24 @@ namespace Labb2DatorGrafik
             //GetHeightMapPositionPosition();
             for (int i = 0; i < amount; i++)
             {
-                Other.Add(new House(this.GraphicsDevice, houses, texture));
+
+                Other.Add(new House(this.GraphicsDevice, houses, texture, new Vector3(10,0,100)));
 
             }
             return Other;
+        }
+        public List<Vector3> GetHeightMapPositionPositions(float[,] heightMapPos, int amoutPositions) {
+            List<Vector3> positions = new List<Vector3>();
+
+            int xpos = 0;
+            int zpos = 0;
+            for (int i = 0; i < amoutPositions; i++) {
+
+                positions.Add(new Vector3(xpos, heightMapPos[xpos, zpos], zpos));
+                xpos += 10;
+                zpos += 10;
+            }
+            return positions;
         }
         private void CreateEntities()
         {

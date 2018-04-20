@@ -226,6 +226,7 @@ namespace Labb1DatorGrafik.EngineHelpers
             ComponentManager.Get().AddComponentToEntity(new HeightmapComponent()
             {
                 HeightMap = HeightMap,
+                HeightMapData = HeightMapData,
                 HeightMapTexture = HeightMapTexture,
                 Indices = Indices,
                 vertices = vertices,
