@@ -33,7 +33,7 @@ namespace Labb2DatorGrafik
             };
 
     }
-    public class WorldTerrain : IGameObject
+    public class WorldTerrain : GameObject
 
     {
         public int Width { get; set; }
@@ -47,7 +47,7 @@ namespace Labb2DatorGrafik
         private VertexTextures[] vertices;
         private int[] Indices;
         private VertexDeclaration vertexDeclaration;
-        BoundingBox worldBoundingBox;
+        //BoundingBox worldBoundingBox;
         private GraphicsDevice graphicsDevice;
 
         public WorldTerrain(GraphicsDevice device, Texture2D heightMap, Texture2D[] textures)
@@ -71,8 +71,8 @@ namespace Labb2DatorGrafik
             InitNormal();
 
             BasicEffect = new BasicEffect(graphicsDevice);
-            worldBoundingBox = new BoundingBox(new Vector3(0, 0, 0), new Vector3(Width, 0, Height));
-            Console.WriteLine(worldBoundingBox.ToString());
+            BoundingBox = new BoundingBox(new Vector3(0, 0, 0), new Vector3(Width, 0, Height));
+            Console.WriteLine(BoundingBox.ToString());
         }
         public float[,] GetHeightMapData() {
             return heightMapData;
@@ -248,12 +248,12 @@ namespace Labb2DatorGrafik
 
             }
         }
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
          
         }
 
-        public void Draw(Matrix view, Matrix projection)
+        public override void Draw(Matrix view, Matrix projection)
         {
             throw new NotImplementedException();
         }

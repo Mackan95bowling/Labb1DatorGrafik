@@ -11,9 +11,9 @@ namespace Labb2DatorGrafik.System
 {
     public class DrawGameObjects
     {
-       public List<IGameObject> gameObjects;
+       public List<GameObject> gameObjects;
         public DrawGameObjects() {
-            gameObjects = new List<IGameObject>();
+            gameObjects = new List<GameObject>();
 
         }
 

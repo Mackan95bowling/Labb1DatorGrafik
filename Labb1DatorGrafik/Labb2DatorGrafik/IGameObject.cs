@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace Labb2DatorGrafik
 {
-    public interface IGameObject
+    public abstract class GameObject
     {
-        Vector3 BoundingSphere { get; set; }
-        Matrix WorldMatrix { get; set; }
+        public BoundingBox BoundingBox { get; set; }
+        public Matrix WorldMatrix { get; set; }
 
-        void Draw(Matrix view, Matrix projection);
-        void Update(GameTime gameTime);
+        public abstract void Draw(Matrix view, Matrix projection);
+        public abstract void Update(GameTime gameTime);
     }
 }

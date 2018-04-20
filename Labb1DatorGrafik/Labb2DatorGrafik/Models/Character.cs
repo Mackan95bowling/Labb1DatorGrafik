@@ -8,16 +8,16 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Labb2DatorGrafik.Models
 {
-   public class Character : IGameObject
+   public class Character : GameObject
     {
 
 
-        public void Draw(Matrix view, Matrix projection)
+        public override void Draw(Matrix view, Matrix projection)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             throw new NotImplementedException();
         }

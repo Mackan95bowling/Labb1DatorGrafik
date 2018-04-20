@@ -8,12 +8,12 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Labb2DatorGrafik.Models
 {
-    public class Tree : IGameObject
+    public class Tree : GameObject
     {
         private Vector3 position;
         public Model model;
         public Matrix[] boneTransformations;
-        public BoundingBox boundingBoxTree;
+        //public BoundingBox boundingBoxTree;
         public GraphicsDevice device;
         public BasicEffect TreeEffect;
         public Texture2D TreeTexture { get; set; }
@@ -25,7 +25,7 @@ namespace Labb2DatorGrafik.Models
             this.device = device;
             this.model = model;
             this.TreeTexture = texture;
-            boundingBoxTree = new BoundingBox();
+            BoundingBox = new BoundingBox();
 
 
         }
@@ -33,7 +33,7 @@ namespace Labb2DatorGrafik.Models
         {
             this.position = position;
         }
-        public void Draw(Matrix view, Matrix projection)
+        public override void Draw(Matrix view, Matrix projection)
         {
             boneTransformations = new Matrix[model.Bones.Count];
             model.CopyAbsoluteBoneTransformsTo(boneTransformations);
@@ -54,7 +54,7 @@ namespace Labb2DatorGrafik.Models
                 mesh.Draw();
             }
         }
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             throw new NotImplementedException();
         }

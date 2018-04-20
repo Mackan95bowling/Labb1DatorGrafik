@@ -28,7 +28,7 @@ namespace Labb2DatorGrafik
         DrawGameObjects drawGameObjects;
         BasicEffect basicEffect;
 
-        List<IGameObject> gameObjects = new List<IGameObject>(100);
+        List<GameObject> gameObjects = new List<GameObject>(100);
         /*private CameraSystem cameraSystem;
         private TransformSystem transformSystem;
         private ModelSystem modelSystem;
@@ -158,9 +158,9 @@ namespace Labb2DatorGrafik
             // gameObjects.ForEach(o => o.Draw());
             base.Draw(gameTime);
         }
-        public List<IGameObject> CreateHouseStaticObject(int amount, Model houses, Texture2D texture)
+        public List<GameObject> CreateHouseStaticObject(int amount, Model houses, Texture2D texture)
         {
-            List<IGameObject> house = new List<IGameObject>();
+            List<GameObject> house = new List<GameObject>();
             var heightData = heightmapSystem.GetHeightMapData();
             List<Vector3> modelPositions = new List<Vector3>();
 
@@ -173,9 +173,9 @@ namespace Labb2DatorGrafik
             }
             return house;
         }
-        public List<IGameObject> CreateOtherStaticObject(int amount, Model houses, Texture2D texture) //FIX
+        public List<GameObject> CreateOtherStaticObject(int amount, Model houses, Texture2D texture) //FIX
         {
-            List<IGameObject> Other = new List<IGameObject>(); ;
+            List<GameObject> Other = new List<GameObject>(); ;
             var heightData = heightmapSystem.GetHeightMapData();
             //add position to HouseConstructor!
             //GetHeightMapPositionPosition();
