@@ -42,6 +42,9 @@ namespace ModelDemo
             float dX = _sizeX / 2;
             float dY = _sizeY / 2;
             float dZ = _sizeZ / 2;
+            //float dX = _sizeX / 6;
+            //float dY = _sizeY / 6;
+            //float dZ = _sizeZ / 6;
 
             Vector3 topLeftFront = new Vector3(-dX, dY, dZ);
             Vector3 bottomLeftFront = new Vector3(-dX, -dY, dZ);

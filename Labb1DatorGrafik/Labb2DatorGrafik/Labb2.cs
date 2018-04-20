@@ -40,6 +40,7 @@ namespace Labb2DatorGrafik
             Content.RootDirectory = "Content";
             heightmapSystem = new HeightmapSystem();
             cameraSystem = new CameraSystem();
+
         }
 
         /// <summary>
@@ -99,7 +100,7 @@ namespace Labb2DatorGrafik
             //    houses: houseModel, 
             //    texture: houseTexture1));
 
-            drawGameObjects.gameObjects.Add(new Character(graphics.GraphicsDevice, new Vector3(0,0,0)));
+            drawGameObjects.gameObjects.Add(new Character(graphics.GraphicsDevice, new Vector3(-5, 1,-5)));
 
             
             //DETTA SKA ANVÄNDAS
@@ -153,9 +154,10 @@ namespace Labb2DatorGrafik
 
           //worldTerrain.Draw(worldTerrain.BasicEffect);
          // brickHouse.Draw(worldTerrain.BasicEffect);
-            heightmapSystem.Draw(graphics.GraphicsDevice);
 
             drawGameObjects.Draw();
+            heightmapSystem.Draw(graphics.GraphicsDevice);
+
             // drawing all game objects
             // gameObjects.ForEach(o => o.Draw());
             base.Draw(gameTime);

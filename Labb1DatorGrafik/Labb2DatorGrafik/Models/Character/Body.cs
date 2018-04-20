@@ -42,6 +42,23 @@ namespace ModelDemo2
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
                 _rotation = new Vector3(_rotation.X - 0.01f, _rotation.Y, _rotation.Z);
 
+            //TEST POSITION
+            if (Keyboard.GetState().IsKeyDown(Keys.A))
+                _position = new Vector3(_position.X - 0.05f, _position.Y, _position.Z);
+            if (Keyboard.GetState().IsKeyDown(Keys.Q))
+                _position = new Vector3(_position.X + 0.05f, _position.Y, _position.Z);
+
+            if (Keyboard.GetState().IsKeyDown(Keys.S))
+                _position = new Vector3(_position.X , _position.Y - 0.05f, _position.Z);
+            if (Keyboard.GetState().IsKeyDown(Keys.W))
+                _position = new Vector3(_position.X, _position.Y + 0.05f, _position.Z);
+
+            if (Keyboard.GetState().IsKeyDown(Keys.D))
+                _position = new Vector3(_position.X, _position.Y, _position.Z - 0.05f);
+            if (Keyboard.GetState().IsKeyDown(Keys.E))
+                _position = new Vector3(_position.X, _position.Y , _position.Z + 0.05f);
+            // _________________ //
+
             World = Matrix.Identity *
                 Matrix.CreateFromQuaternion(Quaternion.CreateFromYawPitchRoll(_rotation.X, _rotation.Y, _rotation.Z)) *
                 Matrix.CreateTranslation(_position);
