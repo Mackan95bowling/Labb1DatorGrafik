@@ -70,7 +70,7 @@ namespace Labb2DatorGrafik
             basicEffect = new BasicEffect(this.GraphicsDevice);
             // Create a new SpriteBatch, which can be used to draw textures.
             Texture2D houseTexture1 = Content.Load<Texture2D>("Farmhouse Texture");
-            Model houses = Content.Load<Model>("farmhouse_obj");
+            Model houseModel = Content.Load<Model>("farmhouse_obj");
             Model tree = Content.Load<Model>("Leaf_Oak");
             houseTexture2 = Content.Load<Texture2D>("TexturesGreen");
 
@@ -93,12 +93,14 @@ namespace Labb2DatorGrafik
             cameraSystem.SetCameraView();
             //gameObjects.Add(brickHouse);
             //gameObjects.Add(woodhouse);
-            int amount = 100;
-            List<IGameObject> list = CreateHouseStaticObject(amount, houses, houseTexture1);
-            foreach (var item in list)
-            {
-                drawGameObjects.gameObjects.Add(item);
-            }
+
+            drawGameObjects.gameObjects.AddRange(CreateHouseStaticObject(
+                amount: 100, 
+                houses: houseModel, 
+                texture: houseTexture1));
+
+
+            
             //DETTA SKA ANVÄNDAS
             // List<IGameObject> list = CreateOtherStaticObject(amount, houses, houseTexture1);
             //foreach (var item in list)
