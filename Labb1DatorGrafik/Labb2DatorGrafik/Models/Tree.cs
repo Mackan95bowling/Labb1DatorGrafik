@@ -29,10 +29,7 @@ namespace Labb2DatorGrafik.Models
 
 
         }
-        public void SetPosition(Vector3 position)
-        {
-            this.position = position;
-        }
+
         public override void Draw(Matrix view, Matrix projection)
         {
             boneTransformations = new Matrix[model.Bones.Count];
