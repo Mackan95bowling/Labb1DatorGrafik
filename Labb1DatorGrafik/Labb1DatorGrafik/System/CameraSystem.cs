@@ -31,20 +31,28 @@ namespace Labb1DatorGrafik.System
             {
                 var camera = cameraComponent.Value as CameraComponent;
                 var modelComponents = ComponentManager.Get().GetComponents<ModelComponent>();
-
-                foreach (var modelComponent in modelComponents)
-                {
-                    var model = modelComponent.Value as ModelComponent;
-                    camera.cameraTarget = model.modelPosition; //camera fck the Z doesnt work as i want it tooo
-                    camera.cameraPosition = new Vector3(camera.cameraTarget.X, (camera.cameraTarget.Y + 10), (camera.cameraTarget.Z + 20));
+                var transformComponents = ComponentManager.Get().GetComponents<TransformComponent>();
+                foreach (var transformComponent in transformComponents) {
+                    var transform = transformComponent.Value as TransformComponent;
+                    camera.cameraTarget = transform.position;
+                    camera.cameraPosition = new Vector3(camera.cameraTarget.X,(camera.cameraTarget.Y + 10),(camera.cameraTarget.Z +20));
                     camera.view = Matrix.CreateLookAt(camera.cameraPosition, camera.cameraTarget, Vector3.Up);
+
                 }
-                Console.WriteLine(camera.cameraPosition.ToString());
+                //foreach (var modelComponent in modelComponents)
+                //{
+                //    transformComponent
+                //    var model = modelComponent.Value as ModelComponent;
+                //    camera.cameraTarget = model.modelPosition; //camera fck the Z doesnt work as i want it tooo
+                //    camera.cameraPosition = new Vector3(camera.cameraTarget.X, (camera.cameraTarget.Y + 10), (camera.cameraTarget.Z + 20));
+                //    camera.view = Matrix.CreateLookAt(camera.cameraPosition, camera.cameraTarget, Vector3.Up);
+                //}
+                //Console.WriteLine(camera.cameraPosition.ToString());
             }
         }
         public void Update(GameTime gameTime) {
 
-           // MoveCamera();
+          MoveCamera();
         }
     }
 }

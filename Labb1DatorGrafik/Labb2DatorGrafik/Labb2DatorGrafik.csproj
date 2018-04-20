@@ -46,6 +46,7 @@
     <Compile Include="Models\Character.cs" />
     <Compile Include="Models\Character\Arm.cs" />
     <Compile Include="Models\Character\Body.cs" />
+    <Compile Include="Models\Character\CharacterComponent.cs" />
     <Compile Include="Models\Character\CuboidMesh.cs" />
     <Compile Include="Models\Character\Head.cs" />
     <Compile Include="Models\Character\IGameObject.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\World.cs" />
+    <Compile Include="System\Camera.cs" />
     <Compile Include="System\DrawGameObjects.cs" />
   </ItemGroup>
   <ItemGroup>
