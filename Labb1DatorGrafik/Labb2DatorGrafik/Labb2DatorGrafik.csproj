@@ -46,7 +46,6 @@
     <Compile Include="Models\Character.cs" />
     <Compile Include="Models\Character\Arm.cs" />
     <Compile Include="Models\Character\Body.cs" />
-    <Compile Include="Models\Character\CharacterComponent.cs" />
     <Compile Include="Models\Character\CuboidMesh.cs" />
     <Compile Include="Models\Character\Head.cs" />
     <Compile Include="Models\Character\IGameObject.cs" />

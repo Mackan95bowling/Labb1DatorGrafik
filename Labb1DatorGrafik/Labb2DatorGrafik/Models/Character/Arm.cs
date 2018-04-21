@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
@@ -16,6 +17,10 @@ namespace ModelDemo2
         private Vector3 _rotation = Vector3.Zero;
         private Vector3 _position = new Vector3(0, 1.5f, 0);
         private Vector3 _jointPos = new Vector3(0, 1.0f, 0);
+        private float maxRotation = 0.5f;
+        private float minRotation = 0f;
+        private float rotation = 0;
+        private bool rotatePositive = true;
 
         public Arm(GraphicsDevice graphics, Vector3 jointPos, Vector3 rotation)
             : base(graphics, 1f, 3f, 1f)
@@ -23,15 +28,29 @@ namespace ModelDemo2
             _jointPos = jointPos;
             _rotation = rotation;
             _children.Add(new OuterLimb(graphics));
+
         }
 
         public override void Update(GameTime gameTime)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.Down))
-                _rotation = new Vector3(_rotation.X, _rotation.Y + 0.01f, _rotation.Z);
+            if (rotation >= maxRotation) rotatePositive = false;
+            if (rotation <= minRotation) rotatePositive = true;
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Up))
+            if (Keyboard.GetState().IsKeyDown(Keys.Up) && rotatePositive)
+            {
+                _rotation = new Vector3(_rotation.X, _rotation.Y + 0.01f, _rotation.Z);
+                rotation += 0.01f;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Up) && !rotatePositive)
+            {
                 _rotation = new Vector3(_rotation.X, _rotation.Y - 0.01f, _rotation.Z);
+                rotation -= 0.01f;
+            }
+
+            Debug.WriteLine($"Z-rotation: {_rotation.Y}");
+            Debug.WriteLine($"Max-rotation: {maxRotation}");
+            Debug.WriteLine($"Min-rotation: {minRotation}");
+
 
             World = Matrix.Identity *
                 Matrix.CreateTranslation(_position) *

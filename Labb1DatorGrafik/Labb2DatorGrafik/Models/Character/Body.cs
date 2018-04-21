@@ -25,8 +25,8 @@ namespace ModelDemo2
             // Head
             _children.Add(new Head(graphics, new Vector3(0, 2.5f, 0)));
             // Legs
-            _children.Add(new Leg(graphics, new Vector3(0, -1f, 1f), new Vector3(0, 3.15f, 0)));
-            _children.Add(new Leg(graphics, new Vector3(0, -1f, -1f), new Vector3(0, 3.15f, 0)));
+            _children.Add(new Leg(graphics, new Vector3(0, -1f, 1f), new Vector3(0, 3.15f, 0), true));
+            _children.Add(new Leg(graphics, new Vector3(0, -1f, -1f), new Vector3(0, 3.15f, 0), false));
             // Arms
             _children.Add(new Arm(graphics, new Vector3(0, 0.5f, 2f), new Vector3(0, 2, 0)));
             _children.Add(new Arm(graphics, new Vector3(0, 0.5f, -2f), new Vector3(0, -2, 0)));
