@@ -163,7 +163,7 @@ namespace Labb2DatorGrafik
         }
         public List<GameObject> CreateOtherStaticObject(int amount, Model houses, Texture2D texture) //FIX
         {
-            List<GameObject> Other = new List<GameObject>(); ;
+            List<GameObject> Other = new List<GameObject>();
             var heightData = heightmapSystem.GetHeightMapData();
             //add position to HouseConstructor!
             //GetHeightMapPositionPosition();

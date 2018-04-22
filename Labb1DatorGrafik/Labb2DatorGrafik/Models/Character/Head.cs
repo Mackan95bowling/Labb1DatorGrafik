@@ -16,10 +16,9 @@ namespace ModelDemo
         private Vector3 _position = Vector3.Zero;
 
         public Head(GraphicsDevice graphics, Vector3 pos)
-            : base(graphics, 2, 2, 2)
+            : base(graphics, 1.5f, 1.5f, 1.5f)
         {
             _position = pos;
-            //_children.Add(new LowerArm(graphics, new Vector3(0, 1.0f, 0)));
         }
 
         public override void Update(GameTime gameTime)

@@ -14,17 +14,17 @@ namespace ModelDemo
         private List<IGameObject> _children = new List<IGameObject>();
 
         private Vector3 _rotation = Vector3.Zero;
-        private Vector3 _position = new Vector3(0, 1.5f, 0);
-        private Vector3 _jointPos = new Vector3(0, 1.0f, 0);
+        private Vector3 _position = new Vector3(0, 0, 0);
+        private Vector3 _jointPos = new Vector3(0, 0, 0);
         private float maxRotation = 0.8f;
         private bool rotatePositive = true;
 
         public Leg(GraphicsDevice graphics, Vector3 jointPos, Vector3 rotation, bool rotationSide)
-            : base(graphics, 1f, 3f, 1f)
+            : base(graphics, 1, 1, 1)
         {
             _jointPos = jointPos;
             _rotation = rotation;
-            _children.Add(new OuterLimb(graphics));
+            _children.Add(new OuterLimb(graphics,new Vector3(0,_sizeY/2,_sizeZ/2)));
             rotatePositive = rotationSide;
         }
 

@@ -13,9 +13,9 @@ namespace ModelDemo
         protected VertexBuffer VertexBuffer;
 
         protected Matrix World = Matrix.Identity;
-        private float _sizeX = 1f;
-        private float _sizeY = 1f;
-        private float _sizeZ = 1f;
+        public float _sizeX = 3f;
+        public float _sizeY = 3f;
+        public float _sizeZ = 3f;
 
         public CuboidMesh(GraphicsDevice graphics)
         {

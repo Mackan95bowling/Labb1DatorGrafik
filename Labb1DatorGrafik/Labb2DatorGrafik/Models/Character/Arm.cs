@@ -15,7 +15,7 @@ namespace ModelDemo2
         private List<IGameObject> _children = new List<IGameObject>();
 
         private Vector3 _rotation = Vector3.Zero;
-        private Vector3 _position = new Vector3(0, 1.5f, 0);
+        private Vector3 _position = new Vector3(0, 0, 0);
         private Vector3 _jointPos = new Vector3(0, 1.0f, 0);
         private float maxRotation = 0.5f;
         private float minRotation = 0f;
@@ -23,11 +23,11 @@ namespace ModelDemo2
         private bool rotatePositive = true;
 
         public Arm(GraphicsDevice graphics, Vector3 jointPos, Vector3 rotation)
-            : base(graphics, 1f, 3f, 1f)
+            : base(graphics, .1f, .1f, .1f)
         {
             _jointPos = jointPos;
             _rotation = rotation;
-            _children.Add(new OuterLimb(graphics));
+            _children.Add(new OuterLimb(graphics,new Vector3(0,_sizeY/2,_sizeZ/2)));
 
         }
 

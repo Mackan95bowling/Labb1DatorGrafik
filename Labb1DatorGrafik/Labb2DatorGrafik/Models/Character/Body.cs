@@ -19,17 +19,17 @@ namespace ModelDemo2
         private Vector3 _position = Vector3.Zero;
 
         public Body(GraphicsDevice graphics, Vector3 pos)
-            : base(graphics, 3, 3, 5)
+            : base(graphics, 0.3f,.3f, .3f)
         {
             _position = pos;
             // Head
             _children.Add(new Head(graphics, new Vector3(0, 2.5f, 0)));
             // Legs
-            _children.Add(new Leg(graphics, new Vector3(0, -1f, 1f), new Vector3(0, 3.15f, 0), true));
-            _children.Add(new Leg(graphics, new Vector3(0, -1f, -1f), new Vector3(0, 3.15f, 0), false));
-            // Arms
-            _children.Add(new Arm(graphics, new Vector3(0, 0.5f, 2f), new Vector3(0, 2, 0)));
-            _children.Add(new Arm(graphics, new Vector3(0, 0.5f, -2f), new Vector3(0, -2, 0)));
+          //  _children.Add(new Leg(graphics, new Vector3(0, -(_sizeY/2), _sizeZ/2), new Vector3(0, 3.15f, 0), true));
+           // _children.Add(new Leg(graphics, new Vector3(0, -(_sizeY/2), -(_sizeZ/2)), new Vector3(0, 3.15f, 0), false));
+            //// Arms
+            _children.Add(new Arm(graphics, new Vector3(0, _sizeY/2, _sizeZ/2f), new Vector3(0, 2, 0)));
+            _children.Add(new Arm(graphics, new Vector3(0, _sizeY / 2, -(_sizeZ / 2f)), new Vector3(0, -2, 0)));
         }
 
         public override void Update(GameTime gameTime)

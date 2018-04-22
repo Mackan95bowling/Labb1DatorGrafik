@@ -14,11 +14,12 @@ namespace ModelDemo
 
         private Vector3 _rotation = Vector3.Zero;
         private Vector3 _position = new Vector3(0, 1f, 0);
-        private Vector3 _jointPos = new Vector3(0, 1.5f, 0);
+        private Vector3 _jointPos = new Vector3(0, 1f, 0);
 
-        public OuterLimb(GraphicsDevice graphics)
-            : base(graphics, 0.5f, 2f, 0.5f)
+        public OuterLimb(GraphicsDevice graphics, Vector3 jointPos)
+            : base(graphics, 0.1f, .1f, 0.1f)
         {
+            _jointPos = jointPos;
         }
 
         public override void Update(GameTime gameTime)
