@@ -9,11 +9,8 @@ using System.Collections.Generic;
 using Labb1DatorGrafik.EngineHelpers;
 using Labb2DatorGrafik.System;
 using System;
-<<<<<<< HEAD
 using Labb2DatorGrafik.Models;
 using Labb2DatorGrafik.Factory;
-=======
->>>>>>> 3bfa48699c6e592cc2276fd32b5f649ce58c265d
 
 namespace Labb2DatorGrafik
 {
@@ -23,10 +20,10 @@ namespace Labb2DatorGrafik
     public class Labb2 : Game
     {
         GraphicsDeviceManager graphics;
-        Texture2D orangeTexture, houseTexture1;
+        private Texture2D houseTexture2;
         Texture2D texture, textureImage;
-        Orange orange;
-        House farmerHouse;
+        //private Tree mapleTree;
+        public House farmerHouse;
 
         DrawGameObjects drawGameObjects;
         BasicEffect basicEffect;
@@ -68,10 +65,10 @@ namespace Labb2DatorGrafik
         protected override void LoadContent()
         {
             basicEffect = new BasicEffect(this.GraphicsDevice);
-            houseTexture1 = Content.Load<Texture2D>("Farmhouse Texture");
+            Texture2D houseTexture1 = Content.Load<Texture2D>("Farmhouse Texture");
             Model houseModel = Content.Load<Model>("farmhouse_obj");
-            Model orange = Content.Load<Model>("Orange");
-            orangeTexture = Content.Load<Texture2D>("Color");
+            Model tree = Content.Load<Model>("Leaf_Oak");
+            houseTexture2 = Content.Load<Texture2D>("TexturesGreen");
 
             texture = Content.Load<Texture2D>("US_Canyon");
             textureImage = Content.Load<Texture2D>("sand");
@@ -95,15 +92,11 @@ namespace Labb2DatorGrafik
                 amount: 100,
                 houses: houseModel,
                 texture: houseTexture1));
-            //drawGameObjects.gameObjects.AddRange(CreateOtherStaticObject(
-            //  amount: 1,
-            //  oranges: orange,
-            //  texture: orangeTexture));
 
             drawGameObjects.gameObjects.Add(robot);
-            
+
         }
-  
+
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
         /// game-specific content.
@@ -125,7 +118,7 @@ namespace Labb2DatorGrafik
 
             robotCameraSystem.Update(gameTime);
             drawGameObjects.gameObjects.ForEach(o => o.Update(gameTime));
-            
+
             base.Update(gameTime);
         }
 
@@ -144,38 +137,14 @@ namespace Labb2DatorGrafik
             base.Draw(gameTime);
         }
 
-<<<<<<< HEAD
-=======
-            modelPositions = GetHeightMapPositionPositions(heightData, amount);
-            for (int i = 0; i < amount; i++)
-            {
-                house.Add(new House(this.GraphicsDevice, houses, texture,modelPositions[i]));
-
-            }
-            return house;
-        }
-        public List<GameObject> CreateOtherStaticObject(int amount, Model oranges, Texture2D texture)
+        public List<Vector3> GetHeightMapPositionPositions(float[,] heightMapPos, int amoutPositions)
         {
-            List<GameObject> Other = new List<GameObject>();
-            var heightData = heightmapSystem.GetHeightMapData();
-
-            List<Vector3> modelPositions = new List<Vector3>();
-            modelPositions = GetHeightMapPositionPositions(heightData, amount);
-            for (int i = 0; i < amount; i++)
-            {
-
-                Other.Add(new Orange(this.GraphicsDevice, oranges, texture, modelPositions[i]));
-
-            }
-            return Other;
-        }
->>>>>>> 3bfa48699c6e592cc2276fd32b5f649ce58c265d
-        public List<Vector3> GetHeightMapPositionPositions(float[,] heightMapPos, int amoutPositions) {
             List<Vector3> positions = new List<Vector3>();
 
             int xpos = 0;
             int zpos = 0;
-            for (int i = 0; i < amoutPositions; i++) {
+            for (int i = 0; i < amoutPositions; i++)
+            {
 
                 positions.Add(new Vector3(xpos, heightMapPos[xpos, zpos], zpos));
                 xpos += 10;
