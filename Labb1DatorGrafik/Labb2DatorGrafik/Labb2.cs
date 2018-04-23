@@ -30,7 +30,6 @@ namespace Labb2DatorGrafik
         // Systems
         private RobotCameraSystem robotCameraSystem;
         private HeightmapSystem heightmapSystem;
-        private CameraSystem cameraSystem;
 
         List<GameObject> gameObjects = new List<GameObject>(100);
 
@@ -40,7 +39,6 @@ namespace Labb2DatorGrafik
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             heightmapSystem = new HeightmapSystem();
-            cameraSystem = new CameraSystem();
         }
 
         /// <summary>
@@ -80,8 +78,7 @@ namespace Labb2DatorGrafik
                 .SetEffects(graphics.GraphicsDevice)
                 .Build();
 
-            CreateEntities();
-            cameraSystem.SetCameraView();
+            CreateCameraEntity();
 
 
             drawGameObjects.gameObjects.AddRange(CreateHouseStaticObject(
@@ -177,10 +174,20 @@ namespace Labb2DatorGrafik
             }
             return positions;
         }
-        private void CreateEntities()
+        private void CreateCameraEntity()
         {
-            var cameraID = ComponentManager.Get().NewEntity();
-            ComponentManager.Get().AddComponentToEntity(new CameraComponent() { fieldOfView = MathHelper.ToRadians(45f), aspectRatio = graphics.GraphicsDevice.Viewport.AspectRatio, cameraPosition = new Vector3(0, -10, 50), cameraTarget = new Vector3(0, -10, 0), FollowPlayer = true }, cameraID);
+                var cameraID = ComponentManager.Get().NewEntity();
+                ComponentManager.Get().AddComponentToEntity(
+                    new CameraComponent() {
+                        fieldOfView = MathHelper.ToRadians(45f),
+                        aspectRatio = graphics.GraphicsDevice.Viewport.AspectRatio,
+                        cameraPosition = new Vector3(0, -10, 50),
+                        cameraTarget = new Vector3(0, -10, 0),
+                        FollowPlayer = true,
+                        World = Matrix.Identity,
+                        projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45f), graphics.GraphicsDevice.Viewport.AspectRatio, 1f, 1000f)
+
+        }, cameraID);
         }
     }
 }
