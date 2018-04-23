@@ -8,28 +8,32 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Labb2DatorGrafik.Models
 {
-    public class Tree : GameObject
+    public class Orange : GameObject
     {
-        private Vector3 position;
-        public Model model;
+
+        Model model;
         public Matrix[] boneTransformations;
-        //public BoundingBox boundingBoxTree;
         public GraphicsDevice device;
-        public BasicEffect TreeEffect;
-        public Texture2D TreeTexture { get; set; }
+        public Texture2D orangeTexture { get; set; }
         public int size;
+        private Vector3 position;
 
-
-        public Tree(GraphicsDevice device, Model model, Texture2D texture)
+        public Orange(GraphicsDevice device, Model model, Texture2D texture, Vector3 pos) : base()
         {
             this.device = device;
             this.model = model;
-            this.TreeTexture = texture;
-            BoundingBox = new BoundingBox();
+            this.orangeTexture = texture;
+            this.position = pos;
+            WorldMatrix = Matrix.CreateTranslation(pos);
+        }
+        private void SetBoundingBox()
+        {
 
+            //Vector3 min = position + Vector3.Up * height - size / 2f;
+            //Vector3 max = position + Vector3.Up * height + size / 2f;
+            //this.boundingBoxHouse = new BoundingBox(min, max);
 
         }
-
         public override void Draw(Matrix view, Matrix projection)
         {
             boneTransformations = new Matrix[model.Bones.Count];
@@ -40,20 +44,22 @@ namespace Labb2DatorGrafik.Models
 
                 foreach (BasicEffect effects in mesh.Effects)
                 {
-                    effects.World = model.Bones[0].Transform; //boneTransformations[mesh.ParentBone.Index];
-                    effects.View = effects.View;
-                    effects.Projection = effects.Projection;
+                    effects.World = WorldMatrix;
+                    effects.View = view;
+                    effects.Projection = projection;
                     effects.EnableDefaultLighting();
-                    effects.Texture = TreeTexture;
+                    effects.Texture = orangeTexture;
                     effects.TextureEnabled = true;
-                    
+                    mesh.Draw();
                 }
-                mesh.Draw();
+
             }
+
         }
+
         public override void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
+
         }
     }
 }

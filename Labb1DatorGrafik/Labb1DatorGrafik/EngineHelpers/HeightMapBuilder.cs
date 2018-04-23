@@ -86,7 +86,7 @@ namespace Labb1DatorGrafik.EngineHelpers
         public HeightMapBuilder SetIndices()
         {
             // amount of triangles
-            Indices = new int[6 * (Width - 1) * (Height - 1)];
+            Indices = new int[(Width - 1) * (Height - 1)*6];
             int number = 0;
             // collect data for corners
             for (int y = 0; y < Height - 1; y++)
@@ -103,52 +103,30 @@ namespace Labb1DatorGrafik.EngineHelpers
                 }
             return this;
         }
+
         public HeightMapBuilder InitNormal()
         {
             for (int i = 0; i < vertices.Length; i++)
-            {
-                vertices[i].Normal = Vector3.Zero;
-            }
+                vertices[i].Normal = new Vector3(0, 0, 0);
+
             for (int i = 0; i < Indices.Length / 3; i++)
             {
+                int index1 = Indices[i * 3];
+                int index2 = Indices[i * 3 + 1];
+                int index3 = Indices[i * 3 + 2];
 
-                int index0 = Indices[i * 3];
-
-                int index1 = Indices[i * 3 + 1];
-
-                int index2 = Indices[i * 3 + 2];
-
-                Vector3 side0 = vertices[index0].Position - vertices[index2].Position;
-
-                Vector3 side1 = vertices[index0].Position - vertices[index1].Position;
-
-                Vector3 normal = Vector3.Cross(side0, side1);
-
-                vertices[index0].Normal += normal;
+                Vector3 side1 = vertices[index1].Position - vertices[index3].Position;
+                Vector3 side2 = vertices[index1].Position - vertices[index2].Position;
+                Vector3 normal = Vector3.Cross(side1, side2);
 
                 vertices[index1].Normal += normal;
-
                 vertices[index2].Normal += normal;
+                vertices[index3].Normal += normal;
             }
             for (int i = 0; i < vertices.Length; i++)
                 vertices[i].Normal.Normalize();
             return this;
         }
-
-        //public HeightMapBuilder SetVertices()
-        //{
-        //    Vertices = new VertexPositionTexture[Width * Height];
-        //    Vector2 texturePosition;
-        //    for (int x = 0; x < Width; x++)
-        //    {
-        //        for (int y = 0; y < Height; y++)
-        //        {
-        //            texturePosition = new Vector2((float)x / 25.5f, (float)y / 25.5f);
-        //            Vertices[x + y * Width] = new VertexPositionTexture(new Vector3(x, HeightMapData[x, y], -y), texturePosition);
-        //        }
-        //    }
-        //    return this;
-        //}
         public HeightMapBuilder SetVertices()
         {
             vertices = new VertexTextures[Width * Height];

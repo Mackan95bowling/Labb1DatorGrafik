@@ -23,11 +23,6 @@ namespace ModelDemo
 
         public override void Update(GameTime gameTime)
         {
-            //if (Keyboard.GetState().IsKeyDown(Keys.Left))
-            //    _rotation = new Vector3(_rotation.X + 0.01f, _rotation.Y, _rotation.Z);
-
-            //if (Keyboard.GetState().IsKeyDown(Keys.Right))
-            //    _rotation = new Vector3(_rotation.X - 0.01f, _rotation.Y, _rotation.Z);
 
             World = Matrix.Identity *
                 Matrix.CreateFromQuaternion(Quaternion.CreateFromYawPitchRoll(_rotation.X, _rotation.Y, _rotation.Z)) *

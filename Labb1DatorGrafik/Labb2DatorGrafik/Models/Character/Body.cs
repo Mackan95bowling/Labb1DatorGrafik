@@ -15,7 +15,6 @@ namespace ModelDemo2
     {
         private List<IGameObject> _children = new List<IGameObject>();
 
-        //private Vector3 _rotation = Vector3.Zero;
         private Vector3 _rotation = new Vector3(0,0,0);
         public Vector3 _position = Vector3.Zero;
         public HeightmapSystem heightmap;
@@ -85,7 +84,6 @@ namespace ModelDemo2
             if (_position.Z > 1080) _position.Z = 1080;
 
             _position.Y = heightMapData[Convert.ToInt32(_position.X), Convert.ToInt32(_position.Z)];
-            _position.Y = 1;
         }
 
         public override void Draw(BasicEffect effect, Matrix world)

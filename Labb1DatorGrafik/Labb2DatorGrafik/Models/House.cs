@@ -25,11 +25,7 @@ namespace Labb2DatorGrafik.Models
             this.model = model;
             this.houseTexture = texture;
             this.position = pos;
-            WorldMatrix = Matrix.CreateTranslation(pos);
-            
-     
-           
-            
+            WorldMatrix = Matrix.CreateTranslation(pos);               
         }
         private void SetBoundingBox() {
 
@@ -48,7 +44,7 @@ namespace Labb2DatorGrafik.Models
 
                 foreach (BasicEffect effects in mesh.Effects)
                 {
-                    effects.World = WorldMatrix; // model.Bones[0].Transform;
+                    effects.World = WorldMatrix; 
                     effects.View = view;
                     effects.Projection = projection;
                     effects.EnableDefaultLighting();
