@@ -27,7 +27,6 @@ namespace Labb2DatorGrafik
         private CameraSystem cameraSystem;
         DrawGameObjects drawGameObjects;
         BasicEffect basicEffect;
-        Camera camera;
         Robot robot;
         RobotCameraSystem robotCameraSystem;
 
@@ -95,8 +94,6 @@ namespace Labb2DatorGrafik
 
             robotCameraSystem = new RobotCameraSystem(robot);
 
-         
-
             drawGameObjects.gameObjects.Add(robot);
             
         }
@@ -120,10 +117,9 @@ namespace Labb2DatorGrafik
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-
+           robotCameraSystem.Update(gameTime);
             drawGameObjects.gameObjects.ForEach(o => o.Update(gameTime));
-            cameraSystem.Update(gameTime);
-            robotCameraSystem.Update(gameTime);
+            
             base.Update(gameTime);
         }
 
@@ -184,10 +180,8 @@ namespace Labb2DatorGrafik
         }
         private void CreateEntities()
         {
-            
             var cameraID = ComponentManager.Get().NewEntity();
-            ComponentManager.Get().AddComponentToEntity(new CameraComponent() { fieldOfView = MathHelper.ToRadians(45f), aspectRatio = graphics.GraphicsDevice.Viewport.AspectRatio, cameraPosition = new Vector3(15, 10, 50), cameraTarget = new Vector3(0,-10,-15), FollowPlayer = true }, cameraID);
-
+            ComponentManager.Get().AddComponentToEntity(new CameraComponent() { fieldOfView = MathHelper.ToRadians(45f), aspectRatio = graphics.GraphicsDevice.Viewport.AspectRatio, cameraPosition = new Vector3(0, -10, 50), cameraTarget = new Vector3(0, -10, 0), FollowPlayer = true }, cameraID);
         }
     }
 }

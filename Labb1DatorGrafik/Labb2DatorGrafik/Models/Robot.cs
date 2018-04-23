@@ -17,8 +17,7 @@ namespace Labb2DatorGrafik.Models
         public Body body;
         private BasicEffect effect;
         public Vector3 position;
-
-        //  public HeightmapSystem heightMapHelper;
+        public RobotCameraSystem tst;
         public Robot(GraphicsDevice graphics, Vector3 position, HeightmapSystem heightMap)
         {
             body = new Body(graphics, position, heightMap);

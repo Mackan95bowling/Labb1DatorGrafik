@@ -14,7 +14,6 @@ namespace Labb2DatorGrafik.Models
     public class RobotCameraSystem 
     {
         private Robot _robot;
-        public Vector3 cameraTarget, cameraPosition;
         public RobotCameraSystem(Robot robot) {
             _robot = robot;
         }
@@ -27,10 +26,13 @@ namespace Labb2DatorGrafik.Models
 
                 if (camera.FollowPlayer)
                 {
-                    cameraTarget = _robot.body._position;
-                    cameraPosition = _robot.body._position - new Vector3(0, 0, 20);
-
-                    camera.view = Matrix.CreateLookAt(cameraPosition, cameraTarget, Vector3.Up);
+                    camera.cameraTarget = _robot.body._position;
+                    camera.cameraPosition = _robot.body._position - new Vector3(0, 0, 20);
+                    camera.view = Matrix.CreateLookAt(camera.cameraPosition, camera.cameraTarget, Vector3.Up);
+                    camera.projection = Matrix.CreatePerspectiveFieldOfView(camera.fieldOfView, camera.aspectRatio, 1f, 1000f);
+                    
+                    Console.WriteLine("CameraTargetRobotCamera" + camera.cameraTarget);
+                    Console.WriteLine("CameraPositionRobotCamera" + camera.cameraPosition);
                 }
             }
 
