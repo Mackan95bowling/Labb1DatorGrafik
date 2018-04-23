@@ -24,9 +24,6 @@ namespace Labb2DatorGrafik.System
                 var cam = camera.Value as CameraComponent;
                 foreach (var gameobject in gameObjects) {
                     gameobject.Draw(cam.view, cam.projection);
-                    //for debugging
-                   // Console.WriteLine("cam PosDrawObjects" + cam.cameraPosition);
-                    //Console.WriteLine("cam TargetDrawObjects"+cam.cameraTarget);
                 }
 
             }

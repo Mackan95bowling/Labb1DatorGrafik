@@ -30,8 +30,6 @@ namespace ModelDemo
 
         public override void Update(GameTime gameTime)
         {
-            //if (Keyboard.GetState().IsKeyDown(Keys.Down))
-            //    _rotation = new Vector3(_rotation.X, _rotation.Y, _rotation.Z + 0.01f);
 
             if (_rotation.Z >= maxRotation) rotatePositive = false;
             if (_rotation.Z <= -maxRotation) rotatePositive = true;

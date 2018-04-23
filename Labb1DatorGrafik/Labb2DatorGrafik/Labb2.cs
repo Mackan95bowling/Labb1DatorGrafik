@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using Labb1DatorGrafik.EngineHelpers;
 using Labb2DatorGrafik.System;
 using System;
-using Labb2DatorGrafik.Models;
+
 namespace Labb2DatorGrafik
 {
     /// <summary>
@@ -18,10 +18,10 @@ namespace Labb2DatorGrafik
     public class Labb2 : Game
     {
         GraphicsDeviceManager graphics;
-        private Texture2D houseTexture2;
+        Texture2D orangeTexture, houseTexture1;
         Texture2D texture, textureImage;
-        private Tree mapleTree;
-        public House farmerHouse;
+        Orange orange;
+        House farmerHouse;
 
         DrawGameObjects drawGameObjects;
         BasicEffect basicEffect;
@@ -61,10 +61,10 @@ namespace Labb2DatorGrafik
         protected override void LoadContent()
         {
             basicEffect = new BasicEffect(this.GraphicsDevice);
-            Texture2D houseTexture1 = Content.Load<Texture2D>("Farmhouse Texture");
+            houseTexture1 = Content.Load<Texture2D>("Farmhouse Texture");
             Model houseModel = Content.Load<Model>("farmhouse_obj");
-            Model tree = Content.Load<Model>("Leaf_Oak");
-            houseTexture2 = Content.Load<Texture2D>("TexturesGreen");
+            Model orange = Content.Load<Model>("Orange");
+            orangeTexture = Content.Load<Texture2D>("Color");
 
             texture = Content.Load<Texture2D>("US_Canyon");
             textureImage = Content.Load<Texture2D>("sand");
@@ -85,6 +85,10 @@ namespace Labb2DatorGrafik
                 amount: 100,
                 houses: houseModel,
                 texture: houseTexture1));
+            //drawGameObjects.gameObjects.AddRange(CreateOtherStaticObject(
+            //  amount: 1,
+            //  oranges: orange,
+            //  texture: orangeTexture));
 
             robot = new Robot(graphics.GraphicsDevice, new Vector3(0, 0, 0), heightmapSystem);
 
@@ -147,16 +151,17 @@ namespace Labb2DatorGrafik
             }
             return house;
         }
-        public List<GameObject> CreateOtherStaticObject(int amount, Model houses, Texture2D texture) //FIX
+        public List<GameObject> CreateOtherStaticObject(int amount, Model oranges, Texture2D texture)
         {
             List<GameObject> Other = new List<GameObject>();
             var heightData = heightmapSystem.GetHeightMapData();
-            //add position to HouseConstructor!
-            //GetHeightMapPositionPosition();
+
+            List<Vector3> modelPositions = new List<Vector3>();
+            modelPositions = GetHeightMapPositionPositions(heightData, amount);
             for (int i = 0; i < amount; i++)
             {
 
-                Other.Add(new House(this.GraphicsDevice, houses, texture, new Vector3(10,0,100)));
+                Other.Add(new Orange(this.GraphicsDevice, oranges, texture, modelPositions[i]));
 
             }
             return Other;
