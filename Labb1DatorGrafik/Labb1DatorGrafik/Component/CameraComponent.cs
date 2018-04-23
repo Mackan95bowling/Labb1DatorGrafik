@@ -17,7 +17,9 @@ namespace Labb1DatorGrafik.Component
         public Matrix World { get; set; }
         public Matrix view { get; set; }
         public Matrix projection { get; set; }
+        public Matrix ClippingProjection { get; set; }
         public bool FollowPlayer { get; set; }
+
         public BoundingFrustum BoundingFrustum { get; set; }
     }
 }
