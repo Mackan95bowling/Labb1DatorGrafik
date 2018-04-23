@@ -41,7 +41,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="IGameObject.cs" />
+    <Compile Include="GameObject.cs" />
     <Compile Include="Labb2.cs" />
     <Compile Include="Models\Robot.cs" />
     <Compile Include="Models\Character\Arm.cs" />
@@ -56,7 +56,6 @@
     <Compile Include="Models\Tree.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Models\World.cs" />
     <Compile Include="System\DrawGameObjects.cs" />
   </ItemGroup>
   <ItemGroup>

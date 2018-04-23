@@ -41,7 +41,6 @@ namespace Labb2DatorGrafik.Models
         {
             body.Update(gameTime);
         }
-        //to check that the players position is above heightmap Y
 
     }
 }

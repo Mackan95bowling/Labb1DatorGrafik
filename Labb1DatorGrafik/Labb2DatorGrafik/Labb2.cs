@@ -18,7 +18,6 @@ namespace Labb2DatorGrafik
     public class Labb2 : Game
     {
         GraphicsDeviceManager graphics;
-        WorldTerrain worldTerrain;
         private Texture2D houseTexture2;
         Texture2D texture, textureImage;
         private Tree mapleTree;
@@ -31,10 +30,7 @@ namespace Labb2DatorGrafik
         RobotCameraSystem robotCameraSystem;
 
         List<GameObject> gameObjects = new List<GameObject>(100);
-        /*private CameraSystem cameraSystem;
-        private TransformSystem transformSystem;
-        private ModelSystem modelSystem;
-        private HeightmapSystem heightmapSystem;*/
+
 
         public Labb2()
         {
@@ -117,7 +113,7 @@ namespace Labb2DatorGrafik
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-           robotCameraSystem.Update(gameTime);
+            robotCameraSystem.Update(gameTime);
             drawGameObjects.gameObjects.ForEach(o => o.Update(gameTime));
             
             base.Update(gameTime);

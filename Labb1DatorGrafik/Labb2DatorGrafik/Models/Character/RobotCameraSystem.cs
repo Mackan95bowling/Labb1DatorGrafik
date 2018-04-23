@@ -29,8 +29,6 @@ namespace Labb2DatorGrafik.Models
                     camera.cameraTarget = _robot.body._position;
                     camera.cameraPosition = _robot.body._position - new Vector3(0, 0, 20);
                     camera.view = Matrix.CreateLookAt(camera.cameraPosition, camera.cameraTarget, Vector3.Up);
-                    camera.projection = Matrix.CreatePerspectiveFieldOfView(camera.fieldOfView, camera.aspectRatio, 1f, 1000f);
-                    
                     Console.WriteLine("CameraTargetRobotCamera" + camera.cameraTarget);
                     Console.WriteLine("CameraPositionRobotCamera" + camera.cameraPosition);
                 }

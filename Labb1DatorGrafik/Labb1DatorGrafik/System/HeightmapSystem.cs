@@ -29,8 +29,8 @@ namespace Labb1DatorGrafik.System
         {
             var cameraComps = ComponentManager.Get().GetComponents<CameraComponent>();
             var cameraComp = cameraComps.FirstOrDefault().Value as CameraComponent;
-            cameraComp.view = Matrix.CreateLookAt(new Vector3(10, 50, 80), new Vector3(0, 0, 0), new Vector3(0, 1, 0));
-            cameraComp.projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver2, gd.Viewport.AspectRatio, 1.0f, 300.0f);
+            cameraComp.view = cameraComp.view;
+            cameraComp.projection = cameraComp.projection;
 
             var heightmapComp = ComponentManager.Get().GetComponents<HeightmapComponent>();
             var heightmap = heightmapComp.FirstOrDefault().Value as HeightmapComponent;
