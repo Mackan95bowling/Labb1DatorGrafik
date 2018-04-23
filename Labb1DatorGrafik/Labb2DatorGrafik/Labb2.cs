@@ -22,12 +22,15 @@ namespace Labb2DatorGrafik
         Texture2D texture, textureImage;
         private Tree mapleTree;
         public House farmerHouse;
-        HeightmapSystem heightmapSystem;
-        private CameraSystem cameraSystem;
+
         DrawGameObjects drawGameObjects;
         BasicEffect basicEffect;
         Robot robot;
-        RobotCameraSystem robotCameraSystem;
+
+        // Systems
+        private RobotCameraSystem robotCameraSystem;
+        private HeightmapSystem heightmapSystem;
+        private CameraSystem cameraSystem;
 
         List<GameObject> gameObjects = new List<GameObject>(100);
 

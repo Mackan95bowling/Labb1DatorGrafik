@@ -16,24 +16,28 @@ namespace Labb2DatorGrafik.Models
     {
         public Body body;
         private BasicEffect effect;
-        public Vector3 position;
-        public RobotCameraSystem tst;
+        private Vector3 position;
         public Robot(GraphicsDevice graphics, Vector3 position, HeightmapSystem heightMap)
         {
-            body = new Body(graphics, position, heightMap);
             this.position = position;
+            body = new Body(graphics, position, heightMap);
             WorldMatrix = Matrix.CreateTranslation(position);
-            effect = new BasicEffect(graphics);
 
-            effect.VertexColorEnabled = true;
             var cameraComps = ComponentManager.Get().GetComponents<CameraComponent>();
             var cameraComp = cameraComps.FirstOrDefault().Value as CameraComponent;
-            effect.Projection = cameraComp.projection;
-            effect.View = cameraComp.view;
+
+            effect = new BasicEffect(graphics);
+            effect.VertexColorEnabled = true;
 
         }
         public override void Draw(Matrix view, Matrix projection)
         {
+            var cameraComps = ComponentManager.Get().GetComponents<CameraComponent>();
+            var cameraComp = cameraComps.FirstOrDefault().Value as CameraComponent;
+
+            effect.Projection = cameraComp.projection;
+            effect.View = cameraComp.view;
+            effect.World = WorldMatrix;
             body.Draw(effect, WorldMatrix);
         }
 

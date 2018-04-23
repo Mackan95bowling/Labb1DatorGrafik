@@ -27,8 +27,9 @@ namespace Labb2DatorGrafik.Models
                 if (camera.FollowPlayer)
                 {
                     camera.cameraTarget = _robot.body._position;
-                    camera.cameraPosition = _robot.body._position - new Vector3(0, 0, 20);
+                    camera.cameraPosition = _robot.body._position - new Vector3(0, 0, 5f);
                     camera.view = Matrix.CreateLookAt(camera.cameraPosition, camera.cameraTarget, Vector3.Up);
+
                     Console.WriteLine("CameraTargetRobotCamera" + camera.cameraTarget);
                     Console.WriteLine("CameraPositionRobotCamera" + camera.cameraPosition);
                 }
