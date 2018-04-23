@@ -14,6 +14,7 @@ namespace Labb1DatorGrafik.Component
         public float aspectRatio;
         public Vector3 cameraPosition;
         public Vector3 cameraTarget;
+        public Matrix World { get; set; }
         public Matrix view { get; set; }
         public Matrix projection { get; set; }
         public bool FollowPlayer { get; set; }

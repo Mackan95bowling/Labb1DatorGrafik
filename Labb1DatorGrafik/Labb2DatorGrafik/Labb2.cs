@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using Labb1DatorGrafik.EngineHelpers;
 using Labb2DatorGrafik.System;
 using System;
-
+using Labb2DatorGrafik.Models;
 namespace Labb2DatorGrafik
 {
     /// <summary>
@@ -23,11 +23,13 @@ namespace Labb2DatorGrafik
         Texture2D texture, textureImage;
         private Tree mapleTree;
         public House farmerHouse;
-        private HeightmapSystem heightmapSystem;
+        HeightmapSystem heightmapSystem;
         private CameraSystem cameraSystem;
         DrawGameObjects drawGameObjects;
         BasicEffect basicEffect;
         Camera camera;
+        Robot robot;
+        RobotCameraSystem robotCameraSystem;
 
         List<GameObject> gameObjects = new List<GameObject>(100);
         /*private CameraSystem cameraSystem;
@@ -81,8 +83,7 @@ namespace Labb2DatorGrafik
                 .Build();
 
             CreateEntities();
-             cameraSystem.SetCameraView();
-            //camera.SetCameraView();
+            cameraSystem.SetCameraView();
 
 
             drawGameObjects.gameObjects.AddRange(CreateHouseStaticObject(
@@ -90,16 +91,14 @@ namespace Labb2DatorGrafik
                 houses: houseModel,
                 texture: houseTexture1));
 
-            drawGameObjects.gameObjects.Add(new Character(graphics.GraphicsDevice, new Vector3(0,0,0)));
+            robot = new Robot(graphics.GraphicsDevice, new Vector3(0, 0, 0), heightmapSystem);
 
+            robotCameraSystem = new RobotCameraSystem(robot);
+
+         
+
+            drawGameObjects.gameObjects.Add(robot);
             
-            //DETTA SKA ANVÄNDAS
-            // List<IGameObject> list = CreateOtherStaticObject(amount, houses, houseTexture1);
-            //foreach (var item in list)
-            //{
-            //    drawGameObjects.gameObjects.Add(item);
-            //}
-            // CreateHouseStaticObject(amount, houses, houseTexture1);
         }
   
         /// <summary>
@@ -121,11 +120,10 @@ namespace Labb2DatorGrafik
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // looping through all the game objects
-            // gameObjects.ForEach(o => o.Update(gameTime));
+
             drawGameObjects.gameObjects.ForEach(o => o.Update(gameTime));
             cameraSystem.Update(gameTime);
-            //camera.Update(gameTime);
+            robotCameraSystem.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -137,13 +135,10 @@ namespace Labb2DatorGrafik
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-          //worldTerrain.Draw(worldTerrain.BasicEffect);
-         // brickHouse.Draw(worldTerrain.BasicEffect);
-          //  heightmapSystem.Draw(graphics.GraphicsDevice);
+            heightmapSystem.Draw(graphics.GraphicsDevice);
 
             drawGameObjects.Draw();
-            // drawing all game objects
-            // gameObjects.ForEach(o => o.Draw());
+
             base.Draw(gameTime);
         }
         public List<GameObject> CreateHouseStaticObject(int amount, Model houses, Texture2D texture)
@@ -156,7 +151,6 @@ namespace Labb2DatorGrafik
             for (int i = 0; i < amount; i++)
             {
                 house.Add(new House(this.GraphicsDevice, houses, texture,modelPositions[i]));
-                
 
             }
             return house;
@@ -190,15 +184,10 @@ namespace Labb2DatorGrafik
         }
         private void CreateEntities()
         {
-            var chopperID = ComponentManager.Get().NewEntity();
-            ComponentManager.Get().AddComponentToEntity(new TransformComponent() { }, chopperID);
             
-            //ComponentManager.Get().AddComponentToEntity(new ModelComponent() { model = brickHouse }, chopperID);
-
-
-
             var cameraID = ComponentManager.Get().NewEntity();
-            ComponentManager.Get().AddComponentToEntity(new CameraComponent() { fieldOfView = MathHelper.ToRadians(45f), aspectRatio = graphics.GraphicsDevice.Viewport.AspectRatio, cameraPosition = new Vector3(15, 10, 20), cameraTarget = new Vector3(0,-10,-15), FollowPlayer = true }, cameraID);
+            ComponentManager.Get().AddComponentToEntity(new CameraComponent() { fieldOfView = MathHelper.ToRadians(45f), aspectRatio = graphics.GraphicsDevice.Viewport.AspectRatio, cameraPosition = new Vector3(15, 10, 50), cameraTarget = new Vector3(0,-10,-15), FollowPlayer = true }, cameraID);
+
         }
     }
 }

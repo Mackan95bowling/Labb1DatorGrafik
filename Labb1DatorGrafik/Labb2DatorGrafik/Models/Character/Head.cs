@@ -16,7 +16,7 @@ namespace ModelDemo
         private Vector3 _position = Vector3.Zero;
 
         public Head(GraphicsDevice graphics, Vector3 pos)
-            : base(graphics, 1.5f, 1.5f, 1.5f)
+            : base(graphics, 0.15f, .15f, .15f)
         {
             _position = pos;
         }

@@ -7,15 +7,15 @@ using Microsoft.Xna.Framework;
 
 namespace ModelDemo
 {
-    abstract class CuboidMesh : IGameObject
+     public abstract class CuboidMesh : IGameObject
     {
         protected GraphicsDevice GraphicsDevice;
         protected VertexBuffer VertexBuffer;
 
         protected Matrix World = Matrix.Identity;
-        public float _sizeX = 3f;
-        public float _sizeY = 3f;
-        public float _sizeZ = 3f;
+        public float _sizeX = 1f;
+        public float _sizeY = 1f;
+        public float _sizeZ = 1f;
 
         public CuboidMesh(GraphicsDevice graphics)
         {

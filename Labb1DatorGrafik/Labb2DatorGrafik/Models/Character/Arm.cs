@@ -47,10 +47,6 @@ namespace ModelDemo2
                 rotation -= 0.01f;
             }
 
-            Debug.WriteLine($"Z-rotation: {_rotation.Y}");
-            Debug.WriteLine($"Max-rotation: {maxRotation}");
-            Debug.WriteLine($"Min-rotation: {minRotation}");
-
 
             World = Matrix.Identity *
                 Matrix.CreateTranslation(_position) *

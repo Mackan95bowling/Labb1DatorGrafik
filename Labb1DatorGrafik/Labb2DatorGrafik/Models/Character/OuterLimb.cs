@@ -13,11 +13,11 @@ namespace ModelDemo
         private List<IGameObject> _children = new List<IGameObject>();
 
         private Vector3 _rotation = Vector3.Zero;
-        private Vector3 _position = new Vector3(0, 1f, 0);
+        private Vector3 _position = new Vector3(0, .1f, 0);
         private Vector3 _jointPos = new Vector3(0, 1f, 0);
 
         public OuterLimb(GraphicsDevice graphics, Vector3 jointPos)
-            : base(graphics, 0.1f, .1f, 0.1f)
+            : base(graphics, .1f, .3f, .1f)
         {
             _jointPos = jointPos;
         }

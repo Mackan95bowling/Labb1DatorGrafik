@@ -20,7 +20,7 @@ namespace ModelDemo
         private bool rotatePositive = true;
 
         public Leg(GraphicsDevice graphics, Vector3 jointPos, Vector3 rotation, bool rotationSide)
-            : base(graphics, 1, 1, 1)
+            : base(graphics, .1f, .1f, .1f)
         {
             _jointPos = jointPos;
             _rotation = rotation;

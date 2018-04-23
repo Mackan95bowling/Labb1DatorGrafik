@@ -43,7 +43,7 @@
   <ItemGroup>
     <Compile Include="IGameObject.cs" />
     <Compile Include="Labb2.cs" />
-    <Compile Include="Models\Character.cs" />
+    <Compile Include="Models\Robot.cs" />
     <Compile Include="Models\Character\Arm.cs" />
     <Compile Include="Models\Character\Body.cs" />
     <Compile Include="Models\Character\CuboidMesh.cs" />
@@ -51,6 +51,7 @@
     <Compile Include="Models\Character\IGameObject.cs" />
     <Compile Include="Models\Character\Leg.cs" />
     <Compile Include="Models\Character\OuterLimb.cs" />
+    <Compile Include="Models\Character\RobotCameraSystem.cs" />
     <Compile Include="Models\House.cs" />
     <Compile Include="Models\Tree.cs" />
     <Compile Include="Program.cs" />
