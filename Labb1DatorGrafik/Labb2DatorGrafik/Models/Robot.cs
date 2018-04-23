@@ -14,20 +14,17 @@ namespace Labb2DatorGrafik.Models
 {
    public class Robot : GameObject
     {
-        public Body body;
+        public Body RobotBody;
         private BasicEffect effect;
         private Vector3 position;
-        public Robot(GraphicsDevice graphics, Vector3 position, HeightmapSystem heightMap)
+        public Robot(GraphicsDevice graphics, Vector3 position, HeightmapSystem heightMap, BasicEffect effect)
         {
             this.position = position;
-            body = new Body(graphics, position, heightMap);
+            this.effect = effect;
+
+            RobotBody = new Body(graphics, position, heightMap);
             WorldMatrix = Matrix.CreateTranslation(position);
 
-            var cameraComps = ComponentManager.Get().GetComponents<CameraComponent>();
-            var cameraComp = cameraComps.FirstOrDefault().Value as CameraComponent;
-
-            effect = new BasicEffect(graphics);
-            effect.VertexColorEnabled = true;
 
         }
         public override void Draw(Matrix view, Matrix projection)
@@ -38,12 +35,12 @@ namespace Labb2DatorGrafik.Models
             effect.Projection = cameraComp.projection;
             effect.View = cameraComp.view;
             effect.World = WorldMatrix;
-            body.Draw(effect, WorldMatrix);
+            RobotBody.Draw(effect, WorldMatrix);
         }
 
         public override void Update(GameTime gameTime)
         {
-            body.Update(gameTime);
+            RobotBody.Update(gameTime);
         }
 
     }

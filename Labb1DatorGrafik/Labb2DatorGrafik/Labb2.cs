@@ -10,6 +10,8 @@ using Labb1DatorGrafik.EngineHelpers;
 using Labb2DatorGrafik.System;
 using System;
 using Labb2DatorGrafik.Models;
+using Labb2DatorGrafik.Factory;
+
 namespace Labb2DatorGrafik
 {
     /// <summary>
@@ -25,11 +27,12 @@ namespace Labb2DatorGrafik
 
         DrawGameObjects drawGameObjects;
         BasicEffect basicEffect;
-        Robot robot;
 
         // Systems
-        private RobotCameraSystem robotCameraSystem;
-        private HeightmapSystem heightmapSystem;
+        public RobotCameraSystem robotCameraSystem;
+        public HeightmapSystem heightmapSystem;
+        // Entity Factory
+        private EntityFactory entityFactory;
 
         List<GameObject> gameObjects = new List<GameObject>(100);
 
@@ -38,7 +41,9 @@ namespace Labb2DatorGrafik
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
             heightmapSystem = new HeightmapSystem();
+            entityFactory = new EntityFactory(this);
         }
 
         /// <summary>
@@ -49,7 +54,6 @@ namespace Labb2DatorGrafik
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
             Window.Title = "Laboration2";
             base.Initialize();
         }
@@ -78,17 +82,16 @@ namespace Labb2DatorGrafik
                 .SetEffects(graphics.GraphicsDevice)
                 .Build();
 
-            CreateCameraEntity();
+            entityFactory.CreateCameraEntity();
+            var robot = entityFactory.CreateRobot(Vector3.Zero, new BasicEffect(graphics.GraphicsDevice) { VertexColorEnabled = true });
+            robotCameraSystem = new RobotCameraSystem(robot);
 
 
-            drawGameObjects.gameObjects.AddRange(CreateHouseStaticObject(
+
+            drawGameObjects.gameObjects.AddRange(entityFactory.CreateHouseStaticObject(
                 amount: 100,
                 houses: houseModel,
                 texture: houseTexture1));
-
-            robot = new Robot(graphics.GraphicsDevice, new Vector3(0, 0, 0), heightmapSystem);
-
-            robotCameraSystem = new RobotCameraSystem(robot);
 
             drawGameObjects.gameObjects.Add(robot);
             
@@ -133,34 +136,7 @@ namespace Labb2DatorGrafik
 
             base.Draw(gameTime);
         }
-        public List<GameObject> CreateHouseStaticObject(int amount, Model houses, Texture2D texture)
-        {
-            List<GameObject> house = new List<GameObject>();
-            var heightData = heightmapSystem.GetHeightMapData();
-            List<Vector3> modelPositions = new List<Vector3>();
 
-            modelPositions = GetHeightMapPositionPositions(heightData, amount);
-            for (int i = 0; i < amount; i++)
-            {
-                house.Add(new House(this.GraphicsDevice, houses, texture,modelPositions[i]));
-
-            }
-            return house;
-        }
-        public List<GameObject> CreateOtherStaticObject(int amount, Model houses, Texture2D texture) //FIX
-        {
-            List<GameObject> Other = new List<GameObject>();
-            var heightData = heightmapSystem.GetHeightMapData();
-            //add position to HouseConstructor!
-            //GetHeightMapPositionPosition();
-            for (int i = 0; i < amount; i++)
-            {
-
-                Other.Add(new House(this.GraphicsDevice, houses, texture, new Vector3(10,0,100)));
-
-            }
-            return Other;
-        }
         public List<Vector3> GetHeightMapPositionPositions(float[,] heightMapPos, int amoutPositions) {
             List<Vector3> positions = new List<Vector3>();
 
@@ -174,20 +150,6 @@ namespace Labb2DatorGrafik
             }
             return positions;
         }
-        private void CreateCameraEntity()
-        {
-                var cameraID = ComponentManager.Get().NewEntity();
-                ComponentManager.Get().AddComponentToEntity(
-                    new CameraComponent() {
-                        fieldOfView = MathHelper.ToRadians(45f),
-                        aspectRatio = graphics.GraphicsDevice.Viewport.AspectRatio,
-                        cameraPosition = new Vector3(0, -10, 50),
-                        cameraTarget = new Vector3(0, -10, 0),
-                        FollowPlayer = true,
-                        World = Matrix.Identity,
-                        projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(45f), graphics.GraphicsDevice.Viewport.AspectRatio, 1f, 1000f)
 
-        }, cameraID);
-        }
     }
 }

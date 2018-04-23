@@ -41,6 +41,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Factory\EntityFactory.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Labb2.cs" />
     <Compile Include="Models\Robot.cs" />
