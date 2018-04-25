@@ -11,6 +11,7 @@ namespace Labb3DatorGrafik
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Effect myEffect;
 
         public Game1()
         {
@@ -39,7 +40,9 @@ namespace Labb3DatorGrafik
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            //this is how we load our EFFECT
+            myEffect = Content.Load<Effect>("test1");
+            var test = myEffect;
             // TODO: use this.Content to load your game content here
         }
 
