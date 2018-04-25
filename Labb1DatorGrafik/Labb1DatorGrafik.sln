@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chopper", "Chopper\Chopper.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Labb2DatorGrafik", "Labb2DatorGrafik\Labb2DatorGrafik.csproj", "{860361AF-120D-48EB-9FF8-98FF19899835}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Labb3DatorGrafik", "Labb3DatorGrafik\Labb3DatorGrafik.csproj", "{B245E9EB-A000-4DF3-9E56-05696D045ABF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -27,6 +29,10 @@ Global
 		{860361AF-120D-48EB-9FF8-98FF19899835}.Debug|x86.Build.0 = Debug|x86
 		{860361AF-120D-48EB-9FF8-98FF19899835}.Release|x86.ActiveCfg = Release|x86
 		{860361AF-120D-48EB-9FF8-98FF19899835}.Release|x86.Build.0 = Release|x86
+		{B245E9EB-A000-4DF3-9E56-05696D045ABF}.Debug|x86.ActiveCfg = Debug|x86
+		{B245E9EB-A000-4DF3-9E56-05696D045ABF}.Debug|x86.Build.0 = Debug|x86
+		{B245E9EB-A000-4DF3-9E56-05696D045ABF}.Release|x86.ActiveCfg = Release|x86
+		{B245E9EB-A000-4DF3-9E56-05696D045ABF}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
