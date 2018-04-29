@@ -23,7 +23,7 @@ namespace Labb2DatorGrafik.Models
             this.effect = effect;
 
             RobotBody = new Body(graphics, position, heightMap);
-            WorldMatrix = Matrix.CreateTranslation(position);
+            WorldMatrix = Matrix.CreateTranslation(position); //denna e fel för att kunna kolla på
 
 
         }

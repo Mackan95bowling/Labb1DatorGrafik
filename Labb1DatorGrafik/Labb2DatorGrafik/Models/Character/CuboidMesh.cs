@@ -12,7 +12,7 @@ namespace ModelDemo
         protected GraphicsDevice GraphicsDevice;
         protected VertexBuffer VertexBuffer;
 
-        protected Matrix World = Matrix.Identity;
+        public Matrix World = Matrix.Identity;
         public float _sizeX = 1f;
         public float _sizeY = 1f;
         public float _sizeZ = 1f;

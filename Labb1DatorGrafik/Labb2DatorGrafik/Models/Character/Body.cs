@@ -84,6 +84,7 @@ namespace ModelDemo2
             if (_position.Z > 1080) _position.Z = 1080;
 
             _position.Y = heightMapData[Convert.ToInt32(_position.X), Convert.ToInt32(_position.Z)];
+            _position.Y = _position.Y - 10;
         }
 
         public override void Draw(BasicEffect effect, Matrix world)
@@ -92,6 +93,7 @@ namespace ModelDemo2
             effect.CurrentTechnique.Passes[0].Apply();
 
             GraphicsDevice.SetVertexBuffer(VertexBuffer);
+            
             GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, 36);
 
             foreach (IGameObject go in _children)

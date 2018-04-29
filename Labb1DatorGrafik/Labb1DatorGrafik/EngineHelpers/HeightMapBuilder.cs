@@ -46,6 +46,10 @@ namespace Labb1DatorGrafik.EngineHelpers
 
         private int minHeight;
         private int maxHeight;
+        //TEST
+        public VertexBuffer vertexBuffer { get; set; }
+        public IndexBuffer indexBuffer { get; set; }
+
 
         public HeightMapBuilder()
         {
@@ -196,6 +200,15 @@ namespace Labb1DatorGrafik.EngineHelpers
 
             return this;
         }
+        //public HeightMapBuilder CreateBuffers(GraphicsDevice graphic)
+        //{
+        //    vertexBuffer = new VertexBuffer(graphic, typeof(VertexTextures), vertices.Length, BufferUsage.None);
+        //    vertexBuffer.SetData(Vertices);
+        //    indexBuffer = new IndexBuffer(graphic, typeof(int), Indices.Length, BufferUsage.WriteOnly);
+        //    indexBuffer.SetData(Indices);
+
+        //    return this;
+        //}
 
         public HeightMapBuilder Build()
         {

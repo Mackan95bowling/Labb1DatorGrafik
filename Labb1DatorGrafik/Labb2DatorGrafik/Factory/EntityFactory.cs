@@ -46,7 +46,7 @@ namespace Labb2DatorGrafik.Factory
             var heightData = game.heightmapSystem.GetHeightMapData();
             List<Vector3> modelPositions = new List<Vector3>();
 
-            modelPositions = game.GetHeightMapPositionPositions(heightData, amount);
+            modelPositions = game.GetHeightMapPositionPositions(heightData,houses, amount);
             for (int i = 0; i < amount; i++)
             {
                 house.Add(new House(game.GraphicsDevice, houses, texture, modelPositions[i]));

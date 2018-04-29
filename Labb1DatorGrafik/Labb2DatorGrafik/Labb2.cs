@@ -80,6 +80,7 @@ namespace Labb2DatorGrafik
                 .SetIndices()
                 .InitNormal()
                 .SetEffects(graphics.GraphicsDevice)
+              //  .CreateBuffers(graphics.GraphicsDevice)
                 .Build();
 
             entityFactory.CreateCameraEntity();
@@ -137,7 +138,7 @@ namespace Labb2DatorGrafik
             base.Draw(gameTime);
         }
 
-        public List<Vector3> GetHeightMapPositionPositions(float[,] heightMapPos, int amoutPositions)
+        public List<Vector3> GetHeightMapPositionPositions(float[,] heightMapPos,Model model, int amoutPositions)
         {
             List<Vector3> positions = new List<Vector3>();
 
@@ -145,8 +146,8 @@ namespace Labb2DatorGrafik
             int zpos = 0;
             for (int i = 0; i < amoutPositions; i++)
             {
-
-                positions.Add(new Vector3(xpos, heightMapPos[xpos, zpos], zpos));
+                
+                positions.Add(new Vector3(xpos, heightMapPos[xpos, zpos] - 10 /*+ (model.Meshes[0].BoundingSphere.Radius)*/, zpos));
                 xpos += 10;
                 zpos += 10;
             }

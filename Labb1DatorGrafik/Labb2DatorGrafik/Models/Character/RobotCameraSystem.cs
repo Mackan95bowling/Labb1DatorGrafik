@@ -26,8 +26,10 @@ namespace Labb2DatorGrafik.Models
 
                 if (camera.FollowPlayer)
                 {
-                    camera.cameraTarget = _robot.RobotBody._position;
-                    camera.cameraPosition = _robot.RobotBody._position - new Vector3(0, 0, 5f);
+                    //camera.cameraTarget = _robot.RobotBody._position;
+                    //camera.cameraPosition = _robot.RobotBody._position - new Vector3(0, 0, 5f);
+                    camera.cameraTarget = _robot.RobotBody.World.Translation + _robot.RobotBody.World.Forward * 5f;
+                     camera.cameraPosition = _robot.RobotBody.World.Translation + _robot.RobotBody.World.Backward * 5f;
                     camera.view = Matrix.CreateLookAt(camera.cameraPosition, camera.cameraTarget, Vector3.Up);
                 }
             }
