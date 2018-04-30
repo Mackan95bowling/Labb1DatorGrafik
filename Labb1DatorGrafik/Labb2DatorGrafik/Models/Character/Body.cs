@@ -78,13 +78,12 @@ namespace ModelDemo2
                 go.Update(gameTime);
         }
         private void BoundPlayerToGround() {
-            if (_position.X < 0) _position.X = 0;
-            if (_position.X > 1080) _position.X = 1080;
-            if (_position.Z < 0) _position.Z = 0;
-            if (_position.Z > 1080) _position.Z = 1080;
 
-            _position.Y = heightMapData[Convert.ToInt32(_position.X), Convert.ToInt32(_position.Z)];
-            _position.Y = _position.Y - 10;
+            int posX = (int)_position.X;
+            int posZ = (int)_position.Z;
+            _position.Y = heightMapData[posX, posZ];
+           _position.Y = _position.Y +2;
+            if (_position.Y < 0) _position.Y = _position.Y + 10;
         }
 
         public override void Draw(BasicEffect effect, Matrix world)

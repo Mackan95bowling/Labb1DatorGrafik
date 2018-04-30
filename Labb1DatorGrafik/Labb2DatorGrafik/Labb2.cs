@@ -132,7 +132,7 @@ namespace Labb2DatorGrafik
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             heightmapSystem.Draw(graphics.GraphicsDevice);
-
+            
             drawGameObjects.Draw();
 
             base.Draw(gameTime);
@@ -147,7 +147,7 @@ namespace Labb2DatorGrafik
             for (int i = 0; i < amoutPositions; i++)
             {
                 
-                positions.Add(new Vector3(xpos, heightMapPos[xpos, zpos] - 10 /*+ (model.Meshes[0].BoundingSphere.Radius)*/, zpos));
+                positions.Add(new Vector3(xpos, heightMapPos[xpos, zpos], zpos));
                 xpos += 10;
                 zpos += 10;
             }

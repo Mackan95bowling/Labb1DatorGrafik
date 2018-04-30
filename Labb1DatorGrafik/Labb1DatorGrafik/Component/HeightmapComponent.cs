@@ -15,7 +15,7 @@ namespace Labb1DatorGrafik.Component
         public float[,] HeightMapData { get;  set; }
         public Texture2D HeightMap { get;  set; }
         public Texture2D HeightMapTexture { get;  set; }
-        public VertexPositionTexture[] Vertices { get;  set; }
+        public VertexPositionNormalTexture[] Vertices { get;  set; }
         public int Width { get; private set; }
         public int Height { get; private set; }
         public BasicEffect BasicEffect { get; set; }

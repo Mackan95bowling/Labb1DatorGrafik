@@ -35,12 +35,12 @@ namespace Labb1DatorGrafik.EngineHelpers
         public float[,] HeightMapData { get; private set; }
         public Texture2D HeightMap { get; private set; }
         public Texture2D HeightMapTexture { get; private set; }
-        public VertexPositionTexture[] Vertices { get; private set; }
+        public VertexPositionNormalTexture[] Vertices { get; private set; }
         public int Width { get; private set; }
         public int Height { get; private set; }
         public BasicEffect BasicEffect { get; private set; }
         public int[] Indices { get; private set; }
-        private VertexTextures[] vertices;
+        //private VertexTextures[] vertices;
 
         public VertexDeclaration vertexDeclaration;
 
@@ -62,10 +62,6 @@ namespace Labb1DatorGrafik.EngineHelpers
             this.HeightMapTexture = heightMapTexture;
             Width = heightMap.Width;
             Height = heightMap.Height;
-            //SetHeights();
-            //SetVertices();
-            //SetIndices();
-            //InitNormal();
             return this;
         }
 
@@ -97,21 +93,22 @@ namespace Labb1DatorGrafik.EngineHelpers
                 for (int x = 0; x < Width - 1; x++)
                 {
                     // create double triangles
-                    Indices[number] = x + (y + 1) * Width;      // up left
-                    Indices[number + 1] = x + y * Width + 1;        // down right
-                    Indices[number + 2] = x + y * Width;            // down left
-                    Indices[number + 3] = x + (y + 1) * Width;      // up left
-                    Indices[number + 4] = x + (y + 1) * Width + 1;  // up right
-                    Indices[number + 5] = x + y * Width + 1;        // down right
-                    number += 6;
+                    Indices[number++] = x + (y + 1) * Width;      // up left
+                    Indices[number++] = ((x + 1) + y * Width);        // down right
+                    Indices[number++] = (x + y * Width);            // down left
+
+                    Indices[number++] = x + (y + 1) * Width;      // up left
+                    Indices[number++] = ((x + 1) + (y + 1) * Width);  // up right
+                    Indices[number++] = ((x + 1) + y * Width);        // down right
+                    //number += 6;
                 }
             return this;
         }
 
         public HeightMapBuilder InitNormal()
         {
-            for (int i = 0; i < vertices.Length; i++)
-                vertices[i].Normal = new Vector3(0, 0, 0);
+            for (int i = 0; i < Vertices.Length; i++)
+                Vertices[i].Normal = new Vector3(0, 0, 0);
 
             for (int i = 0; i < Indices.Length / 3; i++)
             {
@@ -119,74 +116,79 @@ namespace Labb1DatorGrafik.EngineHelpers
                 int index2 = Indices[i * 3 + 1];
                 int index3 = Indices[i * 3 + 2];
 
-                Vector3 side1 = vertices[index1].Position - vertices[index3].Position;
-                Vector3 side2 = vertices[index1].Position - vertices[index2].Position;
+                Vector3 side1 = Vertices[index1].Position - Vertices[index3].Position;
+                Vector3 side2 = Vertices[index1].Position - Vertices[index2].Position;
                 Vector3 normal = Vector3.Cross(side1, side2);
 
-                vertices[index1].Normal += normal;
-                vertices[index2].Normal += normal;
-                vertices[index3].Normal += normal;
+                Vertices[index1].Normal += normal;
+                Vertices[index2].Normal += normal;
+                Vertices[index3].Normal += normal;
             }
-            for (int i = 0; i < vertices.Length; i++)
-                vertices[i].Normal.Normalize();
+            for (int i = 0; i < Vertices.Length; i++)
+                Vertices[i].Normal.Normalize();
             return this;
         }
         public HeightMapBuilder SetVertices()
         {
-            vertices = new VertexTextures[Width * Height];
+            //detta kanske är fel?
+            Vertices = new VertexPositionNormalTexture[Width * Height];
             float step = (maxHeight - minHeight) / 3;
             for (int x = 0; x < Width; x++)
             {
                 for (int y = 0; y < Height; y++)
                 {
-                    vertices[x + y * Width].Position = new Vector3(x, HeightMapData[x, y], -y);
+                    Vertices[x + y * Width].Position = new Vector3(x, HeightMapData[x, y], -y);
+                    Vertices[x + y * Width].TextureCoordinate.X = (float)x / Width;
+                    Vertices[x + y * Width].TextureCoordinate.Y = (float)y / Height;
 
-                    vertices[x + y * Width].TextureCoordinate.X = x;
+                    //vertices[x + y * Width].Position = new Vector3(x, HeightMapData[x, y], -y);
 
-                    vertices[x + y * Width].TextureCoordinate.Y = y;
+                    //vertices[x + y * Width].TextureCoordinate.X = x;
 
-                    vertices[x + y * Width].TetxureWeights = Vector4.Zero;
+                    //vertices[x + y * Width].TextureCoordinate.Y = y;
 
-                    //normalize each weight between 0 and 1
+                    //vertices[x + y * Width].TetxureWeights = Vector4.Zero;
 
-                    vertices[x + y * Width].TetxureWeights.X =
+                    ////normalize each weight between 0 and 1
 
-                        MathHelper.Clamp(1.0f - Math.Abs(HeightMapData[x, y]) / step, 0, 1);
+                    //vertices[x + y * Width].TetxureWeights.X =
 
-                    vertices[x + y * Width].TetxureWeights.Y =
+                    //    MathHelper.Clamp(1.0f - Math.Abs(HeightMapData[x, y]) / step, 0, 1);
 
-                        MathHelper.Clamp(1.0f - Math.Abs(HeightMapData[x, y] - step) / step, 0, 1);
+                    //vertices[x + y * Width].TetxureWeights.Y =
 
-                    vertices[x + y * Width].TetxureWeights.Z =
+                    //    MathHelper.Clamp(1.0f - Math.Abs(HeightMapData[x, y] - step) / step, 0, 1);
 
-                        MathHelper.Clamp(1.0f - Math.Abs(HeightMapData[x, y] - 2 * step) / step, 0, 1);
+                    //vertices[x + y * Width].TetxureWeights.Z =
 
-                    vertices[x + y * Width].TetxureWeights.W =
+                    //    MathHelper.Clamp(1.0f - Math.Abs(HeightMapData[x, y] - 2 * step) / step, 0, 1);
 
-                        MathHelper.Clamp(1.0f - Math.Abs(HeightMapData[x, y] - 3 * step) / step, 0, 1);
+                    //vertices[x + y * Width].TetxureWeights.W =
 
-                    //add to toal
+                    //    MathHelper.Clamp(1.0f - Math.Abs(HeightMapData[x, y] - 3 * step) / step, 0, 1);
 
-                    float total = vertices[x + y * Width].TetxureWeights.X;
+                    ////add to toal
 
-                    total += vertices[x + y * Width].TetxureWeights.Y;
+                    //float total = vertices[x + y * Width].TetxureWeights.X;
 
-                    total += vertices[x + y * Width].TetxureWeights.Z;
+                    //total += vertices[x + y * Width].TetxureWeights.Y;
 
-                    total += vertices[x + y * Width].TetxureWeights.W;
+                    //total += vertices[x + y * Width].TetxureWeights.Z;
 
-                    //divide by total
+                    //total += vertices[x + y * Width].TetxureWeights.W;
 
-                    vertices[x + y * Width].TetxureWeights.X /= total;
+                    ////divide by total
 
-                    vertices[x + y * Width].TetxureWeights.Y /= total;
+                    //vertices[x + y * Width].TetxureWeights.X /= total;
 
-                    vertices[x + y * Width].TetxureWeights.Z /= total;
+                    //vertices[x + y * Width].TetxureWeights.Y /= total;
 
-                    vertices[x + y * Width].TetxureWeights.W /= total;
+                    //vertices[x + y * Width].TetxureWeights.Z /= total;
+
+                    //vertices[x + y * Width].TetxureWeights.W /= total;
                 }
             }
-            vertexDeclaration = new VertexDeclaration(VertexTextures.VertexElements);
+          //  vertexDeclaration = new VertexDeclaration(VertexTextures.VertexElements);
             return this;
         }
 
@@ -220,7 +222,7 @@ namespace Labb1DatorGrafik.EngineHelpers
                 HeightMapData = HeightMapData,
                 HeightMapTexture = HeightMapTexture,
                 Indices = Indices,
-                vertices = vertices,
+                Vertices = Vertices,
                 vertexDeclaration = vertexDeclaration,
                 BasicEffect = BasicEffect,
             }, map);
