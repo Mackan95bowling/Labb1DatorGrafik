@@ -12,7 +12,7 @@ namespace ModelDemo
         protected GraphicsDevice GraphicsDevice;
         protected VertexBuffer VertexBuffer;
 
-        public Matrix World = Matrix.Identity;
+        public Matrix WorldMatrix;
         public float _sizeX = 1f;
         public float _sizeY = 1f;
         public float _sizeZ = 1f;
@@ -57,7 +57,7 @@ namespace ModelDemo
 
             // Front face
             nonIndexedCube[0] =
-                new VertexPositionColor(topLeftFront, Color.Red);
+                new VertexPositionColor(topLeftFront, Color.Red); //här ska texturen in VertexTexturePosition(){ 0,0 -1,1}
             nonIndexedCube[1] =
                 new VertexPositionColor(bottomLeftFront, Color.Red);
             nonIndexedCube[2] =

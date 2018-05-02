@@ -69,11 +69,13 @@ namespace Labb2DatorGrafik.Factory
             return Other;
         }
 
-        public Robot CreateRobot(Vector3 pos, BasicEffect effect)
+        public Robot CreateRobot(Vector3 pos, Matrix worldMatrix, BasicEffect effect)
         {
             Robot robot = new Robot(
                 game.GraphicsDevice,
-                new Vector3(0, 0, 0), game.heightmapSystem,
+                new Vector3(0, 0, 0),
+                /*worldMatrix,*/Matrix.Identity, /*with Matrix.Identity we see the robot, worldmatrix we dont see it*/
+                game.heightmapSystem,
                 new BasicEffect(game.GraphicsDevice)
                 {
                     VertexColorEnabled = true,

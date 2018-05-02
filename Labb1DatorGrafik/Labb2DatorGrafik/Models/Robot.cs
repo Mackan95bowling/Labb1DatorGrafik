@@ -17,14 +17,13 @@ namespace Labb2DatorGrafik.Models
         public Body RobotBody;
         private BasicEffect effect;
         private Vector3 position;
-        public Robot(GraphicsDevice graphics, Vector3 position, HeightmapSystem heightMap, BasicEffect effect)
+        public Robot(GraphicsDevice graphics, Vector3 position, Matrix worldMatrix, HeightmapSystem heightMap, BasicEffect effect)
         {
             this.position = position;
             this.effect = effect;
 
             RobotBody = new Body(graphics, position, heightMap);
-            WorldMatrix = Matrix.CreateTranslation(position); 
-
+            WorldMatrix = worldMatrix;
 
         }
         public override void Draw(Matrix view, Matrix projection)
@@ -34,7 +33,6 @@ namespace Labb2DatorGrafik.Models
 
             effect.Projection = cameraComp.projection;
             effect.View = cameraComp.view;
-            effect.World = WorldMatrix;
             RobotBody.Draw(effect, WorldMatrix);
         }
 

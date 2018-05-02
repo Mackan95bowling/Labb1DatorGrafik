@@ -48,7 +48,7 @@ namespace ModelDemo2
             }
 
 
-            World = Matrix.Identity *
+            WorldMatrix = Matrix.Identity *
                 Matrix.CreateTranslation(_position) *
                 Matrix.CreateFromQuaternion(Quaternion.CreateFromYawPitchRoll(_rotation.X, _rotation.Y, _rotation.Z)) *
                 Matrix.CreateTranslation(_jointPos);
@@ -59,14 +59,14 @@ namespace ModelDemo2
 
         public override void Draw(BasicEffect effect, Matrix world)
         {
-            effect.World = World * world;
+            effect.World = WorldMatrix * world;
             effect.CurrentTechnique.Passes[0].Apply();
 
             GraphicsDevice.SetVertexBuffer(VertexBuffer);
             GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, 36);
 
             foreach (IGameObject go in _children)
-                go.Draw(effect, World * world);
+                go.Draw(effect, WorldMatrix * world);
         }
     }
 }

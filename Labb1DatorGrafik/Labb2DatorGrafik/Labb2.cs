@@ -24,7 +24,7 @@ namespace Labb2DatorGrafik
         Texture2D texture, textureImage;
         //private Tree mapleTree;
         public House farmerHouse;
-
+        public Robot robot;
         DrawGameObjects drawGameObjects;
         BasicEffect basicEffect;
 
@@ -80,11 +80,11 @@ namespace Labb2DatorGrafik
                 .SetIndices()
                 .InitNormal()
                 .SetEffects(graphics.GraphicsDevice)
-              //  .CreateBuffers(graphics.GraphicsDevice)
+                .SetWorldMatrix(Matrix.CreateTranslation(new Vector3(0, 0, 1080)))
                 .Build();
 
             entityFactory.CreateCameraEntity();
-            var robot = entityFactory.CreateRobot(Vector3.Zero, new BasicEffect(graphics.GraphicsDevice) { VertexColorEnabled = true });
+            robot = entityFactory.CreateRobot(Vector3.Zero, heightmapSystem.GetHeightMapWorld(), new BasicEffect(graphics.GraphicsDevice) { VertexColorEnabled = true });
             robotCameraSystem = new RobotCameraSystem(robot);
 
 
@@ -131,9 +131,10 @@ namespace Labb2DatorGrafik
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+
             heightmapSystem.Draw(graphics.GraphicsDevice);
-            
             drawGameObjects.Draw();
+
 
             base.Draw(gameTime);
         }
@@ -141,15 +142,20 @@ namespace Labb2DatorGrafik
         public List<Vector3> GetHeightMapPositionPositions(float[,] heightMapPos,Model model, int amoutPositions)
         {
             List<Vector3> positions = new List<Vector3>();
+            var random = new Random();
+            int xpos = 2;
 
-            int xpos = 0;
-            int zpos = 0;
+            int zpos = 2;
+            int posx = 0;
+            int posz = 0;
             for (int i = 0; i < amoutPositions; i++)
             {
-                
-                positions.Add(new Vector3(xpos, heightMapPos[xpos, zpos], zpos));
-                xpos += 10;
-                zpos += 10;
+                posx = random.Next(xpos / 2, xpos + 5); //1, 1080 om man vill
+                posz = random.Next(zpos / 2, zpos + 5);
+                var ypos = heightMapPos[Math.Abs(posx), Math.Abs(posz)];
+                positions.Add(new Vector3(posx,ypos,-posz));
+                xpos += 5;
+                zpos += 5;
             }
             return positions;
         }

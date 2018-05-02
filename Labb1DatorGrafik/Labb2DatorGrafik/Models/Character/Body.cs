@@ -1,4 +1,6 @@
-﻿using Labb1DatorGrafik.System;
+﻿using Labb1DatorGrafik.Component;
+using Labb1DatorGrafik.Manager;
+using Labb1DatorGrafik.System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -14,7 +16,7 @@ namespace ModelDemo2
     public class Body : CuboidMesh
     {
         private List<IGameObject> _children = new List<IGameObject>();
-
+       
         private Vector3 _rotation = new Vector3(0,0,0);
         public Vector3 _position = Vector3.Zero;
         public HeightmapSystem heightmap;
@@ -39,7 +41,7 @@ namespace ModelDemo2
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Left))
             {
-                _rotation = new Vector3(_rotation.X + 0.01f, _rotation.Y, _rotation.Z);
+                _rotation = new Vector3(_rotation.X + .01f, _rotation.Y, _rotation.Z);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Up)) {
                 _position = new Vector3(_position.X + .01f, _position.Y, _position.Z);
@@ -69,9 +71,9 @@ namespace ModelDemo2
 
             BoundPlayerToGround();
 
-            World = Matrix.Identity *
-                Matrix.CreateFromQuaternion(Quaternion.CreateFromYawPitchRoll(_rotation.X, _rotation.Y, _rotation.Z)) *
-                Matrix.CreateTranslation(_position);
+            WorldMatrix = Matrix.Identity *
+            Matrix.CreateFromQuaternion(Quaternion.CreateFromYawPitchRoll(_rotation.X, _rotation.Y, _rotation.Z)) *
+            Matrix.CreateTranslation(_position);
             Console.WriteLine(_position.ToString());
 
             foreach (IGameObject go in _children)
@@ -81,14 +83,14 @@ namespace ModelDemo2
 
             int posX = (int)_position.X;
             int posZ = (int)_position.Z;
-            _position.Y = heightMapData[posX, posZ];
-           _position.Y = _position.Y +2;
+            _position.Y = heightMapData[Math.Abs(posX), Math.Abs(posZ)];
+            _position.Y = _position.Y + 2;
             if (_position.Y < 0) _position.Y = _position.Y + 10;
         }
 
         public override void Draw(BasicEffect effect, Matrix world)
         {
-            effect.World = World * world;
+            effect.World = WorldMatrix * world;
             effect.CurrentTechnique.Passes[0].Apply();
 
             GraphicsDevice.SetVertexBuffer(VertexBuffer);
@@ -96,7 +98,7 @@ namespace ModelDemo2
             GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, 36);
 
             foreach (IGameObject go in _children)
-                go.Draw(effect, World * world);
+                go.Draw(effect, WorldMatrix * world);
         }
     }
 }

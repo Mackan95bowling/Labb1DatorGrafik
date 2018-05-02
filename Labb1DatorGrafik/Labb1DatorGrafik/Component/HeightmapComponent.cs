@@ -19,9 +19,10 @@ namespace Labb1DatorGrafik.Component
         public int Width { get; private set; }
         public int Height { get; private set; }
         public BasicEffect BasicEffect { get; set; }
+        public Matrix heightMapWorld { get; set; }
 
         public VertexDeclaration vertexDeclaration;
-        public int[] Indices { get; set; }
+        public int[] Indices { get; set; }                        
         public VertexTextures[] vertices;
     }
 }

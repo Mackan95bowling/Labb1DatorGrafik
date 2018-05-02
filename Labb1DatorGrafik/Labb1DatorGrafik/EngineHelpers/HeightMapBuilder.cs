@@ -41,7 +41,7 @@ namespace Labb1DatorGrafik.EngineHelpers
         public BasicEffect BasicEffect { get; private set; }
         public int[] Indices { get; private set; }
         //private VertexTextures[] vertices;
-
+        public Matrix matrix;
         public VertexDeclaration vertexDeclaration;
 
         private int minHeight;
@@ -202,6 +202,11 @@ namespace Labb1DatorGrafik.EngineHelpers
 
             return this;
         }
+        public HeightMapBuilder SetWorldMatrix(Matrix matrix) {
+            this.matrix = matrix;
+            return this;
+
+        }
         //public HeightMapBuilder CreateBuffers(GraphicsDevice graphic)
         //{
         //    vertexBuffer = new VertexBuffer(graphic, typeof(VertexTextures), vertices.Length, BufferUsage.None);
@@ -225,7 +230,8 @@ namespace Labb1DatorGrafik.EngineHelpers
                 Vertices = Vertices,
                 vertexDeclaration = vertexDeclaration,
                 BasicEffect = BasicEffect,
-            }, map);
+                heightMapWorld = matrix,
+        }, map);
             return this;
         }
     }
