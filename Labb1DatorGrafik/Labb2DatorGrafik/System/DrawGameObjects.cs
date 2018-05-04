@@ -23,7 +23,11 @@ namespace Labb2DatorGrafik.System
             foreach (var camera in cameraComponents) {
                 var cam = camera.Value as CameraComponent;
                 foreach (var gameobject in gameObjects) {
-                    gameobject.Draw(cam.view, cam.projection);
+                    if(cam.BoundingFrustum.Intersects(gameobject.BoundingBox));
+                    {
+                        gameobject.Draw(cam.view, cam.projection);
+                    }
+                  
                 }
 
             }

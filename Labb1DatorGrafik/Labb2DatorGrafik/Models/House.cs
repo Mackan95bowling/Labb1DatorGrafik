@@ -25,14 +25,43 @@ namespace Labb2DatorGrafik.Models
             this.model = model;
             this.houseTexture = texture;
             this.position = pos;
-            WorldMatrix = Matrix.CreateTranslation(pos);               
+            WorldMatrix = Matrix.CreateTranslation(pos);
+            SetBoundingBox();
         }
         private void SetBoundingBox() {
+            BoundingSphere mergedSphere = new BoundingSphere();
+            BoundingSphere[] boundingSpheres;
+            int index = 0;
+            int meshCount = model.Meshes.Count;
 
-            //Vector3 min = position + Vector3.Up * height - size / 2f;
-            //Vector3 max = position + Vector3.Up * height + size / 2f;
-            //this.boundingBoxHouse = new BoundingBox(min, max);
+            boundingSpheres = new BoundingSphere[meshCount];
+            foreach (ModelMesh mesh in model.Meshes)
+            {
+                boundingSpheres[index++] = mesh.BoundingSphere;
+            }
 
+            mergedSphere = boundingSpheres[0];
+            if ((meshCount) > 1)
+            {
+                index = 1;
+                do
+                {
+                    mergedSphere = BoundingSphere.CreateMerged(mergedSphere,
+                        boundingSpheres[index]);
+                    index++;
+                } while (index < meshCount);
+            }
+
+            mergedSphere.Center = position;
+
+            //foreach (ModelMesh mesh in model.Meshes) {
+            //    mesh.BoundingSphere;
+            //}
+            //Vector3 min = new Vector3(position.X - width, position.Y - (heigth), position.Z - deepth);
+            //Vector3 max = new Vector3(position.X + (width), position.Y, position.Z + deepth);
+            //boundingBox = new BoundingBoxInfo();
+            //boundingBox.boundingBox = new BoundingBox(min, max);
+            //boundingBox.type = BoundingBoxInfo.CollisionType.House;
         }
         public override void Draw(Matrix view, Matrix projection)
         {

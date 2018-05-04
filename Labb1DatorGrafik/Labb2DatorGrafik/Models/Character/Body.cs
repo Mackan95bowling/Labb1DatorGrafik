@@ -84,8 +84,7 @@ namespace ModelDemo2
             int posX = (int)_position.X;
             int posZ = (int)_position.Z;
             _position.Y = heightMapData[Math.Abs(posX), Math.Abs(posZ)];
-            _position.Y = _position.Y + 2;
-            if (_position.Y < 0) _position.Y = _position.Y + 10;
+            _position.Y = _position.Y + 0.5f;
         }
 
         public override void Draw(BasicEffect effect, Matrix world)
