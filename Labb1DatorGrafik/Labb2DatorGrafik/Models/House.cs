@@ -54,14 +54,6 @@ namespace Labb2DatorGrafik.Models
 
             mergedSphere.Center = position;
 
-            //foreach (ModelMesh mesh in model.Meshes) {
-            //    mesh.BoundingSphere;
-            //}
-            //Vector3 min = new Vector3(position.X - width, position.Y - (heigth), position.Z - deepth);
-            //Vector3 max = new Vector3(position.X + (width), position.Y, position.Z + deepth);
-            //boundingBox = new BoundingBoxInfo();
-            //boundingBox.boundingBox = new BoundingBox(min, max);
-            //boundingBox.type = BoundingBoxInfo.CollisionType.House;
         }
         public override void Draw(Matrix view, Matrix projection)
         {

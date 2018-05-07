@@ -42,16 +42,19 @@ namespace ModelDemo2
             if (Keyboard.GetState().IsKeyDown(Keys.Left))
             {
                 _rotation = new Vector3(_rotation.X + .01f, _rotation.Y, _rotation.Z);
+                _position = new Vector3(_position.X - .06f, _position.Y, _position.Z);
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Up)) {
-                _position = new Vector3(_position.X + .01f, _position.Y, _position.Z);
+                _position = new Vector3(_position.X + .06f, _position.Y, _position.Z);
             }
 
             Console.WriteLine();
 
             if (Keyboard.GetState().IsKeyDown(Keys.Right))
+            {
                 _rotation = new Vector3(_rotation.X - 0.01f, _rotation.Y, _rotation.Z);
-
+              //  _position = new Vector3(_position.X -.06f, _position.Y, _position.Z);
+            }
             //TEST POSITION
             if (Keyboard.GetState().IsKeyDown(Keys.A))
                 _position = new Vector3(_position.X - 0.05f, _position.Y, _position.Z);
