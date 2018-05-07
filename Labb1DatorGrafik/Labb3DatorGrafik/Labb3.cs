@@ -1,4 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Labb1DatorGrafik.Component;
+using Labb1DatorGrafik.EngineHelpers;
+using Labb1DatorGrafik.Manager;
+using Labb1DatorGrafik.System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -7,13 +11,18 @@ namespace Labb3DatorGrafik
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class Labb3 : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Effect myEffect;
 
-        public Game1()
+        Texture2D texture, textureImage;
+        CameraSystem cameraSystem;
+        TransformSystem transformSystem;
+        ModelSystem modelSystem;
+        HeightmapSystem heightmapSystem;
+        public Labb3()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -28,7 +37,10 @@ namespace Labb3DatorGrafik
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            cameraSystem = new CameraSystem();
+            transformSystem = new TransformSystem();
+            modelSystem = new ModelSystem();
+            heightmapSystem = new HeightmapSystem();
             base.Initialize();
         }
 
@@ -43,6 +55,20 @@ namespace Labb3DatorGrafik
             //this is how we load our EFFECT
             myEffect = Content.Load<Effect>("test1");
             var test = myEffect;
+
+
+            texture = Content.Load<Texture2D>("US_Canyon");
+            textureImage = Content.Load<Texture2D>("sand");
+            CreateEntities();
+            HeightMapBuilder heightMap = new HeightMapBuilder()
+                .SetHeightMapTextureData(Content.Load<Texture2D>("US_Canyon"), Content.Load<Texture2D>("sand"))
+                .SetHeights()
+                .SetVertices()
+                .SetIndices()
+                .InitNormal()
+                .SetEffects(graphics.GraphicsDevice)
+                .SetWorldMatrix(Matrix.CreateTranslation(new Vector3(0, 0, 1080)))
+                .Build();
             // TODO: use this.Content to load your game content here
         }
 
@@ -66,7 +92,8 @@ namespace Labb3DatorGrafik
                 Exit();
 
             // TODO: Add your update logic here
-
+            cameraSystem.Update(gameTime);
+            transformSystem.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -80,7 +107,21 @@ namespace Labb3DatorGrafik
 
             // TODO: Add your drawing code here
 
+            modelSystem.Draw(gameTime);
+            heightmapSystem.Draw(graphics.GraphicsDevice);
+
             base.Draw(gameTime);
+        }
+        private void CreateEntities()
+        {
+            var chopperID = ComponentManager.Get().NewEntity();
+            ComponentManager.Get().AddComponentToEntity(new TransformComponent() { }, chopperID);
+            //ComponentManager.Get().AddComponentToEntity(new ModelComponent() { model = chopper }, chopperID);
+
+
+
+            var cameraID = ComponentManager.Get().NewEntity();
+            ComponentManager.Get().AddComponentToEntity(new CameraComponent() { fieldOfView = MathHelper.ToRadians(45f), aspectRatio = graphics.GraphicsDevice.Viewport.AspectRatio, cameraPosition = new Vector3(15, 10, 20), cameraTarget = Vector3.Zero }, cameraID);
         }
     }
 }

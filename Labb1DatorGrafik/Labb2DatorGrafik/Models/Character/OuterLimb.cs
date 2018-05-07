@@ -16,10 +16,11 @@ namespace ModelDemo
         private Vector3 _position = new Vector3(0, .1f, 0);
         private Vector3 _jointPos = new Vector3(0, 1f, 0);
 
-        public OuterLimb(GraphicsDevice graphics, Vector3 jointPos)
+        public OuterLimb(GraphicsDevice graphics, Vector3 jointPos,Texture2D texture)
             : base(graphics, .1f, .3f, .1f)
         {
             _jointPos = jointPos;
+            Texture = texture;
         }
 
         public override void Update(GameTime gameTime)
@@ -43,9 +44,9 @@ namespace ModelDemo
         {
             effect.World = WorldMatrix * world;
             effect.CurrentTechnique.Passes[0].Apply();
-
+            effect.Texture = Texture;
             GraphicsDevice.SetVertexBuffer(VertexBuffer);
-            GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, 36);
+            GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, VertexBuffer.VertexCount);
 
             foreach (IGameObject go in _children)
                 go.Draw(effect, WorldMatrix * world);

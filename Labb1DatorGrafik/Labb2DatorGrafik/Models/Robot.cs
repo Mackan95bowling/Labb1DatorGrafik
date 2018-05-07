@@ -17,12 +17,12 @@ namespace Labb2DatorGrafik.Models
         public Body RobotBody;
         private BasicEffect effect;
         private Vector3 position;
-        public Robot(GraphicsDevice graphics, Vector3 position, Matrix worldMatrix, HeightmapSystem heightMap, BasicEffect effect)
+        public Robot(GraphicsDevice graphics, Vector3 position, Matrix worldMatrix, HeightmapSystem heightMap, BasicEffect effect,Texture2D texture)
         {
             this.position = position;
             this.effect = effect;
 
-            RobotBody = new Body(graphics, position, heightMap);
+            RobotBody = new Body(graphics, position,texture, heightMap);
             WorldMatrix = worldMatrix;
 
         }

@@ -70,11 +70,11 @@ namespace Labb1DatorGrafik.EngineHelpers
             Color[] HeightMapColors = new Color[Width * Height];
             HeightMap.GetData(HeightMapColors);
             HeightMapData = new float[Width, Height];
+
             for (int x = 0; x < Width; x++)
             {
                 for (int y = 0; y < Height; y++)
                 {
-                   // HeightMapData[x, y] = HeightMapColors[x + y * Width].G / 3.1f;
                     HeightMapData[x, y] = HeightMapColors[x + y * Width].G / 3.1f;
                     minHeight = (int)Math.Min(HeightMapData[x, y], minHeight);
                     maxHeight = (int)Math.Max(HeightMapData[x, y], maxHeight);

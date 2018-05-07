@@ -19,6 +19,7 @@ namespace Labb2DatorGrafik.System
 
         public void Draw()
         {
+            int test = 0;
             var cameraComponents = ComponentManager.Get().GetComponents<CameraComponent>();
             foreach (var camera in cameraComponents) {
                 var cam = camera.Value as CameraComponent;
@@ -26,10 +27,11 @@ namespace Labb2DatorGrafik.System
                     if(cam.BoundingFrustum.Intersects(gameobject.BoundingBox));
                     {
                         gameobject.Draw(cam.view, cam.projection);
+                        test++;
                     }
                   
                 }
-
+                Console.WriteLine("" + test);
             }
         }
            

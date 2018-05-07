@@ -19,6 +19,7 @@ namespace ModelDemo
             : base(graphics, 0.15f, .15f, .15f)
         {
             _position = pos;
+            Texture = Texture;
         }
 
         public override void Update(GameTime gameTime)
@@ -36,9 +37,9 @@ namespace ModelDemo
         {
             effect.World = WorldMatrix * world;
             effect.CurrentTechnique.Passes[0].Apply();
-
+            effect.Texture = Texture;
             GraphicsDevice.SetVertexBuffer(VertexBuffer);
-            GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, 36);
+            GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, VertexBuffer.VertexCount);
 
             foreach (IGameObject go in _children)
                 go.Draw(effect, WorldMatrix * world);

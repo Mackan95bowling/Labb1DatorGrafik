@@ -22,12 +22,13 @@ namespace ModelDemo2
         private float rotation = 0;
         private bool rotatePositive = true;
 
-        public Arm(GraphicsDevice graphics, Vector3 jointPos, Vector3 rotation)
+        public Arm(GraphicsDevice graphics, Vector3 jointPos, Vector3 rotation, Texture2D texture)
             : base(graphics, .1f, .1f, .1f)
         {
             _jointPos = jointPos;
             _rotation = rotation;
             _children.Add(new OuterLimb(graphics,new Vector3(0,_sizeY/2,_sizeZ/2)));
+            Texture = texture;
 
         }
 
@@ -61,9 +62,9 @@ namespace ModelDemo2
         {
             effect.World = WorldMatrix * world;
             effect.CurrentTechnique.Passes[0].Apply();
-
+            effect.Texture = Texture;
             GraphicsDevice.SetVertexBuffer(VertexBuffer);
-            GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, 36);
+            GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, VertexBuffer.VertexCount);
 
             foreach (IGameObject go in _children)
                 go.Draw(effect, WorldMatrix * world);
