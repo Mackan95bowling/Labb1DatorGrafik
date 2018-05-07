@@ -1,41 +1,44 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Labb3DatorGrafik.Component;
+using Labb3DatorGrafik.EngineHelpers;
+using Labb3DatorGrafik.Manager;
+using Labb3DatorGrafik.Service;
+using Labb3DatorGrafik.System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace Labb3DatorGrafik
 {
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
+
     public class Game1 : Game
     {
+
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Effect myEffect;
 
+        // Systems
+        private HeightmapSystem heightmapSystem;
+        private CameraSystem cameraSystem;
+
         public Game1()
         {
+
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            GameService.Instance().WorldMatrix = Matrix.Identity;
+            heightmapSystem = new HeightmapSystem();
+            cameraSystem = new CameraSystem();
+
 
             base.Initialize();
         }
 
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
@@ -43,23 +46,30 @@ namespace Labb3DatorGrafik
             //this is how we load our EFFECT
             myEffect = Content.Load<Effect>("test1");
             var test = myEffect;
-            // TODO: use this.Content to load your game content here
+
+
+            HeightMapBuilder heightMap = new HeightMapBuilder()
+                .SetHeightMapTextureData(Content.Load<Texture2D>("Untitled"), Content.Load<Texture2D>("sand"))
+                .SetHeights()
+                .SetVertices()
+                .SetIndices()
+                //.InitNormal()
+                .SetEffects(graphics.GraphicsDevice)
+                .Build();
+
+            var cameraID = ComponentManager.Get().NewEntity();
+            ComponentManager.Get().AddComponentToEntity(new CameraComponent() { fieldOfView = MathHelper.ToRadians(45f), aspectRatio = graphics.GraphicsDevice.Viewport.AspectRatio, cameraPosition = new Vector3(0, 0, -100), cameraTarget = Vector3.Zero }, cameraID);
+
+            cameraSystem.SetCameraView();
         }
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
+
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+
         }
 
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -70,17 +80,19 @@ namespace Labb3DatorGrafik
             base.Update(gameTime);
         }
 
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            heightmapSystem.Draw(graphics.GraphicsDevice);
 
             base.Draw(gameTime);
+        }
+
+        public static Game GetGame()
+        {
+            return _thisGame;
         }
     }
 }
