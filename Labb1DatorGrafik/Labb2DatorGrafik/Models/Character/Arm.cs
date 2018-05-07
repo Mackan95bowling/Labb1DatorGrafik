@@ -27,7 +27,7 @@ namespace ModelDemo2
         {
             _jointPos = jointPos;
             _rotation = rotation;
-            _children.Add(new OuterLimb(graphics,new Vector3(0,_sizeY/2,_sizeZ/2)));
+            _children.Add(new OuterLimb(graphics,new Vector3(0,_sizeY/2,_sizeZ/2),texture));
             Texture = texture;
 
         }
