@@ -22,9 +22,7 @@ namespace Labb3DatorGrafik.System
                 camera.World = GameService.Instance().WorldMatrix;
                 camera.view = Matrix.CreateLookAt(camera.cameraPosition, camera.cameraTarget, Vector3.Up);
                 camera.projection = Matrix.CreatePerspectiveFieldOfView(camera.fieldOfView, camera.aspectRatio, 1f, 1000f);
-                camera.ClippingProjection = Matrix.CreatePerspectiveFieldOfView(1.1f * camera.fieldOfView, camera.aspectRatio,
-                0.5f * 1f, 1.3f * 1000f);
-                camera.BoundingFrustum = new BoundingFrustum(camera.view * camera.ClippingProjection);
+
             }
 
         }

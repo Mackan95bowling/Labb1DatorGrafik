@@ -49,16 +49,17 @@ namespace Labb3DatorGrafik
 
 
             HeightMapBuilder heightMap = new HeightMapBuilder()
-                .SetHeightMapTextureData(Content.Load<Texture2D>("Untitled"), Content.Load<Texture2D>("sand"))
+                .SetHeightMapTextureData(Content.Load<Texture2D>("US_CANYON"), Content.Load<Texture2D>("sand"))
                 .SetHeights()
                 .SetVertices()
                 .SetIndices()
-                //.InitNormal()
+                .InitNormal()
                 .SetEffects(graphics.GraphicsDevice)
                 .Build();
 
             var cameraID = ComponentManager.Get().NewEntity();
-            ComponentManager.Get().AddComponentToEntity(new CameraComponent() { fieldOfView = MathHelper.ToRadians(45f), aspectRatio = graphics.GraphicsDevice.Viewport.AspectRatio, cameraPosition = new Vector3(0, 0, -100), cameraTarget = Vector3.Zero }, cameraID);
+            ComponentManager.Get().AddComponentToEntity(new CameraComponent() { fieldOfView = MathHelper.ToRadians(45f), aspectRatio = graphics.GraphicsDevice.Viewport.AspectRatio, cameraPosition = new Vector3(50, 10, 100), cameraTarget = Vector3.Zero}, cameraID);
+
 
             cameraSystem.SetCameraView();
         }
@@ -76,7 +77,7 @@ namespace Labb3DatorGrafik
                 Exit();
 
             // TODO: Add your update logic here
-
+            cameraSystem.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -86,13 +87,13 @@ namespace Labb3DatorGrafik
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             heightmapSystem.Draw(graphics.GraphicsDevice);
-
+            
             base.Draw(gameTime);
         }
 
-        public static Game GetGame()
-        {
-            return _thisGame;
-        }
+        //public static Game GetGame()
+        //{
+        //    return _thisGame;
+        //}
     }
 }
