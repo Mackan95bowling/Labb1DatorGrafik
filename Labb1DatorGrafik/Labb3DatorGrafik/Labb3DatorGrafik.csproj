@@ -44,6 +44,7 @@
     <Compile Include="Component\CameraComponent.cs" />
     <Compile Include="Component\HeightmapComponent.cs" />
     <Compile Include="Component\IComponent.cs" />
+    <Compile Include="Component\ModelComponent.cs" />
     <Compile Include="EngineHelpers\HeightMapBuilder.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Manager\ComponentManager.cs" />

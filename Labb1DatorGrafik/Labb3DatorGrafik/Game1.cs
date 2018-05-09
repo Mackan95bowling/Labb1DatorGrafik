@@ -60,6 +60,8 @@ namespace Labb3DatorGrafik
             var cameraID = ComponentManager.Get().NewEntity();
             ComponentManager.Get().AddComponentToEntity(new CameraComponent() { fieldOfView = MathHelper.ToRadians(45f), aspectRatio = graphics.GraphicsDevice.Viewport.AspectRatio, cameraPosition = new Vector3(50, 10, 100), cameraTarget = Vector3.Zero}, cameraID);
 
+            var chopperID = ComponentManager.Get().NewEntity();
+            ComponentManager.Get().AddComponentToEntity(new ModelComponent() { })
 
             cameraSystem.SetCameraView();
         }
