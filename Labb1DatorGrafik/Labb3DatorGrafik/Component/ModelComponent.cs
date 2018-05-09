@@ -10,9 +10,10 @@ namespace Labb3DatorGrafik.Component
 {
     public class ModelComponent : IComponent
     {
+
         public Vector3 modelPosition;
         public Matrix[] boneTransformations { get; set; }
         public Model model { get; set; }
     }
 }
-}
+

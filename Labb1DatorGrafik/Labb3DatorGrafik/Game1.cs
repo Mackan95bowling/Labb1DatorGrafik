@@ -22,6 +22,8 @@ namespace Labb3DatorGrafik
         private HeightmapSystem heightmapSystem;
         private CameraSystem cameraSystem;
 
+        public ModelSystem modelSystem;
+
         public Game1()
         {
 
@@ -34,7 +36,7 @@ namespace Labb3DatorGrafik
             GameService.Instance().WorldMatrix = Matrix.Identity;
             heightmapSystem = new HeightmapSystem();
             cameraSystem = new CameraSystem();
-
+            modelSystem = new ModelSystem();
 
             base.Initialize();
         }
@@ -61,8 +63,8 @@ namespace Labb3DatorGrafik
             ComponentManager.Get().AddComponentToEntity(new CameraComponent() { fieldOfView = MathHelper.ToRadians(45f), aspectRatio = graphics.GraphicsDevice.Viewport.AspectRatio, cameraPosition = new Vector3(50, 10, 100), cameraTarget = Vector3.Zero}, cameraID);
 
             var chopperID = ComponentManager.Get().NewEntity();
-            ComponentManager.Get().AddComponentToEntity(new ModelComponent() { })
-
+            ComponentManager.Get().AddComponentToEntity(new ModelComponent() { model = Content.Load<Model>("Chopper"), modelPosition = new Vector3(50, 10, 80)}, chopperID);
+            
             cameraSystem.SetCameraView();
         }
 
@@ -89,7 +91,7 @@ namespace Labb3DatorGrafik
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             heightmapSystem.Draw(graphics.GraphicsDevice);
-            
+            modelSystem.Draw(gameTime);
             base.Draw(gameTime);
         }
 
