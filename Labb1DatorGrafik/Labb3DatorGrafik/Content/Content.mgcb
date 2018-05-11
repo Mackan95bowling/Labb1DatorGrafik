@@ -485,3 +485,9 @@
 /processorParam:TextureFormat=Compressed
 /build:farmhouse_obj.obj
 
+#begin ShadowMapEffect.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:ShadowMapEffect.fx
+
