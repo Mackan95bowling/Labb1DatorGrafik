@@ -85,7 +85,7 @@ namespace Labb2DatorGrafik
 
             entityFactory.CreateCameraEntity();
             robot = entityFactory.CreateRobot(Vector3.Zero, heightmapSystem.GetHeightMapWorld(), new BasicEffect(graphics.GraphicsDevice), Content.Load<Texture2D>("US_Canyon"));
-            robotCameraSystem = new RobotCameraSystem(robot);
+            robotCameraSystem = new RobotCameraSystem(GraphicsDevice, robot);
 
 
 

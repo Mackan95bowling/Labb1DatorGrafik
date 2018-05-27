@@ -14,8 +14,10 @@ namespace Labb2DatorGrafik.Models
     public class RobotCameraSystem 
     {
         private Robot _robot;
-        public RobotCameraSystem(Robot robot) {
+        private GraphicsDevice _graphics;
+        public RobotCameraSystem(GraphicsDevice graphics,Robot robot) {
             _robot = robot;
+            _graphics = graphics;
         }
         public void Update(GameTime gameTime)
         {
@@ -29,14 +31,15 @@ namespace Labb2DatorGrafik.Models
                     camera.cameraTarget = _robot.RobotBody.WorldMatrix.Translation;
                     camera.cameraPosition = (_robot.RobotBody.WorldMatrix.Translation + new Vector3(0,0,5));
                     camera.view = Matrix.CreateLookAt(camera.cameraPosition, camera.cameraTarget, Vector3.Up);
-                    camera.BoundingFrustum = CreateBoundingFrustum();
+                    camera.BoundingFrustum = CreateBoundingFrustum(camera);
                 }
             }
 
         }
-        public BoundingFrustum CreateBoundingFrustum()
+        public BoundingFrustum CreateBoundingFrustum(CameraComponent camera)
         {
-            BoundingFrustum boundingFrustum = new BoundingFrustum(Matrix.Identity);
+            BoundingFrustum boundingFrustum = new BoundingFrustum(Matrix.CreatePerspectiveFieldOfView(1.1f * MathHelper.PiOver2, _graphics.Viewport.AspectRatio,
+                        0.5f * 0.1f, 1.3f * 1000f) * camera.view);
             return boundingFrustum;
         }
     }
