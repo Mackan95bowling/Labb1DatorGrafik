@@ -41,10 +41,15 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Component\AmbientComponent.cs" />
     <Compile Include="Component\CameraComponent.cs" />
+    <Compile Include="Component\FogComponent.cs" />
     <Compile Include="Component\HeightmapComponent.cs" />
     <Compile Include="Component\IComponent.cs" />
+    <Compile Include="Component\LightComponent.cs" />
     <Compile Include="Component\ModelComponent.cs" />
+    <Compile Include="Component\ShadowMapEffect.cs" />
+    <Compile Include="Component\ShadowRenderTargetComponent.cs" />
     <Compile Include="EngineHelpers\HeightMapBuilder.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Manager\ComponentManager.cs" />
