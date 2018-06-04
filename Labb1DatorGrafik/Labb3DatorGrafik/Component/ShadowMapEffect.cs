@@ -10,13 +10,13 @@ namespace Labb3DatorGrafik.Component
 {
     public class ShadowMapEffect : IComponent
     {
-        AmbientComponent AmbientComponent { get; set; }
-        CameraComponent camera { get; set; }
-        Effect effect { get; set; }
-        FogComponent fog { get; set; }
-        LightComponent light { get; set; }
-        RenderTarget2D ShadowRenderTarget { get; set; }
-        Matrix world { get; set; }
+       public AmbientComponent AmbientComponent { get; set; }
+        public CameraComponent camera { get; set; }
+        public Effect effect { get; set; }
+        public FogComponent fog { get; set; }
+        public LightComponent light { get; set; }
+        public RenderTarget2D ShadowRenderTarget { get; set; }
+        public Matrix world { get; set; }
         bool ShadowMap { get; set; }
         string TechniqueName { get; set; }
         public void AddEffect(Effect effects, Texture2D texture) {

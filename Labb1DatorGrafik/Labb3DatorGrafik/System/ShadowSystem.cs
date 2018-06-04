@@ -53,27 +53,26 @@ namespace Labb3DatorGrafik.System
             var lightComp = ComponentManager.Get().GetComponents<LightComponent>();
             var light = lightComp.FirstOrDefault().Value as LightComponent;
 
-            var shadowMappingEffects = ComponentManager.Get().GetComponents<ShadowMapEffect>();
+            var shadowMappingEffects = ComponentManager.Get().GetComponents<ShadowMapEffect>().FirstOrDefault();
             var fogComp = ComponentManager.Get().GetComponents<FogComponent>().Values.FirstOrDefault();
             var ambientComp = ComponentManager.Get().GetComponents<AmbientComponent>().Values.FirstOrDefault();
             if (cameraComp == null || shadowRender == null || light == null || fogComp == null || ambientComp == null)
             {
                 return;
             }
-            foreach (var modelComp in models.Values)
+            foreach (var modelComp in models)
             {
-               var  model = modelComp as ModelComponent;
+                var model = modelComp.Value as ModelComponent;
              
-                ShadowMapEffect shadowMappingEffect;
-                if (shadowMappingEffects.TryGetValue(modelComp., out shadowMappingEffect))
-                {
-                    shadowMappingEffect = ambientComp;
-                    shadowMappingEffect.CameraComponent = cameraComp;
-                    shadowMappingEffect.FogComponent = fogComp;
-                    shadowMappingEffect.LightComponet = light;
-                    shadowMappingEffect.shadowRenderTarget = shadowRender.ShadowRenderTarget;
+                ShadowMapEffect ShadowMappingEffect;
+                
+                    ShadowMappingEffect.AmbientComponent = ambientComp;
+                    ShadowMappingEffect.camera = cameraComp;
+                    ShadowMappingEffect.fog = fogComp;
+                    ShadowMappingEffect.light = light;
+                    ShadowMappingEffect.ShadowRenderTarget = shadowRender.;
                     DrawModel(modelComp, false, shadowMappingEffect);
-                }
+                
 
             }
         }

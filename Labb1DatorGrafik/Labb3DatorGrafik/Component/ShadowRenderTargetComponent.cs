@@ -9,6 +9,6 @@ namespace Labb3DatorGrafik.Component
 {
     public class ShadowRenderTargetComponent : IComponent
     {
-        RenderTarget2D shadowRenderTarget { get; set; }
+      public  RenderTarget2D shadowRenderTarget { get; set; }
     }
 }
