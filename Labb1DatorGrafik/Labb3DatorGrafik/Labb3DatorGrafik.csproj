@@ -60,6 +60,7 @@
     <Compile Include="System\HeightmapSystem.cs" />
     <Compile Include="System\ISystem.cs" />
     <Compile Include="System\ModelSystem.cs" />
+    <Compile Include="System\ShadowSystem.cs" />
     <Compile Include="System\TransformSystem.cs" />
   </ItemGroup>
   <ItemGroup>

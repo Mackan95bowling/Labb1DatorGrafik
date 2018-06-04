@@ -34,6 +34,7 @@ namespace Labb3DatorGrafik
         protected override void Initialize()
         {
             GameService.Instance().WorldMatrix = Matrix.Identity;
+            GameService.Instance().graphics = graphics.GraphicsDevice;
             heightmapSystem = new HeightmapSystem();
             cameraSystem = new CameraSystem();
             modelSystem = new ModelSystem();

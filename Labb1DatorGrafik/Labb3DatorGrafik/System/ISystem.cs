@@ -9,6 +9,7 @@ namespace Labb3DatorGrafik.System
 {
     interface ISystem
     {
-        //void Update(GameTime gameTime);
+        void Update(GameTime gameTime);
+        void Draw(GameTime gameTime);
     }
 }

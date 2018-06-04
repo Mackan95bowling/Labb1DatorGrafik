@@ -8,6 +8,5 @@ namespace Labb3DatorGrafik.Component
 {
     public interface IComponent
     {
-
     }
 }
