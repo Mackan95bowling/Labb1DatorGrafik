@@ -45,6 +45,16 @@ namespace Labb3DatorGrafik.System
             }
 
         }
+
+        public void Update(GameTime gameTime)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Draw(GameTime gameTime)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

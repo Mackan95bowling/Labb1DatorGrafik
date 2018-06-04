@@ -16,7 +16,8 @@ namespace Labb3DatorGrafik.System
         public ShadowSystem()
         {
         }
-        public void Draw(GameTime gameTime) {
+        public void Draw(GameTime gameTime)
+        {
             CreateShadowMap();
             DrawShadowMap();
 
@@ -53,7 +54,7 @@ namespace Labb3DatorGrafik.System
             var lightComp = ComponentManager.Get().GetComponents<LightComponent>();
             var light = lightComp.FirstOrDefault().Value as LightComponent;
 
-            var shadowMappingEffects = ComponentManager.Get().GetComponents<ShadowMapEffect>().FirstOrDefault();
+            var shadowMappingEffects = ComponentManager.Get().EntityComponent<ShadowMapEffect>(1);
             var fogComp = ComponentManager.Get().GetComponents<FogComponent>().Values.FirstOrDefault();
             var ambientComp = ComponentManager.Get().GetComponents<AmbientComponent>().Values.FirstOrDefault();
             if (cameraComp == null || shadowRender == null || light == null || fogComp == null || ambientComp == null)
@@ -63,20 +64,19 @@ namespace Labb3DatorGrafik.System
             foreach (var modelComp in models)
             {
                 var model = modelComp.Value as ModelComponent;
-             
-                ShadowMapEffect ShadowMappingEffect;
-                
-                    ShadowMappingEffect.AmbientComponent = ambientComp;
-                    ShadowMappingEffect.camera = cameraComp;
-                    ShadowMappingEffect.fog = fogComp;
-                    ShadowMappingEffect.light = light;
-                    ShadowMappingEffect.ShadowRenderTarget = shadowRender.;
-                    DrawModel(modelComp, false, shadowMappingEffect);
-                
+
+                //ShadowMapEffect ShadowMappingEffect;
+                //    ShadowMappingEffect.AmbientComponent = ambientComp;
+                //    ShadowMappingEffect.camera = cameraComp;
+                //    ShadowMappingEffect.fog = fogComp;
+                //    ShadowMappingEffect.light = light;
+                //    ShadowMappingEffect.ShadowRenderTarget = shadowRender;
+                //    DrawModel(modelComp, false, shadowMappingEffect);
+
 
             }
         }
-            public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             throw new NotImplementedException();
         }
@@ -91,3 +91,4 @@ namespace Labb3DatorGrafik.System
             throw new NotImplementedException();
         }
     }
+}

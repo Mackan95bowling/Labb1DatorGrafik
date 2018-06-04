@@ -46,5 +46,10 @@ namespace Labb3DatorGrafik.System
 
             }
         }
+
+        public void Update(GameTime gameTime)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
