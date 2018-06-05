@@ -64,7 +64,7 @@ namespace Labb3DatorGrafik.System
                             Meshpart.Effect.Parameters["Texture"].SetValue(model.texture);
                         }
                     }
-                    mesh.Draw();
+                    //mesh.Draw();
                 }
             }
         }

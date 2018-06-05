@@ -86,6 +86,8 @@ namespace Labb3DatorGrafik
             //ComponentManager.Get().AddComponentToEntity(new ModelComponent() { model = Content.Load<Model>("Chopper"), modelPosition = new Vector3(15, 10, 0), ModelEffect = Content.Load<Effect>("ShadowEffect") }, chopperID);
             CreateHouse();
             CreateGround();
+            CreateShadowRender();
+            CreateFog();
             cameraSystem.SetCameraView();
             var ambientID = ComponentManager.Get().NewEntity();
             var ambientComponent = new AmbientComponent() { AmbientColor = Color.White.ToVector4(), Intensity = 0.2f };
@@ -96,12 +98,36 @@ namespace Labb3DatorGrafik
             ComponentManager.Get().AddComponentToEntity(lightComponent,lightID);
         }
 
+        private void CreateShadowRender()
+        {
+            var shadowRenderCompID = ComponentManager.Get().NewEntity();
+            var shadowRenderComp = new ShadowRenderTargetComponent();
+            shadowRenderComp.shadowRenderTarget = new RenderTarget2D(GameService.Instance().graphics,2048,2048,false,SurfaceFormat.Single,DepthFormat.Depth24);
+            ComponentManager.Get().AddComponentToEntity(shadowRenderComp, shadowRenderCompID);
+
+
+        }
+        private void CreateFog() {
+            var fogCompID = ComponentManager.Get().NewEntity();
+            var fogComp = new FogComponent();
+            fogComp.Color = Color.CornflowerBlue.ToVector4();
+            fogComp.Enabled = true;
+            fogComp.FogStart = 200f;
+            fogComp.FogEnd = 300f;
+            ComponentManager.Get().AddComponentToEntity(fogComp, fogCompID);
+
+        }
+
         private void CreateGround()
         {
             var groundId = ComponentManager.Get().NewEntity();
             var modelComponentGround = new ModelComponent(groundTexture, ground, new Vector3(0,0,0));
             modelComponentGround.ModelEffect = Content.Load<Effect>("ShadowEffect");
+            modelComponentGround.ShadowMapRender = true;
             ComponentManager.Get().AddComponentToEntity(modelComponentGround, groundId);
+            var shadowEffectGround = ComponentManager.Get().EntityComponent<ShadowMapEffect>(groundId);
+            shadowEffectGround.effect = Content.Load<Effect>("ShadowEffect");
+            ComponentManager.Get().AddComponentToEntity(shadowEffectGround,groundId);
 
         }
 
@@ -109,6 +135,7 @@ namespace Labb3DatorGrafik
             var testID = ComponentManager.Get().NewEntity();
             var modelComponentHouse = new ModelComponent(houseTexture, House, (new Vector3(10, 10, 0)* Matrix.Identity.Translation));
             modelComponentHouse.ModelEffect = Content.Load<Effect>("ShadowEffect");
+            modelComponentHouse.ShadowMapRender = true;
             ComponentManager.Get().AddComponentToEntity(modelComponentHouse, testID);
         }
 
@@ -135,9 +162,9 @@ namespace Labb3DatorGrafik
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
            // heightmapSystem.Draw(graphics.GraphicsDevice);
-            modelSystem.Draw(gameTime);
+            //modelSystem.Draw(gameTime);
             lightSystem.Draw(gameTime);
-           // shadowSystem.Draw(gameTime);
+            shadowSystem.Draw(gameTime);
             base.Draw(gameTime);
         }
     }

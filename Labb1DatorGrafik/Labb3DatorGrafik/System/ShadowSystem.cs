@@ -115,7 +115,7 @@ namespace Labb3DatorGrafik.System
 
                     }
 
-                    modelComp.ModelEffect.Parameters["ModelTexture"].SetValue(modelComp.texture);
+                    modelComp.ModelEffect.Parameters["Texture"].SetValue(modelComp.texture);
 
                     modelComp.ModelEffect.Parameters["World"].SetValue(Matrix.CreateTranslation(modelComp.modelPosition));
 
@@ -125,7 +125,7 @@ namespace Labb3DatorGrafik.System
 
                     modelComp.ModelEffect.Parameters["DiffuseLightDirection"].SetValue(light.LightDir);
 
-                   // modelComp.ModelEffect.Parameters["LightViewProj"].SetValue(light.LightProjection);
+                    modelComp.ModelEffect.Parameters["LightViewProj"].SetValue(light.LightProjection);
 
                     modelComp.ModelEffect.Parameters["AmbientColor"].SetValue(ambient.AmbientColor);
 
@@ -141,9 +141,9 @@ namespace Labb3DatorGrafik.System
 
 
 
-                    //modelComp.ModelEffect.Parameters["ShadowStrenght"].SetValue(0.5f);
+                    modelComp.ModelEffect.Parameters["ShadowStrenght"].SetValue(0.5f);
 
-                    //modelComp.ModelEffect.Parameters["DepthBias"].SetValue(0.001f);
+                    modelComp.ModelEffect.Parameters["DepthBias"].SetValue(0.001f);
 
                     modelComp.ModelEffect.Parameters["ViewVector"].SetValue(Vector3.One);
 
@@ -155,13 +155,13 @@ namespace Labb3DatorGrafik.System
 
 
 
-                    //modelComp.ModelEffect.Parameters["FogStart"].SetValue(100f);
+                    modelComp.ModelEffect.Parameters["FogStart"].SetValue(100f);
 
-                    //modelComp.ModelEffect.Parameters["FogEnd"].SetValue(150f);
+                    modelComp.ModelEffect.Parameters["FogEnd"].SetValue(150f);
 
-                    //modelComp.ModelEffect.Parameters["FogColor"].SetValue(Color.CornflowerBlue.ToVector4());
+                    modelComp.ModelEffect.Parameters["FogColor"].SetValue(Color.CornflowerBlue.ToVector4());
 
-                    //modelComp.ModelEffect.Parameters["FogEnabled"].SetValue(true);
+                    modelComp.ModelEffect.Parameters["FogEnabled"].SetValue(true);
 
                     foreach (var pass in modelComp.ModelEffect.CurrentTechnique.Passes)
 

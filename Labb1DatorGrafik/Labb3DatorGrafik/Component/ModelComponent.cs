@@ -17,7 +17,7 @@ namespace Labb3DatorGrafik.Component
         public Model model { get; set; }
         public Texture2D texture { get; set; }
         public float rotate { get; set; }
-        public bool ShadowMapRennder { get; set; }
+        public bool ShadowMapRender { get; set; }
         public ModelComponent(Texture2D texturemodel, Model model, Vector3 position) {
             this.texture = texturemodel;
             this.model = model;
