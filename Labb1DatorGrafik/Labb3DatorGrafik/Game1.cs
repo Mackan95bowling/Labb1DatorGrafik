@@ -125,18 +125,21 @@ namespace Labb3DatorGrafik
             modelComponentGround.ModelEffect = Content.Load<Effect>("ShadowEffect");
             modelComponentGround.ShadowMapRender = true;
             ComponentManager.Get().AddComponentToEntity(modelComponentGround, groundId);
-            var shadowEffectGround = ComponentManager.Get().EntityComponent<ShadowMapEffect>(groundId);
+            var shadowEffectGround = new ShadowMapEffect();
             shadowEffectGround.effect = Content.Load<Effect>("ShadowEffect");
             ComponentManager.Get().AddComponentToEntity(shadowEffectGround,groundId);
 
         }
 
         public void  CreateHouse() {
-            var testID = ComponentManager.Get().NewEntity();
+            var HouseID = ComponentManager.Get().NewEntity();
             var modelComponentHouse = new ModelComponent(houseTexture, House, (new Vector3(10, 10, 0)* Matrix.Identity.Translation));
             modelComponentHouse.ModelEffect = Content.Load<Effect>("ShadowEffect");
             modelComponentHouse.ShadowMapRender = true;
-            ComponentManager.Get().AddComponentToEntity(modelComponentHouse, testID);
+            ComponentManager.Get().AddComponentToEntity(modelComponentHouse, HouseID);
+            var shadowEffectHouse = new ShadowMapEffect();
+            shadowEffectHouse.effect = Content.Load<Effect>("ShadowEffect");
+            ComponentManager.Get().AddComponentToEntity(shadowEffectHouse, HouseID);
         }
 
         protected override void UnloadContent()
