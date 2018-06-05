@@ -87,7 +87,7 @@ namespace Labb3DatorGrafik.System
             }
             foreach (ModelComponent modelComp in models.Values)
             {
-                DrawModel(modelComp, "Textured", camera, light, ambientComp);
+                DrawModel(modelComp, "DrawWithShadowMap", camera, light, ambientComp);
             }
         }
         public void Update(GameTime gameTime)
