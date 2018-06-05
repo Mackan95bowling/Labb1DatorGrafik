@@ -25,10 +25,10 @@ namespace Labb3DatorGrafik.System
             foreach (var modelComponent in ModelComponents)
             {
                 var model = modelComponent.Value as ModelComponent;
-              
 
-                //model.boneTransformations = new Matrix[model.model.Bones.Count];
-                //model.model.CopyAbsoluteBoneTransformsTo(model.boneTransformations);
+
+                model.boneTransformations = new Matrix[model.model.Bones.Count];
+                model.model.CopyAbsoluteBoneTransformsTo(model.boneTransformations);
                 foreach (var cameraComponent in cameraComponents)
                 {
                     var camera = cameraComponent.Value as CameraComponent;
@@ -45,8 +45,6 @@ namespace Labb3DatorGrafik.System
                         Meshpart.Effect = model.ModelEffect;
                         Meshpart.Effect.Parameters["DiffuseLightDirection"].SetValue(model.modelPosition + Vector3.Up);
 
-
-
                         Meshpart.Effect.Parameters["World"].SetValue(Matrix.CreateTranslation(model.modelPosition));
 
                         Meshpart.Effect.Parameters["View"].SetValue(view);
@@ -57,30 +55,27 @@ namespace Labb3DatorGrafik.System
 
                         Meshpart.Effect.Parameters["CameraPosition"].SetValue(position);
 
-                        var InverseTransposeMatrix = Matrix.Transpose(Matrix.Invert(mesh.ParentBone.Transform * Matrix.Identity));
+                        var WorldInverseTransposeMatrix = Matrix.Transpose(Matrix.Invert(mesh.ParentBone.Transform * Matrix.Identity));
 
-                    //    Meshpart.Effect.Parameters["WorldInverseTranspose"].SetValue(InverseTransposeMatrix);
+                        Meshpart.Effect.Parameters["WorldInverseTranspose"].SetValue(WorldInverseTransposeMatrix);
 
                         if (model.texture != null)
                         {
                             Meshpart.Effect.Parameters["ModelTexture"].SetValue(model.texture);
                         }
-
-
                     }
-                    //foreach (BasicEffect effect in mesh.Effects)
-                    //{
-                    //effect.World = Matrix.CreateTranslation(model.modelPosition * GameService.Instance().WorldMatrix.Translation);//model.boneTransformations[mesh.ParentBone.Index];
-                    //    effect.View = view;
-                    //    effect.Projection = projection;
-                    //    effect.EnableDefaultLighting();
-                    //}
-                    //mesh.Draw();
+                    mesh.Draw();
                 }
-
             }
         }
-
+        //old code
+        //foreach (BasicEffect effect in mesh.Effects)
+        //{
+        //    effect.World = Matrix.CreateTranslation(model.modelPosition * GameService.Instance().WorldMatrix.Translation);//model.boneTransformations[mesh.ParentBone.Index];
+        //    effect.View = view;
+        //    effect.Projection = projection;
+        //    effect.EnableDefaultLighting();
+        //}
         public void Update(GameTime gameTime)
         {
             throw new NotImplementedException();

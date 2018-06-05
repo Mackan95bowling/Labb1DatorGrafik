@@ -20,6 +20,10 @@ namespace Labb3DatorGrafik.System
         }
         public void Draw(GameTime gameTime)
         {
+            GameService.Instance().graphics.BlendState = BlendState.Opaque;
+
+            GameService.Instance().graphics.DepthStencilState = DepthStencilState.Default;
+
             CreateShadowMap();
             DrawShadowMap();
 
@@ -37,15 +41,11 @@ namespace Labb3DatorGrafik.System
             var ambient = ComponentManager.Get().GetComponents<AmbientComponent>().Values.First() as AmbientComponent;
 
             var models = ComponentManager.Get().GetComponents<ModelComponent>().Values;
-
-
+           
 
             foreach (ModelComponent modelComp in models)
-
             {
-
                 GameService.Instance().graphics.SetRenderTarget(null);
-
                 DrawModel(modelComp, "CreateShadowMap", camera, light, ambient);
 
             }
@@ -87,7 +87,7 @@ namespace Labb3DatorGrafik.System
             }
             foreach (ModelComponent modelComp in models.Values)
             {
-                DrawModel(modelComp, "DrawWithShadowMap", camera, light, ambientComp);
+                DrawModel(modelComp, "Textured", camera, light, ambientComp);
             }
         }
         public void Update(GameTime gameTime)
@@ -115,7 +115,7 @@ namespace Labb3DatorGrafik.System
 
                     }
 
-                    modelComp.ModelEffect.Parameters["Texture"].SetValue(modelComp.texture);
+                    modelComp.ModelEffect.Parameters["ModelTexture"].SetValue(modelComp.texture);
 
                     modelComp.ModelEffect.Parameters["World"].SetValue(Matrix.CreateTranslation(modelComp.modelPosition));
 
@@ -123,9 +123,9 @@ namespace Labb3DatorGrafik.System
 
                     modelComp.ModelEffect.Parameters["Projection"].SetValue(camera.projection);
 
-                    modelComp.ModelEffect.Parameters["LightDirection"].SetValue(light.LightDir);
+                    modelComp.ModelEffect.Parameters["DiffuseLightDirection"].SetValue(light.LightDir);
 
-                    modelComp.ModelEffect.Parameters["LightViewProj"].SetValue(light.LightProjection);
+                   // modelComp.ModelEffect.Parameters["LightViewProj"].SetValue(light.LightProjection);
 
                     modelComp.ModelEffect.Parameters["AmbientColor"].SetValue(ambient.AmbientColor);
 
@@ -141,9 +141,9 @@ namespace Labb3DatorGrafik.System
 
 
 
-                    modelComp.ModelEffect.Parameters["ShadowStrenght"].SetValue(0.5f);
+                    //modelComp.ModelEffect.Parameters["ShadowStrenght"].SetValue(0.5f);
 
-                    modelComp.ModelEffect.Parameters["DepthBias"].SetValue(0.001f);
+                    //modelComp.ModelEffect.Parameters["DepthBias"].SetValue(0.001f);
 
                     modelComp.ModelEffect.Parameters["ViewVector"].SetValue(Vector3.One);
 
@@ -155,13 +155,13 @@ namespace Labb3DatorGrafik.System
 
 
 
-                    modelComp.ModelEffect.Parameters["FogStart"].SetValue(100f);
+                    //modelComp.ModelEffect.Parameters["FogStart"].SetValue(100f);
 
-                    modelComp.ModelEffect.Parameters["FogEnd"].SetValue(150f);
+                    //modelComp.ModelEffect.Parameters["FogEnd"].SetValue(150f);
 
-                    modelComp.ModelEffect.Parameters["FogColor"].SetValue(Color.CornflowerBlue.ToVector4());
+                    //modelComp.ModelEffect.Parameters["FogColor"].SetValue(Color.CornflowerBlue.ToVector4());
 
-                    modelComp.ModelEffect.Parameters["FogEnabled"].SetValue(true);
+                    //modelComp.ModelEffect.Parameters["FogEnabled"].SetValue(true);
 
                     foreach (var pass in modelComp.ModelEffect.CurrentTechnique.Passes)
 

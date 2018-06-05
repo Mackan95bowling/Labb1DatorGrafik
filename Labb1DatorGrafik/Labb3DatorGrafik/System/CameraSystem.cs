@@ -28,12 +28,16 @@ namespace Labb3DatorGrafik.System
         }
 
         public void Update(GameTime gameTime) {
-            //var camera = ComponentManager.Get().GetComponents<CameraComponent>().Values.FirstOrDefault() as CameraComponent;
-            //if (Keyboard.GetState().IsKeyDown(Keys.D))
-            //{
-            //    camera.cameraPosition = new Vector3();
-            //}
-                
+            var camera = ComponentManager.Get().GetComponents<CameraComponent>().Values.FirstOrDefault() as CameraComponent;
+            if (Keyboard.GetState().IsKeyDown(Keys.D))
+            {
+                camera.cameraPosition.Z *= 0.6f;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.A))
+            {
+                camera.cameraPosition.Y *= 0.6f;
+            }
+
         }
     }
 }
