@@ -100,7 +100,7 @@ namespace Labb3DatorGrafik
         {
             var groundId = ComponentManager.Get().NewEntity();
             var modelComponentGround = new ModelComponent(groundTexture, ground, new Vector3(0,0,0));
-            modelComponentGround.ModelEffect = Content.Load<Effect>("ShadingEffect");
+            modelComponentGround.ModelEffect = Content.Load<Effect>("ShadowEffect");
             ComponentManager.Get().AddComponentToEntity(modelComponentGround, groundId);
 
         }
@@ -108,7 +108,7 @@ namespace Labb3DatorGrafik
         public void  CreateHouse() {
             var testID = ComponentManager.Get().NewEntity();
             var modelComponentHouse = new ModelComponent(houseTexture, House, (new Vector3(10, 10, 0)* Matrix.Identity.Translation));
-            modelComponentHouse.ModelEffect = Content.Load<Effect>("ShadingEffect");
+            modelComponentHouse.ModelEffect = Content.Load<Effect>("ShadowEffect");
             ComponentManager.Get().AddComponentToEntity(modelComponentHouse, testID);
         }
 

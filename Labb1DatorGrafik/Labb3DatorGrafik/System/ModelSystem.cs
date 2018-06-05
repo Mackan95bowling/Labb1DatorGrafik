@@ -55,13 +55,13 @@ namespace Labb3DatorGrafik.System
 
                         Meshpart.Effect.Parameters["CameraPosition"].SetValue(position);
 
-                        var WorldInverseTransposeMatrix = Matrix.Transpose(Matrix.Invert(mesh.ParentBone.Transform * Matrix.Identity));
+                        //var WorldInverseTransposeMatrix = Matrix.Transpose(Matrix.Invert(mesh.ParentBone.Transform * Matrix.Identity));
 
-                        Meshpart.Effect.Parameters["WorldInverseTranspose"].SetValue(WorldInverseTransposeMatrix);
+                        //Meshpart.Effect.Parameters["WorldInverseTranspose"].SetValue(WorldInverseTransposeMatrix);
 
                         if (model.texture != null)
                         {
-                            Meshpart.Effect.Parameters["ModelTexture"].SetValue(model.texture);
+                            Meshpart.Effect.Parameters["Texture"].SetValue(model.texture);
                         }
                     }
                     mesh.Draw();
