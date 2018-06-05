@@ -13,10 +13,17 @@ namespace Labb3DatorGrafik.Component
 
         public Vector3 modelPosition;
         public Matrix[] boneTransformations { get; set; }
+        public Effect ModelEffect { get; set; }
         public Model model { get; set; }
         public Texture2D texture { get; set; }
         public float rotate { get; set; }
         public bool ShadowMapRennder { get; set; }
+        public ModelComponent(Texture2D texturemodel, Model model, Vector3 position) {
+            this.texture = texturemodel;
+            this.model = model;
+            this.modelPosition = position;
+
+        }
     }
 }
 

@@ -16,12 +16,13 @@ namespace Labb3DatorGrafik
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Effect myEffect;
 
         // Systems
         private HeightmapSystem heightmapSystem;
         private CameraSystem cameraSystem;
         LightSystem lightSystem;
+        Model House;
+        Texture2D houseTexture;
 
         public ModelSystem modelSystem;
 
@@ -47,10 +48,8 @@ namespace Labb3DatorGrafik
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            //this is how we load our EFFECT
-            myEffect = Content.Load<Effect>("test1");
-            var test = myEffect;
-
+            House = Content.Load<Model>("farmhouse_obj");
+            houseTexture = Content.Load<Texture2D>("Farmhouse_Texture");
 
             HeightMapBuilder heightMap = new HeightMapBuilder()
                 .SetHeightMapTextureData(Content.Load<Texture2D>("US_CANYON"), Content.Load<Texture2D>("sand"))
@@ -62,12 +61,17 @@ namespace Labb3DatorGrafik
                 .Build();
 
             var cameraID = ComponentManager.Get().NewEntity();
-            ComponentManager.Get().AddComponentToEntity(new CameraComponent() { fieldOfView = MathHelper.ToRadians(45f), aspectRatio = graphics.GraphicsDevice.Viewport.AspectRatio, cameraPosition = new Vector3(10, 15, 70), cameraTarget = Vector3.Zero, BoundingFrustum = }, cameraID);
+            var cameraComponent = new CameraComponent() {fieldOfView = MathHelper.ToRadians(45f), aspectRatio = graphics.GraphicsDevice.Viewport.AspectRatio, cameraPosition = new Vector3(0, 10, 200), cameraTarget = Vector3.Zero };
+            cameraComponent.BoundingFrustum = new BoundingFrustum(Matrix.CreatePerspectiveFieldOfView(1.1f * MathHelper.PiOver2, graphics.GraphicsDevice.Viewport.AspectRatio,
+                        0.5f * 0.1f, 1.3f * 1000f) * cameraComponent.view);
+            ComponentManager.Get().AddComponentToEntity(cameraComponent, cameraID);
 
-            var chopperID = ComponentManager.Get().NewEntity();
-            ComponentManager.Get().AddComponentToEntity(new ModelComponent() { model = Content.Load<Model>("Chopper"), modelPosition = new Vector3(50, 10, 80)}, chopperID);
+            //var chopperID = ComponentManager.Get().NewEntity();
+            //ComponentManager.Get().AddComponentToEntity(new ModelComponent() { model = Content.Load<Model>("Chopper"), modelPosition = new Vector3(15, 10, 0), ModelEffect = Content.Load<Effect>("ShadowEffect") }, chopperID);
             var testID = ComponentManager.Get().NewEntity();
-            ComponentManager.Get().AddComponentToEntity(new ModelComponent() { model = Content.Load<Model>("farmhouse_obj"), modelPosition = new Vector3(110, 10, 110) }, testID);
+            var modelComponentHouse = new ModelComponent(houseTexture, House, new Vector3(0, 10, 0));
+            modelComponentHouse.ModelEffect = Content.Load<Effect>("ShadowEffect");
+            ComponentManager.Get().AddComponentToEntity(modelComponentHouse, testID);
             cameraSystem.SetCameraView();
             var lightID = ComponentManager.Get().NewEntity();
             var lightComponent = new LightComponent() { LightDir = new Vector3(-0.3333333f, 0.6666667f, 0.6666667f), DiffLightColor = Color.White.ToVector4(), DiffIntensity = 1.0f };
@@ -89,7 +93,7 @@ namespace Labb3DatorGrafik
 
             // TODO: Add your update logic here
             cameraSystem.Update(gameTime);
-            lightSystem.Update(gameTime);
+         //   lightSystem.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -100,13 +104,8 @@ namespace Labb3DatorGrafik
 
             heightmapSystem.Draw(graphics.GraphicsDevice);
             modelSystem.Draw(gameTime);
-            lightSystem.Draw(gameTime);
+        //    lightSystem.Draw(gameTime);
             base.Draw(gameTime);
         }
-
-        //public static Game GetGame()
-        //{
-        //    return _thisGame;
-        //}
     }
 }
