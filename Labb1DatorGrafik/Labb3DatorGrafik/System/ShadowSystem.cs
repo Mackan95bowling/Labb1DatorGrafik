@@ -79,7 +79,7 @@ namespace Labb3DatorGrafik.System
             var light = lightComp.FirstOrDefault().Value as LightComponent;
 
             var shadowMappingEffects = ComponentManager.Get().EntityComponent<ShadowMapEffect>(1);
-            var fogComp = ComponentManager.Get().GetComponents<FogComponent>().Values.FirstOrDefault();
+            var fogComp = ComponentManager.Get().GetComponents<FogComponent>().Values.FirstOrDefault() as FogComponent;
             var ambientComp = ComponentManager.Get().GetComponents<AmbientComponent>().Values.FirstOrDefault() as AmbientComponent;
             if (cameraComp == null || shadowRender == null || light == null || fogComp == null || ambientComp == null)
             {
@@ -87,6 +87,14 @@ namespace Labb3DatorGrafik.System
             }
             foreach (ModelComponent modelComp in models.Values)
             {
+                //ShadowMapEffect shadowEffect; BJÖRNSSÄTT VET EJ OM DETTA FUNKAR
+                //shadowEffect = ComponentManager.Get().GetComponents<ShadowMapEffect>().Values.FirstOrDefault() as ShadowMapEffect;
+                //shadowEffect.AmbientComponent = ambientComp;
+                //shadowEffect.camera = camera;
+                //shadowEffect.fog = fogComp;
+                //shadowEffect.light = light;
+                //shadowEffect.ShadowRenderTarget = shadowRender.shadowRenderTarget;
+
                 DrawModel(modelComp, "DrawWithShadowMap", camera, light, ambientComp);
             }
         }
@@ -98,6 +106,33 @@ namespace Labb3DatorGrafik.System
         public void DrawModel(ModelComponent modelComp, string techniqueName, CameraComponent camera, LightComponent light, AmbientComponent ambient)
         {
             var model = modelComp.model;
+            #region Björnssätt
+            //var model = modelComp.Model;
+            //string techniqueName = createShadowMap ? "CreateShadowMap" : "DrawWithShadowMap";
+
+            //Matrix[] transforms = new Matrix[model.Bones.Count];
+            //model.CopyAbsoluteBoneTransformsTo(transforms);
+            //// Loop over meshs in the modelgraphicsDevice.RasterizerState
+            //foreach (ModelMesh mesh in model.Meshes)
+            //{
+
+
+            //    foreach (var meshPart in mesh.MeshParts)
+            //    {
+
+            //        _ShadowMappingEffect.AddEffect(meshPart.Effect, modelComp.Texture2D);
+            //        _ShadowMappingEffect.Techniquename = techniqueName;
+            //        _ShadowMappingEffect.world = transforms[mesh.ParentBone.Index] * modelComp.ObjectWorld * EnvironmentService.Instance().World;
+            //        _ShadowMappingEffect.createShadowMap = createShadowMap;
+            //        _ShadowMappingEffect.Apply();
+
+            //        EnvironmentService.Instance().Graphics.SetVertexBuffer(meshPart.VertexBuffer);
+            //        EnvironmentService.Instance().Graphics.Indices = meshPart.IndexBuffer;
+            //        EnvironmentService.Instance().Graphics.DrawIndexedPrimitives(PrimitiveType.TriangleList, meshPart.VertexOffset, meshPart.StartIndex, meshPart.PrimitiveCount);
+
+            //    }
+            //}
+            #endregion
             #region EffectParameters Enligt hur Simon och nick gör
             foreach (ModelMesh mesh in model.Meshes)
 
