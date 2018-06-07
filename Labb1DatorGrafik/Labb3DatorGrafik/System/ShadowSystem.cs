@@ -98,7 +98,7 @@ namespace Labb3DatorGrafik.System
         public void DrawModel(ModelComponent modelComp, string techniqueName, CameraComponent camera, LightComponent light, AmbientComponent ambient)
         {
             var model = modelComp.model;
-            #region EffectParameters
+            #region EffectParameters Enligt hur Simon och nick gör
             foreach (ModelMesh mesh in model.Meshes)
 
             {
@@ -170,6 +170,7 @@ namespace Labb3DatorGrafik.System
                         pass.Apply();
 
                     }
+                    /*Här ritas allt ut!!!! ska vara kvar såhär*/
                     GameService.Instance().graphics.SetVertexBuffer(meshPart.VertexBuffer);
                     GameService.Instance().graphics.Indices = meshPart.IndexBuffer;
                     GameService.Instance().graphics.DrawIndexedPrimitives(PrimitiveType.TriangleList, meshPart.VertexOffset, meshPart.StartIndex, meshPart.PrimitiveCount);

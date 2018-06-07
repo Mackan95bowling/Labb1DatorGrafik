@@ -164,8 +164,6 @@ namespace Labb3DatorGrafik
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-           // heightmapSystem.Draw(graphics.GraphicsDevice);
-            //modelSystem.Draw(gameTime);
             lightSystem.Draw(gameTime);
             shadowSystem.Draw(gameTime);
             base.Draw(gameTime);
