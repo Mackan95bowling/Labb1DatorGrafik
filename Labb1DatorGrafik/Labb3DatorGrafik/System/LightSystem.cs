@@ -1,6 +1,7 @@
 ﻿using Labb3DatorGrafik.Component;
 using Labb3DatorGrafik.Manager;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Linq;
 
@@ -34,7 +35,7 @@ namespace Labb3DatorGrafik.System
             lightPos.Z = boxLight.Min.Z;
             Matrix viewMatrixLight = Matrix.CreateLookAt(lightPos, lightPos - lightComp.LightDir, Vector3.Up);
             Matrix lightProjectionMatrix = Matrix.CreateOrthographic(SizeOfBox.X, SizeOfBox.Y, -SizeOfBox.Z, SizeOfBox.Y);
-
+            
             lightComp.LightProjection = viewMatrixLight * lightProjectionMatrix;
         }
 
@@ -46,6 +47,8 @@ namespace Labb3DatorGrafik.System
             var rotationY = (float)gameTime.ElapsedGameTime.TotalMilliseconds * 0.00007f;
             var rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, rotationY);
             lightComp.LightDir = Vector3.Transform(lightComp.LightDir, rotation);
+
+            Console.WriteLine("" + lightComp.LightDir);
         }
     }
 }

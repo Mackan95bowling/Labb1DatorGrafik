@@ -31,13 +31,14 @@ namespace Labb3DatorGrafik.System
             var camera = ComponentManager.Get().GetComponents<CameraComponent>().Values.FirstOrDefault() as CameraComponent;
             if (Keyboard.GetState().IsKeyDown(Keys.D))
             {
-                camera.cameraPosition.Z *= 0.6f;
+                camera.cameraPosition.X += 0.6f;
             }
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
-                camera.cameraPosition.Y *= 0.6f;
+                camera.cameraPosition.X -= 0.6f;
+                
             }
-
+            Console.WriteLine(camera.cameraPosition);
         }
     }
 }

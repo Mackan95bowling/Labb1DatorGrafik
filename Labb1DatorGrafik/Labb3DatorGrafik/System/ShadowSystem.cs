@@ -31,7 +31,9 @@ namespace Labb3DatorGrafik.System
 
         private void CreateShadowMap()
         {
-            GameService.Instance().graphics.SetRenderTarget(renderTarget);
+            var shadowRenderTarget = ComponentManager.Get().GetComponents<ShadowRenderTargetComponent>().Values.FirstOrDefault() as ShadowRenderTargetComponent;
+            if (shadowRenderTarget == null) return;
+            GameService.Instance().graphics.SetRenderTarget(shadowRenderTarget.shadowRenderTarget);
             GameService.Instance().graphics.Clear(Color.CornflowerBlue);
 
 
@@ -39,17 +41,23 @@ namespace Labb3DatorGrafik.System
 
             var camera = ComponentManager.Get().GetComponents<CameraComponent>().Values.First() as CameraComponent;
             var ambient = ComponentManager.Get().GetComponents<AmbientComponent>().Values.First() as AmbientComponent;
-
+            var fogComp = ComponentManager.Get().GetComponents<FogComponent>().Values.First() as FogComponent;
             var models = ComponentManager.Get().GetComponents<ModelComponent>().Values;
-           
+            var shadowMapEffects = ComponentManager.Get().GetComponents<ShadowMapEffect>();
 
             foreach (ModelComponent modelComp in models)
             {
-                GameService.Instance().graphics.SetRenderTarget(null);
-                DrawModel(modelComp, "CreateShadowMap", camera, light, ambient);
+                ShadowMapEffect shadowEffect;
+                shadowEffect = ComponentManager.Get().GetComponents<ShadowMapEffect>().Values.FirstOrDefault() as ShadowMapEffect;
+                shadowEffect.AmbientComponent = ambient;
+                shadowEffect.camera = camera;
+                shadowEffect.fog = fogComp;
+                shadowEffect.light = light;
+                shadowEffect.ShadowRenderTarget = null;
 
+                DrawModel(modelComp, "DrawWithShadowMap", false, shadowEffect);
             }
-
+            GameService.Instance().graphics.SetRenderTarget(null);
         }
 
         public void DrawShadowMap()
@@ -87,15 +95,17 @@ namespace Labb3DatorGrafik.System
             }
             foreach (ModelComponent modelComp in models.Values)
             {
-                //ShadowMapEffect shadowEffect; BJÖRNSSÄTT VET EJ OM DETTA FUNKAR
-                //shadowEffect = ComponentManager.Get().GetComponents<ShadowMapEffect>().Values.FirstOrDefault() as ShadowMapEffect;
-                //shadowEffect.AmbientComponent = ambientComp;
-                //shadowEffect.camera = camera;
-                //shadowEffect.fog = fogComp;
-                //shadowEffect.light = light;
-                //shadowEffect.ShadowRenderTarget = shadowRender.shadowRenderTarget;
+                //björn
+                ShadowMapEffect shadowEffect; 
+                shadowEffect = ComponentManager.Get().GetComponents<ShadowMapEffect>().Values.FirstOrDefault() as ShadowMapEffect;
+                shadowEffect.AmbientComponent = ambientComp;
+                shadowEffect.camera = camera;
+                shadowEffect.fog = fogComp;
+                shadowEffect.light = light;
+                shadowEffect.ShadowRenderTarget = shadowRender.shadowRenderTarget;
 
-                DrawModel(modelComp, "DrawWithShadowMap", camera, light, ambientComp);
+                DrawModel(modelComp, "DrawWithShadowMap", false, shadowEffect);
+                    //camera, light, ambientComp); lägg till dessa och ta bort shadowEffect för att få de o funka
             }
         }
         public void Update(GameTime gameTime)
@@ -103,115 +113,116 @@ namespace Labb3DatorGrafik.System
             throw new NotImplementedException();
         }
 
-        public void DrawModel(ModelComponent modelComp, string techniqueName, CameraComponent camera, LightComponent light, AmbientComponent ambient)
-        {
-            var model = modelComp.model;
-            #region Björnssätt
-            //var model = modelComp.Model;
-            //string techniqueName = createShadowMap ? "CreateShadowMap" : "DrawWithShadowMap";
-
-            //Matrix[] transforms = new Matrix[model.Bones.Count];
-            //model.CopyAbsoluteBoneTransformsTo(transforms);
-            //// Loop over meshs in the modelgraphicsDevice.RasterizerState
-            //foreach (ModelMesh mesh in model.Meshes)
-            //{
-
-
-            //    foreach (var meshPart in mesh.MeshParts)
-            //    {
-
-            //        _ShadowMappingEffect.AddEffect(meshPart.Effect, modelComp.Texture2D);
-            //        _ShadowMappingEffect.Techniquename = techniqueName;
-            //        _ShadowMappingEffect.world = transforms[mesh.ParentBone.Index] * modelComp.ObjectWorld * EnvironmentService.Instance().World;
-            //        _ShadowMappingEffect.createShadowMap = createShadowMap;
-            //        _ShadowMappingEffect.Apply();
-
-            //        EnvironmentService.Instance().Graphics.SetVertexBuffer(meshPart.VertexBuffer);
-            //        EnvironmentService.Instance().Graphics.Indices = meshPart.IndexBuffer;
-            //        EnvironmentService.Instance().Graphics.DrawIndexedPrimitives(PrimitiveType.TriangleList, meshPart.VertexOffset, meshPart.StartIndex, meshPart.PrimitiveCount);
-
-            //    }
-            //}
-            #endregion
-            #region EffectParameters Enligt hur Simon och nick gör
-            foreach (ModelMesh mesh in model.Meshes)
-
+        public void DrawModel(ModelComponent modelComp, string techniqueName, bool shadowMap, ShadowMapEffect _shadowMapEffect)
+        {//CameraComponent camera, LightComponent light, AmbientComponent ambient)
             {
+                var model = modelComp.model;
+                #region Björnssätt
+                //var model = modelComp.Model;
+                string TechniqueName = shadowMap ? "CreateShadowMap" : "DrawWithShadowMap";
 
-                foreach (var meshPart in mesh.MeshParts)
-
+                Matrix[] transforms = new Matrix[model.Bones.Count];
+                model.CopyAbsoluteBoneTransformsTo(transforms);
+                // Loop over meshs in the modelgraphicsDevice.RasterizerState
+                foreach (ModelMesh mesh in model.Meshes)
                 {
-                    modelComp.ModelEffect.CurrentTechnique = modelComp.ModelEffect.Techniques[techniqueName];
-                    if (techniqueName.Contains("DrawWithShadowMap"))
 
+
+                    foreach (var meshPart in mesh.MeshParts)
                     {
 
-                        modelComp.ModelEffect.Parameters["ShadowMap"].SetValue(renderTarget);
+                        _shadowMapEffect.AddEffect(meshPart.Effect, modelComp.texture);
+                        _shadowMapEffect.TechniqueName = TechniqueName;
+                        _shadowMapEffect.world = transforms[mesh.ParentBone.Index] /** modelComp.ObjectWorld */* GameService.Instance().WorldMatrix;
+                        _shadowMapEffect.ShadowMap = shadowMap;
+                        _shadowMapEffect.Apply();
+
+                        GameService.Instance().graphics.SetVertexBuffer(meshPart.VertexBuffer);
+                        GameService.Instance().graphics.Indices = meshPart.IndexBuffer;
+                        GameService.Instance().graphics.DrawIndexedPrimitives(PrimitiveType.TriangleList, meshPart.VertexOffset, meshPart.StartIndex, meshPart.PrimitiveCount);
 
                     }
-
-                    modelComp.ModelEffect.Parameters["Texture"].SetValue(modelComp.texture);
-
-                    modelComp.ModelEffect.Parameters["World"].SetValue(Matrix.CreateTranslation(modelComp.modelPosition));
-
-                    modelComp.ModelEffect.Parameters["View"].SetValue(camera.view);
-
-                    modelComp.ModelEffect.Parameters["Projection"].SetValue(camera.projection);
-
-                    modelComp.ModelEffect.Parameters["DiffuseLightDirection"].SetValue(light.LightDir);
-
-                    modelComp.ModelEffect.Parameters["LightViewProj"].SetValue(light.LightProjection);
-
-                    modelComp.ModelEffect.Parameters["AmbientColor"].SetValue(ambient.AmbientColor);
-
-                    modelComp.ModelEffect.Parameters["AmbientIntensity"].SetValue(ambient.Intensity);
-
-                    modelComp.ModelEffect.Parameters["DiffuseLightDirection"].SetValue(light.DiffLightDir);
-
-                    modelComp.ModelEffect.Parameters["DiffuseColor"].SetValue(light.DiffLightColor);
-
-                    modelComp.ModelEffect.Parameters["DiffuseIntensity"].SetValue(light.DiffIntensity);
-
-                    modelComp.ModelEffect.Parameters["CameraPosition"].SetValue(camera.cameraPosition);
-
-
-
-                    modelComp.ModelEffect.Parameters["ShadowStrenght"].SetValue(0.5f);
-
-                    modelComp.ModelEffect.Parameters["DepthBias"].SetValue(0.001f);
-
-                    modelComp.ModelEffect.Parameters["ViewVector"].SetValue(Vector3.One);
-
-                    modelComp.ModelEffect.Parameters["Shininess"].SetValue(0.9f);
-
-                    modelComp.ModelEffect.Parameters["SpecularColor"].SetValue(Color.CornflowerBlue.ToVector4());
-
-                    modelComp.ModelEffect.Parameters["SpecularIntensity"].SetValue(0.1f);
-
-
-
-                    modelComp.ModelEffect.Parameters["FogStart"].SetValue(100f);
-
-                    modelComp.ModelEffect.Parameters["FogEnd"].SetValue(150f);
-
-                    modelComp.ModelEffect.Parameters["FogColor"].SetValue(Color.CornflowerBlue.ToVector4());
-
-                    modelComp.ModelEffect.Parameters["FogEnabled"].SetValue(true);
-
-                    foreach (var pass in modelComp.ModelEffect.CurrentTechnique.Passes)
-
-                    {
-
-                        pass.Apply();
-
-                    }
-                    /*Här ritas allt ut!!!! ska vara kvar såhär*/
-                    GameService.Instance().graphics.SetVertexBuffer(meshPart.VertexBuffer);
-                    GameService.Instance().graphics.Indices = meshPart.IndexBuffer;
-                    GameService.Instance().graphics.DrawIndexedPrimitives(PrimitiveType.TriangleList, meshPart.VertexOffset, meshPart.StartIndex, meshPart.PrimitiveCount);
                 }
+                #endregion
+                #region EffectParameters Enligt hur Simon och nick gör.... det funkar att rendrera men vet inte om det direkt blir någon effekt på sakerna.
+                //foreach (ModelMesh mesh in model.Meshes)
+
+                //{
+
+                //    foreach (var meshPart in mesh.MeshParts)
+
+                //    {
+                //        modelComp.ModelEffect.CurrentTechnique = modelComp.ModelEffect.Techniques[techniqueName];
+                //        if (techniqueName.Contains("DrawWithShadowMap"))
+
+                //        {
+
+                //            modelComp.ModelEffect.Parameters["ShadowMap"].SetValue(renderTarget);
+
+                //        }
+
+                //        modelComp.ModelEffect.Parameters["Texture"].SetValue(modelComp.texture);
+
+                //        modelComp.ModelEffect.Parameters["World"].SetValue(Matrix.CreateTranslation(modelComp.modelPosition));
+
+                //        modelComp.ModelEffect.Parameters["View"].SetValue(camera.view);
+
+                //        modelComp.ModelEffect.Parameters["Projection"].SetValue(camera.projection);
+
+                //        modelComp.ModelEffect.Parameters["DiffuseLightDirection"].SetValue(light.LightDir);
+
+                //        modelComp.ModelEffect.Parameters["LightViewProj"].SetValue(light.LightProjection);
+
+                //        modelComp.ModelEffect.Parameters["AmbientColor"].SetValue(ambient.AmbientColor);
+
+                //        modelComp.ModelEffect.Parameters["AmbientIntensity"].SetValue(ambient.Intensity);
+
+                //        modelComp.ModelEffect.Parameters["DiffuseLightDirection"].SetValue(light.DiffLightDir);
+
+                //        modelComp.ModelEffect.Parameters["DiffuseColor"].SetValue(light.DiffLightColor);
+
+                //        modelComp.ModelEffect.Parameters["DiffuseIntensity"].SetValue(light.DiffIntensity);
+
+                //        modelComp.ModelEffect.Parameters["CameraPosition"].SetValue(camera.cameraPosition);
+
+
+
+                //        modelComp.ModelEffect.Parameters["ShadowStrenght"].SetValue(0.5f);
+
+                //        modelComp.ModelEffect.Parameters["DepthBias"].SetValue(0.001f);
+
+                //        modelComp.ModelEffect.Parameters["ViewVector"].SetValue(Vector3.One);
+
+                //        modelComp.ModelEffect.Parameters["Shininess"].SetValue(0.9f);
+
+                //        modelComp.ModelEffect.Parameters["SpecularColor"].SetValue(Color.CornflowerBlue.ToVector4());
+
+                //        modelComp.ModelEffect.Parameters["SpecularIntensity"].SetValue(0.1f);
+
+
+
+                //        modelComp.ModelEffect.Parameters["FogStart"].SetValue(100f);
+
+                //        modelComp.ModelEffect.Parameters["FogEnd"].SetValue(150f);
+
+                //        modelComp.ModelEffect.Parameters["FogColor"].SetValue(Color.CornflowerBlue.ToVector4());
+
+                //        modelComp.ModelEffect.Parameters["FogEnabled"].SetValue(true);
+
+                //        foreach (var pass in modelComp.ModelEffect.CurrentTechnique.Passes)
+
+                //        {
+
+                //            pass.Apply();
+
+                //        }
+                /*Här ritas allt ut!!!! ska vara kvar såhär*/
+                //    GameService.Instance().graphics.SetVertexBuffer(meshPart.VertexBuffer);
+                //    GameService.Instance().graphics.Indices = meshPart.IndexBuffer;
+                //    GameService.Instance().graphics.DrawIndexedPrimitives(PrimitiveType.TriangleList, meshPart.VertexOffset, meshPart.StartIndex, meshPart.PrimitiveCount);
+                //}
             }
-#endregion
+            #endregion
         }
     }
 }

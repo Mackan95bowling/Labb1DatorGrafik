@@ -17,8 +17,8 @@ namespace Labb3DatorGrafik.Component
         public LightComponent light { get; set; }
         public RenderTarget2D ShadowRenderTarget { get; set; }
         public Matrix world { get; set; }
-        bool ShadowMap { get; set; }
-        string TechniqueName { get; set; }
+        public bool ShadowMap { get; set; }
+        public string TechniqueName { get; set; }
         public void AddEffect(Effect effects, Texture2D texture) {
 
             effect.Parameters["Texture"].SetValue(effects.Parameters["Texture"].GetValueTexture2D());
@@ -48,7 +48,6 @@ namespace Labb3DatorGrafik.Component
             effect.Parameters["AmbientIntensity"].SetValue(AmbientComponent.Intensity);
 
             effect.Parameters["ViewVector"].SetValue(Vector3.One);
-            //effect.Parameters["DiffuseLightDirection"].SetValue(shader.DiffuseLightDirection);
             effect.Parameters["DiffuseLightDirection"].SetValue(light.DiffLightDir); // todo
             effect.Parameters["DiffuseColor"].SetValue(light.DiffLightColor);
             effect.Parameters["DiffuseIntensity"].SetValue(light.DiffIntensity);

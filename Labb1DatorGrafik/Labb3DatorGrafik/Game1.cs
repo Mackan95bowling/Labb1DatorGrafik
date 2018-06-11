@@ -19,10 +19,10 @@ namespace Labb3DatorGrafik
         SpriteBatch spriteBatch;
 
         // Systems
-        private HeightmapSystem heightmapSystem;
         private CameraSystem cameraSystem;
         LightSystem lightSystem;
         ShadowSystem shadowSystem;
+        Model Chopper;
         Model House;
         Model ground;
         Texture2D houseTexture;
@@ -51,7 +51,6 @@ namespace Labb3DatorGrafik
         {
             GameService.Instance().WorldMatrix = Matrix.Identity;
             GameService.Instance().graphics = graphics.GraphicsDevice;
-            //heightmapSystem = new HeightmapSystem();
             cameraSystem = new CameraSystem();
             modelSystem = new ModelSystem();
             lightSystem = new LightSystem();
@@ -63,6 +62,7 @@ namespace Labb3DatorGrafik
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            Chopper = Content.Load<Model>("Chopper");
             House = Content.Load<Model>("farmhouse_obj");
             houseTexture = Content.Load<Texture2D>("Farmhouse_Texture");
             ground = Content.Load<Model>("Models/grid");
@@ -82,8 +82,7 @@ namespace Labb3DatorGrafik
                         0.5f * 0.1f, 1.3f * 1000f) * cameraComponent.view);
             ComponentManager.Get().AddComponentToEntity(cameraComponent, cameraID);
 
-            //var chopperID = ComponentManager.Get().NewEntity();
-            //ComponentManager.Get().AddComponentToEntity(new ModelComponent() { model = Content.Load<Model>("Chopper"), modelPosition = new Vector3(15, 10, 0), ModelEffect = Content.Load<Effect>("ShadowEffect") }, chopperID);
+            CreateChopper();
             CreateHouse();
             CreateGround();
             CreateShadowRender();
@@ -122,11 +121,11 @@ namespace Labb3DatorGrafik
         {
             var groundId = ComponentManager.Get().NewEntity();
             var modelComponentGround = new ModelComponent(groundTexture, ground, new Vector3(0,0,0));
-            modelComponentGround.ModelEffect = Content.Load<Effect>("ShadowEffect");
+            modelComponentGround.ModelEffect = Content.Load<Effect>("ShadowMapEffect");
             modelComponentGround.ShadowMapRender = true;
             ComponentManager.Get().AddComponentToEntity(modelComponentGround, groundId);
             var shadowEffectGround = new ShadowMapEffect();
-            shadowEffectGround.effect = Content.Load<Effect>("ShadowEffect");
+            shadowEffectGround.effect = Content.Load<Effect>("ShadowMapEffect");
             ComponentManager.Get().AddComponentToEntity(shadowEffectGround,groundId);
 
         }
@@ -134,14 +133,25 @@ namespace Labb3DatorGrafik
         public void  CreateHouse() {
             var HouseID = ComponentManager.Get().NewEntity();
             var modelComponentHouse = new ModelComponent(houseTexture, House, (new Vector3(10, 10, 0)* Matrix.Identity.Translation));
-            modelComponentHouse.ModelEffect = Content.Load<Effect>("ShadowEffect");
+            modelComponentHouse.ModelEffect = Content.Load<Effect>("ShadowMapEffect");
             modelComponentHouse.ShadowMapRender = true;
             ComponentManager.Get().AddComponentToEntity(modelComponentHouse, HouseID);
             var shadowEffectHouse = new ShadowMapEffect();
-            shadowEffectHouse.effect = Content.Load<Effect>("ShadowEffect");
+            shadowEffectHouse.effect = Content.Load<Effect>("ShadowMapEffect");
             ComponentManager.Get().AddComponentToEntity(shadowEffectHouse, HouseID);
         }
+        public void CreateChopper() {
 
+            var chopperID = ComponentManager.Get().NewEntity();
+            var modelComponentChopper = new ModelComponent(groundTexture, Chopper ,new Vector3(-10, 10, 0 ));
+            modelComponentChopper.ModelEffect = Content.Load<Effect>("ShadowMapEffect");
+            modelComponentChopper.ShadowMapRender = true;
+            ComponentManager.Get().AddComponentToEntity(modelComponentChopper, chopperID);
+            var shadowEffectChopper = new ShadowMapEffect();
+            shadowEffectChopper.effect = Content.Load<Effect>("ShadowMapEffect");
+            ComponentManager.Get().AddComponentToEntity(shadowEffectChopper, chopperID);
+
+        }
         protected override void UnloadContent()
         {
 
