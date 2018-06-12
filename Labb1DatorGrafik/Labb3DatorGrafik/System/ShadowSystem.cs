@@ -133,7 +133,7 @@ namespace Labb3DatorGrafik.System
 
                         _shadowMapEffect.AddEffect(meshPart.Effect, modelComp.texture);
                         _shadowMapEffect.TechniqueName = TechniqueName;
-                        _shadowMapEffect.world = transforms[mesh.ParentBone.Index] /** modelComp.ObjectWorld */* GameService.Instance().WorldMatrix;
+                        _shadowMapEffect.world = transforms[mesh.ParentBone.Index] * modelComp.ObjectWorld * GameService.Instance().WorldMatrix;
                         _shadowMapEffect.ShadowMap = shadowMap;
                         _shadowMapEffect.Apply();
 

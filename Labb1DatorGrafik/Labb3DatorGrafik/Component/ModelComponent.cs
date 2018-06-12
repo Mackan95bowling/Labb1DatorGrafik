@@ -12,6 +12,7 @@ namespace Labb3DatorGrafik.Component
     {
 
         public Vector3 modelPosition;
+        public Matrix ObjectWorld { get; set; }
         public Matrix[] boneTransformations { get; set; }
         public Effect ModelEffect { get; set; }
         public Model model { get; set; }
