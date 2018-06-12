@@ -85,8 +85,8 @@ namespace Labb3DatorGrafik
                         0.5f * 0.1f, 1.3f * 1000f) * cameraComponent.view);
             ComponentManager.Get().AddComponentToEntity(cameraComponent, cameraID);
 
-           CreateChopper();
-            //  CreateHouse();
+           //CreateChopper();
+              CreateHouse();
            // CreateDude();
             CreateGround();
             CreateShadowRender();
@@ -194,8 +194,9 @@ namespace Labb3DatorGrafik
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            lightSystem.Draw(gameTime);
             shadowSystem.Draw(gameTime);
+
+            lightSystem.Draw(gameTime);
             base.Draw(gameTime);
         }
     }

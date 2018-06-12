@@ -38,6 +38,7 @@ namespace Labb3DatorGrafik.System
                 camera.cameraPosition.X -= 0.6f;
                 
             }
+            camera.BoundingFrustum.Matrix = camera.view * camera.projection;
             Console.WriteLine(camera.cameraPosition);
         }
     }

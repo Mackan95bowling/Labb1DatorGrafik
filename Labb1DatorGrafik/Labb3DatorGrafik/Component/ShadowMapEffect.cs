@@ -36,7 +36,7 @@ namespace Labb3DatorGrafik.Component
             effect.Parameters["Projection"].SetValue(camera.projection);
             effect.Parameters["LightDirection"].SetValue(light.LightDir);
             effect.Parameters["LightViewProj"].SetValue(light.LightProjection);
-            effect.Parameters["ShadowStrenght"].SetValue(10f);
+            effect.Parameters["ShadowStrenght"].SetValue(0.5f);
             effect.Parameters["DepthBias"].SetValue(0.001f);
 
             if (!ShadowMap)
@@ -48,7 +48,7 @@ namespace Labb3DatorGrafik.Component
             effect.Parameters["AmbientIntensity"].SetValue(AmbientComponent.Intensity);
 
             effect.Parameters["ViewVector"].SetValue(Vector3.One);
-            effect.Parameters["DiffuseLightDirection"].SetValue(light.DiffLightDir); // todo
+            effect.Parameters["DiffuseLightDirection"].SetValue(light.DiffLightDir); 
             effect.Parameters["DiffuseColor"].SetValue(light.DiffLightColor);
             effect.Parameters["DiffuseIntensity"].SetValue(light.DiffIntensity);
 
@@ -71,7 +71,7 @@ namespace Labb3DatorGrafik.Component
             {
                 effectPass.Apply();
             }
-            //effect.CurrentTechnique.Passes[0].Apply();
+           // effect.CurrentTechnique.Passes[0].Apply(); makes no difference
         }
     }
 }

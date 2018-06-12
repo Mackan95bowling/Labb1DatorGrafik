@@ -126,8 +126,6 @@ namespace Labb3DatorGrafik.System
                 // Loop over meshs in the modelgraphicsDevice.RasterizerState
                 foreach (ModelMesh mesh in model.Meshes)
                 {
-
-
                     foreach (var meshPart in mesh.MeshParts)
                     {
 
