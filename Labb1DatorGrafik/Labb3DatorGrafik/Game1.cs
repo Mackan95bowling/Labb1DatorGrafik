@@ -92,19 +92,31 @@ namespace Labb3DatorGrafik
             CreateShadowRender();
             CreateFog();
             cameraSystem.SetCameraView();
+            CreateLight();
+      
+        }
+        public void CreateLight() {
+
+            var lightID = ComponentManager.Get().NewEntity();
+            var lightComponent = new LightComponent();
+            lightComponent.LightDir = new Vector3(-0.3333333f, 0.6666667f, 0.6666667f);
+            lightComponent.DiffLightColor = Color.White.ToVector4(); 
+            lightComponent.DiffIntensity = 0.5f;
+            lightComponent.DiffLightDir = lightComponent.LightDir;
+            lightComponent.AmbientColor = Color.White.ToVector4();
+            lightComponent.AmbientIntensity = 0.2f;
+           
+            ComponentManager.Get().AddComponentToEntity(lightComponent, lightID);
             var ambientID = ComponentManager.Get().NewEntity();
             var ambientComponent = new AmbientComponent() { AmbientColor = Color.White.ToVector4(), Intensity = 0.2f };
             ComponentManager.Get().AddComponentToEntity(ambientComponent, ambientID);
-            var lightID = ComponentManager.Get().NewEntity();
-            var lightComponent = new LightComponent() { LightDir = new Vector3(-0.3333333f, 0.6666667f, 0.6666667f), DiffLightColor = Color.White.ToVector4(), DiffIntensity = 0.5f };
-            lightComponent.DiffLightDir = lightComponent.LightDir;
-            ComponentManager.Get().AddComponentToEntity(lightComponent,lightID);
+
         }
 
         private void CreateDude()
         {
             var dudeID = ComponentManager.Get().NewEntity();
-            var modelComponent = new ModelComponent(dudeTexture, dude, new Vector3(0, 1, 0));
+            var modelComponent = new ModelComponent(dudeTexture, dude, new Vector3(0, 0, 0));
             modelComponent.ModelEffect = Content.Load<Effect>("ShadowMapEffect");
             modelComponent.ShadowMapRender = true;
             modelComponent.ObjectWorld = GameService.Instance().WorldMatrix;
