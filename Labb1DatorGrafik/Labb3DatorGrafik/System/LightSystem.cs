@@ -33,9 +33,10 @@ namespace Labb3DatorGrafik.System
             Vector3 halfOfBox = SizeOfBox * 0.5f;
             Vector3 lightPos = boxLight.Min + halfOfBox;
             lightPos.Z = boxLight.Min.Z;
+           // lightPos = Vector3.Transform(lightPos, Matrix.Invert(lightRot)); denna har björn, kanske för att få det o bli stabilt på samma plats dock fuckar det för oss
             Matrix viewMatrixLight = Matrix.CreateLookAt(lightPos, lightPos - lightComp.LightDir, Vector3.Up);
             Matrix lightProjectionMatrix = Matrix.CreateOrthographic(SizeOfBox.X, SizeOfBox.Y, -SizeOfBox.Z, SizeOfBox.Y);
-            
+            Console.WriteLine("LightPos: "+ lightPos);
             lightComp.LightProjection = viewMatrixLight * lightProjectionMatrix;
         }
 
@@ -44,11 +45,11 @@ namespace Labb3DatorGrafik.System
             //förflytta ljuset konstant 
             var lightComponent = ComponentManager.Get().GetComponents<LightComponent>().FirstOrDefault();
             lightComp = lightComponent.Value as LightComponent;
-            var rotationY = (float)gameTime.ElapsedGameTime.TotalMilliseconds * 0.00007f;
+            var rotationY = (float)gameTime.ElapsedGameTime.TotalMilliseconds * 0.00005f;
             var rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, rotationY);
             lightComp.LightDir = Vector3.Transform(lightComp.LightDir, rotation);
 
-            Console.WriteLine("" + lightComp.LightDir);
+            Console.WriteLine("light dir" + lightComp.LightDir);
         }
     }
 }

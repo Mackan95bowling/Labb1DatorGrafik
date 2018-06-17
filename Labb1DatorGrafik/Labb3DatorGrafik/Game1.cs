@@ -86,8 +86,8 @@ namespace Labb3DatorGrafik
             ComponentManager.Get().AddComponentToEntity(cameraComponent, cameraID);
 
            //CreateChopper();
-              CreateHouse();
-           // CreateDude();
+           //CreateHouse();
+            CreateDude();
             CreateGround();
             CreateShadowRender();
             CreateFog();
