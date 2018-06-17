@@ -33,10 +33,10 @@ namespace Labb3DatorGrafik.System
             Vector3 halfOfBox = SizeOfBox * 0.5f;
             Vector3 lightPos = boxLight.Min + halfOfBox;
             lightPos.Z = boxLight.Min.Z;
-            lightPos = (Vector3.Transform(lightPos, Matrix.Invert(lightRot))); 
+            lightPos = Vector3.Transform(lightPos, Matrix.Invert(lightRot)); 
             
             Matrix viewMatrixLight = Matrix.CreateLookAt(lightPos, lightPos - lightComp.LightDir, Vector3.Up);
-            Matrix lightProjectionMatrix = Matrix.CreateOrthographic(SizeOfBox.X, SizeOfBox.Y, -SizeOfBox.Z, SizeOfBox.Y);
+            Matrix lightProjectionMatrix = Matrix.CreateOrthographic(SizeOfBox.X, SizeOfBox.Y, -SizeOfBox.Z, SizeOfBox.Z);
             Console.WriteLine("LightPos: "+ lightPos);
             lightComp.LightProjection = viewMatrixLight * lightProjectionMatrix;
         }
@@ -47,8 +47,16 @@ namespace Labb3DatorGrafik.System
             var lightComponent = ComponentManager.Get().GetComponents<LightComponent>().FirstOrDefault();
             lightComp = lightComponent.Value as LightComponent;
             var rotationY = (float)gameTime.ElapsedGameTime.TotalMilliseconds * 0.00005f;
-            var rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, rotationY); //0.1f
+            var rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, rotationY); 
             lightComp.LightDir = Vector3.Transform(lightComp.LightDir, rotation);
+            if (Keyboard.GetState().IsKeyDown(Keys.F))
+            {
+                lightComp.LightDir = new Vector3(lightComp.LightDir.X, lightComp.LightDir.Y, lightComp.LightDir.Z - 0.002f);
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.G))
+            {
+                lightComp.LightDir = new Vector3(lightComp.LightDir.X, lightComp.LightDir.Y, lightComp.LightDir.Z + 0.002f);
+            }
 
             Console.WriteLine("light dir" + lightComp.LightDir);
         }

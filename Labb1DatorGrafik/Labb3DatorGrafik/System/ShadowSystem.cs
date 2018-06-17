@@ -34,7 +34,7 @@ namespace Labb3DatorGrafik.System
             var shadowRenderTarget = ComponentManager.Get().GetComponents<ShadowRenderTargetComponent>().Values.FirstOrDefault() as ShadowRenderTargetComponent;
             if (shadowRenderTarget == null) return;
             GameService.Instance().graphics.SetRenderTarget(shadowRenderTarget.shadowRenderTarget);
-            GameService.Instance().graphics.Clear(Color.CornflowerBlue);
+            GameService.Instance().graphics.Clear(Color.White);
 
 
             var light = ComponentManager.Get().GetComponents<LightComponent>().Values.FirstOrDefault() as LightComponent;
@@ -42,10 +42,13 @@ namespace Labb3DatorGrafik.System
             var camera = ComponentManager.Get().GetComponents<CameraComponent>().Values.First() as CameraComponent;
             var ambient = ComponentManager.Get().GetComponents<AmbientComponent>().Values.First() as AmbientComponent;
             var fogComp = ComponentManager.Get().GetComponents<FogComponent>().Values.First() as FogComponent;
-            var models = ComponentManager.Get().GetComponents<ModelComponent>().Values;
+            var models = ComponentManager.Get().GetComponents<ModelComponent>();
             var shadowMapEffects = ComponentManager.Get().GetComponents<ShadowMapEffect>();
-
-            foreach (ModelComponent modelComp in models)
+            if (camera == null || shadowRenderTarget == null || light == null || fogComp == null || ambient == null)
+            {
+                return;
+            }
+            foreach (ModelComponent modelComp in models.Values)
             {
                 ShadowMapEffect shadowEffect;
                 shadowEffect = ComponentManager.Get().GetComponents<ShadowMapEffect>().Values.FirstOrDefault() as ShadowMapEffect;
@@ -55,7 +58,7 @@ namespace Labb3DatorGrafik.System
                 shadowEffect.light = light;
                 shadowEffect.ShadowRenderTarget = null;
 
-                DrawModel(modelComp, "DrawWithShadowMap", false, shadowEffect);
+                DrawModel(modelComp,true, shadowEffect);
             }
             GameService.Instance().graphics.SetRenderTarget(null);
         }
@@ -104,8 +107,7 @@ namespace Labb3DatorGrafik.System
                 shadowEffect.light = light;
                 shadowEffect.ShadowRenderTarget = shadowRender.shadowRenderTarget;
 
-                DrawModel(modelComp, "DrawWithShadowMap", false, shadowEffect);
-                    //camera, light, ambientComp); lägg till dessa och ta bort shadowEffect för att få de o funka
+                DrawModel(modelComp, false, shadowEffect);
             }
         }
         public void Update(GameTime gameTime)
@@ -113,12 +115,11 @@ namespace Labb3DatorGrafik.System
             throw new NotImplementedException();
         }
 
-        public void DrawModel(ModelComponent modelComp, string techniqueName, bool shadowMap, ShadowMapEffect _shadowMapEffect)
-        {//CameraComponent camera, LightComponent light, AmbientComponent ambient)
+        public void DrawModel(ModelComponent modelComp, bool shadowMap, ShadowMapEffect _shadowMapEffect)
+        {
             {
                 var model = modelComp.model;
-                #region Björnssätt
-                //var model = modelComp.Model;
+
                 string TechniqueName = shadowMap ? "CreateShadowMap" : "DrawWithShadowMap";
 
                 Matrix[] transforms = new Matrix[model.Bones.Count];
@@ -141,86 +142,7 @@ namespace Labb3DatorGrafik.System
 
                     }
                 }
-                #endregion
-                #region EffectParameters Enligt hur Simon och nick gör.... det funkar att rendrera men vet inte om det direkt blir någon effekt på sakerna.
-                //foreach (ModelMesh mesh in model.Meshes)
-
-                //{
-
-                //    foreach (var meshPart in mesh.MeshParts)
-
-                //    {
-                //        modelComp.ModelEffect.CurrentTechnique = modelComp.ModelEffect.Techniques[techniqueName];
-                //        if (techniqueName.Contains("DrawWithShadowMap"))
-
-                //        {
-
-                //            modelComp.ModelEffect.Parameters["ShadowMap"].SetValue(renderTarget);
-
-                //        }
-
-                //        modelComp.ModelEffect.Parameters["Texture"].SetValue(modelComp.texture);
-
-                //        modelComp.ModelEffect.Parameters["World"].SetValue(Matrix.CreateTranslation(modelComp.modelPosition));
-
-                //        modelComp.ModelEffect.Parameters["View"].SetValue(camera.view);
-
-                //        modelComp.ModelEffect.Parameters["Projection"].SetValue(camera.projection);
-
-                //        modelComp.ModelEffect.Parameters["DiffuseLightDirection"].SetValue(light.LightDir);
-
-                //        modelComp.ModelEffect.Parameters["LightViewProj"].SetValue(light.LightProjection);
-
-                //        modelComp.ModelEffect.Parameters["AmbientColor"].SetValue(ambient.AmbientColor);
-
-                //        modelComp.ModelEffect.Parameters["AmbientIntensity"].SetValue(ambient.Intensity);
-
-                //        modelComp.ModelEffect.Parameters["DiffuseLightDirection"].SetValue(light.DiffLightDir);
-
-                //        modelComp.ModelEffect.Parameters["DiffuseColor"].SetValue(light.DiffLightColor);
-
-                //        modelComp.ModelEffect.Parameters["DiffuseIntensity"].SetValue(light.DiffIntensity);
-
-                //        modelComp.ModelEffect.Parameters["CameraPosition"].SetValue(camera.cameraPosition);
-
-
-
-                //        modelComp.ModelEffect.Parameters["ShadowStrenght"].SetValue(0.5f);
-
-                //        modelComp.ModelEffect.Parameters["DepthBias"].SetValue(0.001f);
-
-                //        modelComp.ModelEffect.Parameters["ViewVector"].SetValue(Vector3.One);
-
-                //        modelComp.ModelEffect.Parameters["Shininess"].SetValue(0.9f);
-
-                //        modelComp.ModelEffect.Parameters["SpecularColor"].SetValue(Color.CornflowerBlue.ToVector4());
-
-                //        modelComp.ModelEffect.Parameters["SpecularIntensity"].SetValue(0.1f);
-
-
-
-                //        modelComp.ModelEffect.Parameters["FogStart"].SetValue(100f);
-
-                //        modelComp.ModelEffect.Parameters["FogEnd"].SetValue(150f);
-
-                //        modelComp.ModelEffect.Parameters["FogColor"].SetValue(Color.CornflowerBlue.ToVector4());
-
-                //        modelComp.ModelEffect.Parameters["FogEnabled"].SetValue(true);
-
-                //        foreach (var pass in modelComp.ModelEffect.CurrentTechnique.Passes)
-
-                //        {
-
-                //            pass.Apply();
-
-                //        }
-                /*Här ritas allt ut!!!! ska vara kvar såhär*/
-                //    GameService.Instance().graphics.SetVertexBuffer(meshPart.VertexBuffer);
-                //    GameService.Instance().graphics.Indices = meshPart.IndexBuffer;
-                //    GameService.Instance().graphics.DrawIndexedPrimitives(PrimitiveType.TriangleList, meshPart.VertexOffset, meshPart.StartIndex, meshPart.PrimitiveCount);
-                //}
             }
-            #endregion
         }
     }
 }

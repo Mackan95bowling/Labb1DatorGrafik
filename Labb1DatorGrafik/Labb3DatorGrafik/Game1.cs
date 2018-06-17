@@ -38,11 +38,11 @@ namespace Labb3DatorGrafik
 
             {
 
-                PreferredBackBufferWidth = 1280,
+                PreferredBackBufferWidth = 800,
 
-                PreferredBackBufferHeight = 720,
+                PreferredBackBufferHeight = 480,
 
-                GraphicsProfile = GraphicsProfile.HiDef
+                //GraphicsProfile = GraphicsProfile.HiDef
 
             };
             Content.RootDirectory = "Content";
@@ -80,13 +80,12 @@ namespace Labb3DatorGrafik
             //    .Build();
 
             var cameraID = ComponentManager.Get().NewEntity();
-            var cameraComponent = new CameraComponent() {fieldOfView = MathHelper.ToRadians(45f), aspectRatio = graphics.GraphicsDevice.Viewport.AspectRatio, cameraPosition = new Vector3(0, 10,20), cameraTarget = (new Vector3(10,10,0)* GameService.Instance().WorldMatrix.Translation) };
-            cameraComponent.BoundingFrustum = new BoundingFrustum(Matrix.CreatePerspectiveFieldOfView(1.1f * MathHelper.PiOver2, graphics.GraphicsDevice.Viewport.AspectRatio,
-                        0.5f * 0.1f, 1.3f * 1000f) * cameraComponent.view);
+            var cameraComponent = new CameraComponent() {fieldOfView = MathHelper.ToRadians(45f), aspectRatio = graphics.GraphicsDevice.Viewport.AspectRatio, cameraPosition = new Vector3(0, 150,50), cameraTarget = new Vector3(0, -0.4472136f, -0.8944272f) };
+            cameraComponent.BoundingFrustum = new BoundingFrustum(Matrix.Identity);
             ComponentManager.Get().AddComponentToEntity(cameraComponent, cameraID);
 
            //CreateChopper();
-           //CreateHouse();
+            //CreateHouse();
             CreateDude();
             CreateGround();
             CreateShadowRender();
@@ -117,7 +116,7 @@ namespace Labb3DatorGrafik
         {
             var dudeID = ComponentManager.Get().NewEntity();
             var modelComponent = new ModelComponent(dudeTexture, dude, new Vector3(0, 0, 0));
-            modelComponent.ModelEffect = Content.Load<Effect>("ShadowMapEffect");
+           // modelComponent.ModelEffect = Content.Load<Effect>("ShadowMapEffect");
             modelComponent.ShadowMapRender = true;
             modelComponent.ObjectWorld = GameService.Instance().WorldMatrix;
             ComponentManager.Get().AddComponentToEntity(modelComponent, dudeID);
@@ -150,7 +149,7 @@ namespace Labb3DatorGrafik
         {
             var groundId = ComponentManager.Get().NewEntity();
             var modelComponentGround = new ModelComponent(groundTexture, ground, new Vector3(0,0,0));
-            modelComponentGround.ModelEffect = Content.Load<Effect>("ShadowMapEffect");
+           // modelComponentGround.ModelEffect = Content.Load<Effect>("ShadowMapEffect");
             modelComponentGround.ShadowMapRender = true;
             modelComponentGround.ObjectWorld = GameService.Instance().WorldMatrix;
             ComponentManager.Get().AddComponentToEntity(modelComponentGround, groundId);
@@ -163,7 +162,7 @@ namespace Labb3DatorGrafik
         public void  CreateHouse() {
             var HouseID = ComponentManager.Get().NewEntity();
             var modelComponentHouse = new ModelComponent(houseTexture, House, (new Vector3(10, 10, 0)* Matrix.Identity.Translation));
-            modelComponentHouse.ModelEffect = Content.Load<Effect>("ShadowMapEffect");
+           // modelComponentHouse.ModelEffect = Content.Load<Effect>("ShadowMapEffect");
             modelComponentHouse.ShadowMapRender = true;
             modelComponentHouse.ObjectWorld = GameService.Instance().WorldMatrix;
             ComponentManager.Get().AddComponentToEntity(modelComponentHouse, HouseID);
@@ -175,7 +174,7 @@ namespace Labb3DatorGrafik
 
             var chopperID = ComponentManager.Get().NewEntity();
             var modelComponentChopper = new ModelComponent(groundTexture, Chopper ,new Vector3(-10, 10, 0 ));
-            modelComponentChopper.ModelEffect = Content.Load<Effect>("ShadowMapEffect");
+           // modelComponentChopper.ModelEffect = Content.Load<Effect>("ShadowMapEffect");
             modelComponentChopper.ShadowMapRender = true;
             modelComponentChopper.ObjectWorld = GameService.Instance().WorldMatrix;
             ComponentManager.Get().AddComponentToEntity(modelComponentChopper, chopperID);

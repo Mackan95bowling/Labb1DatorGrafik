@@ -37,7 +37,7 @@ namespace Labb3DatorGrafik.Component
             effect.Parameters["LightDirection"].SetValue(light.LightDir);
             effect.Parameters["LightViewProj"].SetValue(light.LightProjection);
             effect.Parameters["ShadowStrenght"].SetValue(1f);
-            effect.Parameters["DepthBias"].SetValue(0.01f);
+            effect.Parameters["DepthBias"].SetValue(0.001f);
 
             if (!ShadowMap)
             {
