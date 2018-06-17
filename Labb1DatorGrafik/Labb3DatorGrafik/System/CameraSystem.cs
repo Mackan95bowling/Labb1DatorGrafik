@@ -58,6 +58,17 @@ namespace Labb3DatorGrafik.System
                 //rotate
                 camera.cameraPosition -= cameraLeftRight * 0.5f;
             }
+            if (Keyboard.GetState().IsKeyDown(Keys.W))
+            {
+                //move forward "zoom"
+                camera.cameraPosition.Z += 0.5f;
+
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.S))
+            {
+                //move forward "zoom"
+                camera.cameraPosition.Z -= 0.5f;
+            }
             //camera.cameraTarget.Normalize();
             camera.view = Matrix.CreateLookAt(camera.cameraPosition, camera.cameraTarget, Vector3.Up);
             camera.BoundingFrustum.Matrix = camera.view * camera.projection;
