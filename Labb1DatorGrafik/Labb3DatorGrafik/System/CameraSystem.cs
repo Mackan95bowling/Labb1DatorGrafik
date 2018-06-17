@@ -29,15 +29,37 @@ namespace Labb3DatorGrafik.System
 
         public void Update(GameTime gameTime) {
             var camera = ComponentManager.Get().GetComponents<CameraComponent>().Values.FirstOrDefault() as CameraComponent;
-            if (Keyboard.GetState().IsKeyDown(Keys.D))
+
+            Vector3 cameraLeftRight = Vector3.Cross(Vector3.Up, camera.cameraTarget);
+            if (Keyboard.GetState().IsKeyDown(Keys.Up))
+            {//move
+                camera.cameraPosition.Y += 0.5f;// camera.cameraTarget * 1f;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Down))
+            {//move
+                camera.cameraPosition.Y -= 0.5f;//camera.cameraTarget * 0.5f;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Left))
+            {//move
+                camera.cameraPosition -=  camera.cameraTarget * 0.5f;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Right))
             {
-                camera.cameraPosition.X += 0.6f;
+                //move
+                camera.cameraPosition += camera.cameraTarget * 0.5f;
             }
             if (Keyboard.GetState().IsKeyDown(Keys.A))
             {
-                camera.cameraPosition.X -= 0.6f;
-                
+                //rotate
+                camera.cameraPosition += cameraLeftRight * 0.5f;
             }
+            if (Keyboard.GetState().IsKeyDown(Keys.D))
+            {
+                //rotate
+                camera.cameraPosition -= cameraLeftRight * 0.5f;
+            }
+            //camera.cameraTarget.Normalize();
+            camera.view = Matrix.CreateLookAt(camera.cameraPosition, camera.cameraTarget, Vector3.Up);
             camera.BoundingFrustum.Matrix = camera.view * camera.projection;
             Console.WriteLine(camera.cameraPosition);
         }
