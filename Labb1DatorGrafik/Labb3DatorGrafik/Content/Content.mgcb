@@ -396,9 +396,3 @@
 /processorParam:TextureFormat=Color
 /build:upBodyS.tga
 
-#begin Effect/MyEffect.fx
-/importer:EffectImporter
-/processor:EffectProcessor
-/processorParam:DebugMode=Auto
-/build:Effect/MyEffect.fx
-

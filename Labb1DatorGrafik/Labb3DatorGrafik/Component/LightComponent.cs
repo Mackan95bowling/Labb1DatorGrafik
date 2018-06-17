@@ -10,8 +10,6 @@ namespace Labb3DatorGrafik.Component
         public Vector3 DiffLightDir { get; set; }
         public Vector4 DiffLightColor { get; set; }
         public float DiffIntensity { get; set; }
-        public Vector4 AmbientColor { get; set; }
-        public float AmbientIntensity { get; set; }
 
     }
 }

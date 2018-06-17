@@ -93,8 +93,7 @@ namespace Labb3DatorGrafik
             lightComponent.DiffLightColor = Color.White.ToVector4(); 
             lightComponent.DiffIntensity = 0.5f;
             lightComponent.DiffLightDir = lightComponent.LightDir;
-            lightComponent.AmbientColor = Color.White.ToVector4();
-            lightComponent.AmbientIntensity = 0.2f;
+   
            
             ComponentManager.Get().AddComponentToEntity(lightComponent, lightID);
             var ambientID = ComponentManager.Get().NewEntity();

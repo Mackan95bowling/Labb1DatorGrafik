@@ -98,7 +98,6 @@ namespace Labb3DatorGrafik.System
             }
             foreach (ModelComponent modelComp in models.Values)
             {
-                //björn
                 ShadowMapEffect shadowEffect; 
                 shadowEffect = ComponentManager.Get().GetComponents<ShadowMapEffect>().Values.FirstOrDefault() as ShadowMapEffect;
                 shadowEffect.AmbientComponent = ambientComp;
@@ -124,7 +123,6 @@ namespace Labb3DatorGrafik.System
 
                 Matrix[] transforms = new Matrix[model.Bones.Count];
                 model.CopyAbsoluteBoneTransformsTo(transforms);
-                // Loop over meshs in the modelgraphicsDevice.RasterizerState
                 foreach (ModelMesh mesh in model.Meshes)
                 {
                     foreach (var meshPart in mesh.MeshParts)

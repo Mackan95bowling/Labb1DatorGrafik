@@ -37,7 +37,6 @@ namespace Labb3DatorGrafik.System
             
             Matrix viewMatrixLight = Matrix.CreateLookAt(lightPos, lightPos - lightComp.LightDir, Vector3.Up);
             Matrix lightProjectionMatrix = Matrix.CreateOrthographic(SizeOfBox.X, SizeOfBox.Y, -SizeOfBox.Z, SizeOfBox.Z);
-            Console.WriteLine("LightPos: "+ lightPos);
             lightComp.LightProjection = viewMatrixLight * lightProjectionMatrix;
         }
 
@@ -58,7 +57,6 @@ namespace Labb3DatorGrafik.System
                 lightComp.LightDir = new Vector3(lightComp.LightDir.X, lightComp.LightDir.Y, lightComp.LightDir.Z + 0.002f);
             }
 
-            Console.WriteLine("light dir" + lightComp.LightDir);
         }
     }
 }
